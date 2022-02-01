@@ -16,12 +16,18 @@ class If {
     elseBody: List<Statement>
 }
 
+class Write {
+    expression: Expression
+}
 
 ASTNode <|-- Statement
 Statement <|.. If
+Statement <|.. Write
 
 If o-- "1" Expression
+Write o-- "1" Expression
 If o-- "0..n" Statement
+
 
 
 @enduml
