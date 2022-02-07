@@ -9,6 +9,7 @@ interface ASTNode {
 }
 
 interface Statement
+interface Expression
 
 class If {
     condition: Expression
@@ -16,17 +17,52 @@ class If {
     elseBody: List<Statement>
 }
 
+class While {
+    condition: Expression
+    body: List<Statement>
+}
+
 class Write {
     expression: Expression
 }
 
+class Read {
+    expression: Expression
+}
+
+class Assignment {
+    leftExpression: Expression
+    rightExpression: Expression
+}
+
+class Return {
+    expression: Expression
+}
+
+class FunctionInvocation {
+    variable: Variable
+    parameters: List<Expression>
+}
+
 ASTNode <|-- Statement
 Statement <|.. If
+Statement <|.. While
 Statement <|.. Write
+Statement <|.. Read
+Statement <|.. Assignment
+Statement <|.. Return
+Statement <|.. FunctionInvocation
 
 If o-- "1" Expression
+While o-- "1" Expression
 Write o-- "1" Expression
+Read o-- "1" Expression
+Return o-- "1" Expression
+Assignment o-- "2" Expression
+FunctionInvocation o-- "0..n" Expression
+
 If o-- "0..n" Statement
+While o-- "0..n" Statement
 
 
 
