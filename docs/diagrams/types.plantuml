@@ -9,10 +9,61 @@ interface ASTNode {
 
 interface Type
 
+class ArrayType {
+    type: Type
+    length: int
+}
+
+class DoubleType {
+
+}
+
+class CharType {
+
+}
+
+class IntType {
+
+}
+
+class VoidType {
+
+}
+
+class StructType {
+
+}
+
+class RecordType {
+    type: Type
+    name: String
+}
+
+class FunctionType {
+    returnType: Type
+    parameters: List<VariableDefinition>
+}
+
+class VariableDefinition {
+    type: Type
+    name: String
+}
+
 ASTNode <|-- Type
 
-class IntType
-
+Type <|.. ArrayType
+Type <|.. DoubleType
+Type <|.. CharType
 Type <|.. IntType
+Type <|.. VoidType
+Type <|.. StructType
+Type <|.. RecordType
+Type <|.. FunctionType
 
+ArrayType o-- "1" Type
+RecordType o-- "1" Type
+FunctionType o-- "1" Type
+
+StructType o-- "1..n" RecordType
+FunctionType o-- "1..n" VariableDefinition
 @enduml
