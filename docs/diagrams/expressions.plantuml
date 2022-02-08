@@ -14,7 +14,80 @@ class IntLiteral {
     value: int
 }
 
-ASTNode <|-- Expression
-Expression <|.. IntLiteral
+class CharLiteral {
+    value: char
+}
 
+class DoubleLiteral {
+    value: double
+}
+
+class UnaryMinus {
+    expression: Expression
+}
+
+class UnaryNegative {
+    expression: Expression
+}
+
+class Cast {
+    typeCast: Type
+    expression: Expression
+}
+
+class ArrayAccess {
+    array: Expression
+    index: Expression
+}
+
+class StructAccess {
+    struct: Expression
+    field: String
+}
+
+class Variable {
+    name: String
+}
+
+class Arithmetic {
+    operator: String
+    leftExpression: Expression
+    rightExpression: Expression
+}
+
+class Logical {
+    operator: String
+    leftExpression: Expression
+    rightExpression: Expression
+}
+
+class Relational {
+    operator: String
+    leftExpression: Expression
+    rightExpression: Expression
+}
+ASTNode <|-- Expression
+
+Expression <|.. IntLiteral
+Expression <|.. CharLiteral
+Expression <|.. DoubleLiteral
+Expression <|.. UnaryMinus
+Expression <|.. UnaryNegative
+Expression <|.. Cast
+Expression <|.. Arithmetic
+Expression <|.. ArrayAccess
+Expression <|.. StructAccess
+Expression <|.. Relational
+Expression <|.. Variable
+Expression <|.. Logical
+
+UnaryMinus o-- "1" Expression
+UnaryNegative o-- "1" Expression
+StructAccess o-- "1" Expression
+Cast o-- "1" Expression
+
+ArrayAccess o-- "2" Expression
+Arithmetic o-- "2" Expression
+Logical o-- "2" Expression
+Relational o-- "2" Expression
 @enduml
