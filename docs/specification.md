@@ -106,7 +106,8 @@ end
 Una asignación está compuesta por dos expresiones separadas por el operador `=`.
 
 ```
-age :: int = 5
+age :: int
+age = 5
 ```
 
 #### I/O
@@ -116,7 +117,8 @@ Por ejemplo:
 
 ```
 age :: int
-grade :: char = 'A'
+grade :: char
+grade = 'A'
 
 puts grade
 in age
@@ -148,18 +150,13 @@ else
 end
 ```
 
-Ejemplo de una sola línea:
-
-```
-if i > 10, do: i = i + 1, else: i = 0
-```
-
 ##### While
 
 Una sentencia iterativa se define usando la palabra clave `while` y delimitando el cuerpo con `do` y `end`:
 
 ```
-vidas :: int = 10
+vidas :: int
+vidas = 10
 
 while vidas > 0 do
   vidas = vidas - 1
@@ -201,8 +198,10 @@ Las expresiones están formadas por:
 La conversión explícita a tipos simples (también conocido como cast en inglés) se podrá realizar usando la palabra clave `as`:
 
 ```
-coins_of_one :: int = 10
-money :: double = 0.0
+coins_of_one :: int
+coins_of_one = 10
+money :: double
+money = 0.0
 
 money = coins_of_one as double
 ```

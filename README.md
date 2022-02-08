@@ -9,7 +9,7 @@ Este es el proyecto base que servirá para implementar un compilador durante el 
 ## Guión del proyecto
 
 - [x] [Laboratorio 1 - Diagrama del AST](docs/labs/lab_01.md)
-- [ ] Laboratorio 2 - Implementación del AST
+- [x] [Laboratorio 2 - Implementación del AST](docs/labs/lab_02.md)
 - [ ] Laboratorio 3 - Analizador léxico
 - [ ] Laboratorio 4 - Analizador sintáctico
 - [ ] Laboratorio 5 - Construcción del AST
