@@ -8,7 +8,21 @@ interface ASTNode {
     getColumn(): int
 }
 
-interface Expression
+class AbstractASTNode {
+    AbstractASTNode(int line, int column)
+    getLine(): int
+    getColumn(): int
+    line: int
+    column: int
+}
+
+interface Expression {
+
+}
+
+class AbstractExpression {
+    AbstractExpression(int line, int column)
+}
 
 class IntLiteral {
     value: int
@@ -66,20 +80,25 @@ class Relational {
     leftExpression: Expression
     rightExpression: Expression
 }
-ASTNode <|-- Expression
 
-Expression <|.. IntLiteral
-Expression <|.. CharLiteral
-Expression <|.. DoubleLiteral
-Expression <|.. UnaryMinus
-Expression <|.. UnaryNegative
-Expression <|.. Cast
-Expression <|.. Arithmetic
-Expression <|.. ArrayAccess
-Expression <|.. StructAccess
-Expression <|.. Relational
-Expression <|.. Variable
-Expression <|.. Logical
+ASTNode <|-- AbstractASTNode
+
+AbstractASTNode <|-- AbstractExpression
+
+Expression <|.. AbstractExpression
+
+AbstractExpression <|-- IntLiteral
+AbstractExpression <|-- CharLiteral
+AbstractExpression <|-- DoubleLiteral
+AbstractExpression <|-- UnaryMinus
+AbstractExpression <|-- UnaryNegative
+AbstractExpression <|-- Cast
+AbstractExpression <|-- Arithmetic
+AbstractExpression <|-- ArrayAccess
+AbstractExpression <|-- StructAccess
+AbstractExpression <|-- Relational
+AbstractExpression <|-- Variable
+AbstractExpression <|-- Logical
 
 UnaryMinus o-- "1" Expression
 UnaryNegative o-- "1" Expression
