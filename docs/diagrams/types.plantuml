@@ -7,7 +7,19 @@ interface ASTNode {
     getColumn(): int
 }
 
+class AbstractASTNode {
+    AbstractASTNode(int line, int column)
+    getLine(): int
+    getColumn(): int
+    line: int
+    column: int
+}
+
 interface Type
+
+class AbstractType {
+
+}
 
 class ArrayType {
     type: Type
@@ -49,16 +61,20 @@ class VariableDefinition {
     name: String
 }
 
-ASTNode <|-- Type
+ASTNode <|.. AbstractASTNode
 
-Type <|.. ArrayType
-Type <|.. DoubleType
-Type <|.. CharType
-Type <|.. IntType
-Type <|.. VoidType
-Type <|.. StructType
-Type <|.. RecordType
-Type <|.. FunctionType
+AbstractASTNode <|-- AbstractType
+
+Type <|.. AbstractType
+
+AbstractType <|-- ArrayType
+AbstractType <|-- DoubleType
+AbstractType <|-- CharType
+AbstractType <|-- IntType
+AbstractType <|-- VoidType
+AbstractType <|-- StructType
+AbstractType <|-- RecordType
+AbstractType <|-- FunctionType
 
 ArrayType o-- "1" Type
 RecordType o-- "1" Type
