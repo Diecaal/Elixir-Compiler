@@ -8,33 +8,54 @@ interface ASTNode {
     getColumn(): int
 }
 
+class AbstractASTNode {
+    AbstractASTNode(int line, int column)
+    getLine(): int
+    getColumn(): int
+    line: int
+    column: int
+}
+
 class Program {
     statements: List<Statement>
 }
 
-class Expression
-class Definition
+interface Definition {
+    getType(): Type
+}
+
+class AbstractDefinition {
+    AbstractDefinition(int line, int column)
+}
+
 class VariableDefinition
 class FunctionDefinition
 class Type
 
-ASTNode <|.. Program
-ASTNode <|-- Statement
-ASTNode <|-- Definition
+class FunctionType {
+    returnType: Type
+    parameters: List<VariableDefinition>
+}
 
-Program "0..n" o-- Statement
+ASTNode <|.. AbstractASTNode
 
-Statement o-- Expression
-ASTNode <|-- Expression
+AbstractASTNode <|-- Program
+AbstractASTNode <|-- AbstractDefinition
 
-Program "0..n" o-- Definition
+Definition <|.. AbstractDefinition
+
+Program o-- "0..n" Definition
 
 Definition <|.. VariableDefinition
-Definition <|.. FunctionDefinition
+AbstractDefinition <|-- FunctionDefinition
+AbstractStatement <|-- VariableDefinition
 
-VariableDefinition "1" o-- Type
+Type <-- Definition
+
+FunctionType <-- FunctionDefinition
+
+VariableDefinition "1" o-- "1" Type
 
 FunctionDefinition "0..n" o-- VariableDefinition
 
-Expression <|-- Variable
 @enduml
