@@ -1,13 +1,12 @@
 package es.uniovi.dlp.parser;
 
 import org.antlr.v4.runtime.*;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.fail;
 
 public class LexerTest {
 
@@ -55,20 +54,20 @@ public class LexerTest {
         failIfLexerHasErrors(lexer);
 
         if (expectedTokens.isEmpty()) {
-            fail("There aren't expected tokens");
+            Assertions.fail("There aren't expected tokens");
         }
 
         for (LexicalInfo expectedToken : expectedTokens) {
             Token token = lexer.nextToken();
             if (token.getType() == XanaLexer.EOF) {
-                fail("Reached End Of File when expecting a new token");
+                Assertions.fail("Reached End Of File when expecting a new token");
             }
 
             expectedToken.assertIsEqual(token);
         }
 
         if (lexer.nextToken().getType() != XanaLexer.EOF) {
-            fail("There are tokens at the end of the file that weren't expected");
+            Assertions.fail("There are tokens at the end of the file that weren't expected");
         }
     }
 
@@ -89,7 +88,7 @@ public class LexerTest {
         lexer.addErrorListener(new BaseErrorListener() {
             @Override
             public void syntaxError(Recognizer<?, ?> recognizer, Object o, int i, int i1, String s, RecognitionException e) {
-                fail("The lexer found a syntax error: " + s);
+                Assertions.fail("The lexer found a syntax error: " + s);
             }
         });
     }

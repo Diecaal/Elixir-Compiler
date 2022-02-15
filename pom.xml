@@ -12,8 +12,8 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>17</maven.compiler.source>
-    <maven.compiler.target>17</maven.compiler.target>
+    <maven.compiler.source>16</maven.compiler.source>
+    <maven.compiler.target>16</maven.compiler.target>
   </properties>
 
   <dependencyManagement>
@@ -39,6 +39,12 @@
       <artifactId>antlr4-runtime</artifactId>
       <version>4.9.3</version>
     </dependency>
+      <dependency>
+          <groupId>junit</groupId>
+          <artifactId>junit</artifactId>
+          <version>RELEASE</version>
+          <scope>compile</scope>
+      </dependency>
   </dependencies>
 
 
@@ -69,16 +75,14 @@
           </dependency>
         </dependencies>
       </plugin>
-<<<<<<< HEAD
         <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
             <configuration>
-                <source>15</source>
-                <target>15</target>
+                <source>16</source>
+                <target>16</target>
             </configuration>
         </plugin>
-=======
       <plugin>
         <groupId>org.antlr</groupId>
         <artifactId>antlr4-maven-plugin</artifactId>
@@ -88,7 +92,6 @@
           <outputDirectory>src/main/java/es/uniovi/dlp/parser/</outputDirectory>
         </configuration>
       </plugin>
->>>>>>> upstream/main
     </plugins>
   </build>
 </project>

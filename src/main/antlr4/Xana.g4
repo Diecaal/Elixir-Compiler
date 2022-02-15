@@ -1,6 +1,5 @@
 grammar Xana;
 
-
 @header {
 package es.uniovi.dlp.parser;
 }
