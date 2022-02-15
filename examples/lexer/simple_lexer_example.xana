@@ -1,0 +1,25 @@
+# Comentario de una linea
+
+""" Constantes
+   enteras """
+    0 123
+    0 12
+
+"""
+Constantes
+ reales
+"""
+    12.3  2.  .34
+    34.12E-3  3e3
+
+""" Identificadores """
+
+    var1  _var_1  VAR_1_AB_2
+
+""" Constantes
+   de caracteres """
+    'a'  'b'  '.'  '-'  '~'
+    '\n'  '\t'
+    '\126'
+
+# Comentario al final del fichero
