@@ -18,6 +18,8 @@ public record LexicalInfo(int line, int column, String lexeme, int tokenKey, Obj
     private static Object getSemanticValue(Token token) {
         return switch (token.getType()) {
             case XanaLexer.INT_CONSTANT -> LexerHelper.lexemeToInt(token.getText());
+            case XanaLexer.CHAR_CONSTANT -> LexerHelper.lexemeToChar(token.getText());
+            case XanaLexer.REAL_CONSTANT -> LexerHelper.lexemeToReal(token.getText());
             default -> token.getText();
         };
     }
