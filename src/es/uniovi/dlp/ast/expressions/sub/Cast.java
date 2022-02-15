@@ -2,6 +2,7 @@ package es.uniovi.dlp.ast.expressions.sub;
 
 import es.uniovi.dlp.ast.expressions.AbstractExpression;
 import es.uniovi.dlp.ast.expressions.Expression;
+import es.uniovi.dlp.ast.types.Type;
 
 public class Cast extends AbstractExpression {
 
