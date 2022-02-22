@@ -19,11 +19,11 @@ public class XanaParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		ID=1, COMMENT=2, WS=3, BASIC_TYPE=4, INT_CONSTANT=5, REAL_CONSTANT=6, 
-		CHAR_CONSTANT=7, EOL=8, DOUBLE_CONSTANT=9;
+		ID=1, COMMENT=2, WS=3, BASIC_TYPE=4, REAL_CONSTANT=5, INT_CONSTANT=6, 
+		CHAR_CONSTANT=7, EOL=8;
 	public static final String[] tokenNames = {
-		"<INVALID>", "ID", "COMMENT", "WS", "BASIC_TYPE", "INT_CONSTANT", "REAL_CONSTANT", 
-		"CHAR_CONSTANT", "EOL", "DOUBLE_CONSTANT"
+		"<INVALID>", "ID", "COMMENT", "WS", "BASIC_TYPE", "REAL_CONSTANT", "INT_CONSTANT", 
+		"CHAR_CONSTANT", "EOL"
 	};
 	public static final int
 		RULE_program = 0, RULE_expression = 1;
@@ -73,9 +73,9 @@ public class XanaParser extends Parser {
 				setState(4); match(ID);
 				}
 				break;
+			case REAL_CONSTANT:
 			case INT_CONSTANT:
 			case CHAR_CONSTANT:
-			case DOUBLE_CONSTANT:
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(5); expression();
@@ -98,7 +98,7 @@ public class XanaParser extends Parser {
 
 	public static class ExpressionContext extends ParserRuleContext {
 		public TerminalNode INT_CONSTANT() { return getToken(XanaParser.INT_CONSTANT, 0); }
-		public TerminalNode DOUBLE_CONSTANT() { return getToken(XanaParser.DOUBLE_CONSTANT, 0); }
+		public TerminalNode REAL_CONSTANT() { return getToken(XanaParser.REAL_CONSTANT, 0); }
 		public TerminalNode CHAR_CONSTANT() { return getToken(XanaParser.CHAR_CONSTANT, 0); }
 		public ExpressionContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -115,7 +115,7 @@ public class XanaParser extends Parser {
 			{
 			setState(8);
 			_la = _input.LA(1);
-			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << INT_CONSTANT) | (1L << CHAR_CONSTANT) | (1L << DOUBLE_CONSTANT))) != 0)) ) {
+			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << REAL_CONSTANT) | (1L << INT_CONSTANT) | (1L << CHAR_CONSTANT))) != 0)) ) {
 			_errHandler.recoverInline(this);
 			}
 			consume();
@@ -133,10 +133,10 @@ public class XanaParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\13\r\4\2\t\2\4\3"+
-		"\t\3\3\2\3\2\5\2\t\n\2\3\3\3\3\3\3\2\2\4\2\4\2\3\5\2\7\7\t\t\13\13\13"+
-		"\2\b\3\2\2\2\4\n\3\2\2\2\6\t\7\3\2\2\7\t\5\4\3\2\b\6\3\2\2\2\b\7\3\2\2"+
-		"\2\t\3\3\2\2\2\n\13\t\2\2\2\13\5\3\2\2\2\3\b";
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\n\r\4\2\t\2\4\3\t"+
+		"\3\3\2\3\2\5\2\t\n\2\3\3\3\3\3\3\2\2\4\2\4\2\3\3\2\7\t\13\2\b\3\2\2\2"+
+		"\4\n\3\2\2\2\6\t\7\3\2\2\7\t\5\4\3\2\b\6\3\2\2\2\b\7\3\2\2\2\t\3\3\2\2"+
+		"\2\n\13\t\2\2\2\13\5\3\2\2\2\3\b";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

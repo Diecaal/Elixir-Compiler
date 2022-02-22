@@ -22,12 +22,15 @@ public class LexerHelper {
     public static char lexemeToChar(String lexeme) {
         char result = Character.MIN_VALUE;
 
-        if(lexeme.charAt(0) == '\\') {
+        // Remove first quote from the character
+        String lexemeClean = lexeme.substring(1, lexeme.length()-1);
+
+        if(lexemeClean.charAt(0) == '\\') {
             try { // ASCII code case
-                String aux = lexeme.substring( 1 );
+                String aux = lexemeClean.substring( 1 );
                 result = (char) Integer.parseInt( aux );
             } catch(NumberFormatException e) { // Special char case
-                switch (lexeme.charAt(1)){
+                switch (lexemeClean.charAt(1)){
                     case 'n':
                         result = '\n';
                         break;
@@ -40,8 +43,9 @@ public class LexerHelper {
                 return result;
             }
         } else {
-            result = lexeme.charAt(0);
+            result = lexemeClean.charAt(0);
         }
+
         return result;
     }
 

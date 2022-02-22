@@ -8,15 +8,15 @@ program: ID
        | expression
        ;
 
-ID: CHAR_CONSTANT (',' CHAR_CONSTANT)* '::' BASIC_TYPE
-          ;
+ID: ([a-zA-Z]|'_') ([a-zA-Z]|'_'|[0-9])*
+  ;
 
 expression: INT_CONSTANT
-          | DOUBLE_CONSTANT
+          | REAL_CONSTANT
           | CHAR_CONSTANT
           ;
 
-COMMENT: ('#' .*? (EOL|EOF) | '"""' .*? '"""')+ -> skip
+COMMENT: ('#' .*? (EOL|EOF) | '"""' .*? '"""' )+ -> skip
        ;
 
 WS: ([\t\n\r] | ' ')+ -> skip
@@ -27,16 +27,18 @@ BASIC_TYPE: 'int'
           | 'char'
           ;
 
-INT_CONSTANT: [0-9]+
-            ;
-
-REAL_CONSTANT: INT_CONSTANT '.' INT_CONSTANT ([eE] INT_CONSTANT)?
-             | INT_CONSTANT* '.' INT_CONSTANT ([eE] INT_CONSTANT)?
-             | INT_CONSTANT '.' INT_CONSTANT* ([eE] INT_CONSTANT)?
-             | INT_CONSTANT [eE] INT_CONSTANT
+REAL_CONSTANT: INT_CONSTANT '.' INT_CONSTANT ([Ee] INT_CONSTANT)?
+             | INT_CONSTANT* '.' INT_CONSTANT ([Ee] INT_CONSTANT)?
+             | INT_CONSTANT '.' INT_CONSTANT* ([Ee] INT_CONSTANT)?
+             | INT_CONSTANT [Ee] INT_CONSTANT
              ;
 
-CHAR_CONSTANT: [a-zA-Z]
+INT_CONSTANT: [0-9]+
+            | '-' [0-9]+
+            ;
+
+CHAR_CONSTANT: '\'' .*? '\''
+             | '\'\\ ' INT_CONSTANT '\''
              ;
 
 EOL : ('\r'|'\n')+
