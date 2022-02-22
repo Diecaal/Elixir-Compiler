@@ -1,5 +1,5 @@
 #!/bin/bash
-options=("1. Git Fetch", "2. Execute tests", "3. Generate UMLs")
+options=("1. Git Fetch" "2. Execute tests" "3. Generate UMLs" "4. Generate ANTLR")
 for i in "${options[@]}"
 do
     echo $i
@@ -14,8 +14,10 @@ if (( $choice == 1 )) ; then
 	git merge upstream/main
 elif (( $choice == 2 )) ; then
 	mvn clean antlr4:antlr4 test
-elif (( $choice ==3 )) ; then
+elif (( $choice == 3 )) ; then
 	mvn clean com.github.jeluard:plantuml-maven-plugin:generate
+elif (( $choice == 4)) ; then
+	mvn clean antlr4:antlr4
 else
     echo "Invalid choice!!"
 fi

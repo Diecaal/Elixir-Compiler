@@ -4,28 +4,78 @@ grammar Xana;
 package es.uniovi.dlp.parser;
 }
 
-program: ID
-       | expression
+program: definitions* mainFunction EOF
        ;
 
-ID: ([a-zA-Z]|'_') ([a-zA-Z]|'_'|[0-9])*
-  ;
+definitions: functionDefinition
+           | variableDefinition
+           ;
 
-expression: INT_CONSTANT
+mainFunction: 'def' 'main' '(' ')' 'do' functionBody 'end'
+                      ;
+
+variableDefinition: ID (',' ID)* '::' type
+                  ;
+
+functionDefinition: 'def' ID '(' functionParameters ')' '::' functionType 'do' functionBody 'end'
+                  ;
+
+functionParameters: (ID '::' type (',' ID '::' type)*)?
+                  ;
+
+functionBody: variableDefinition* statement*
+            ;
+
+statement: 'if' expression 'do' functionBody ('else' functionBody)? 'end'
+         | 'while' expression 'do' functionBody 'end'
+         | 'puts' expression (',' expression)*?
+         | 'in' expression
+         | 'return' expression
+         | expression '=' expression
+         | ID '(' (ID (',' ID)*)? ')' /* Function Invocation */
+         ;
+
+expression: '(' expression ')'
+          | '[' expression ']'
+          | expression '.' expression
+          | expression 'as' primitiveType
+          | '-' expression
+          | '!' expression
+          | expression ('*'|'/'|'%') expression
+          | expression ('+'|'-') expression
+          | expression ('>'|'>='|'<'|'<='|'!='|'==') expression
+          | expression ('&&'|'||') expression
+          | expression '=' expression
+          | INT_CONSTANT
           | REAL_CONSTANT
           | CHAR_CONSTANT
           ;
+
+functionType: primitiveType
+            | 'void'
+            ;
+
+type: '[' ID '::' type ']'
+    | 'defstruct' 'do' recordFields 'end'
+    | primitiveType
+    ;
+
+recordFields: ID (',' ID)* '::' type
+            ;
+
+primitiveType: 'int'
+             | 'double'
+             | 'char'
+             ;
+
+ID: ([a-zA-Z]|'_') ([a-zA-Z]|'_'|[0-9])*
+  ;
 
 COMMENT: ('#' .*? (EOL|EOF) | '"""' .*? '"""' )+ -> skip
        ;
 
 WS: ([\t\n\r] | ' ')+ -> skip
   ;
-
-BASIC_TYPE: 'int'
-          | 'double'
-          | 'char'
-          ;
 
 REAL_CONSTANT: INT_CONSTANT '.' INT_CONSTANT ([Ee] INT_CONSTANT)?
              | INT_CONSTANT* '.' INT_CONSTANT ([Ee] INT_CONSTANT)?
