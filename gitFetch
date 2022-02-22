@@ -1,3 +1,0 @@
-git remote add upstream https://github.com/dlp-luis/dlp-compiler.git
-git fetch upstream
-git merge upstream/main
