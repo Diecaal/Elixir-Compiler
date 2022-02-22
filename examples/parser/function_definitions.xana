@@ -1,0 +1,35 @@
+
+def function(a :: int, b :: char) :: double do
+    return 1.1
+end
+
+def multiplication(op1 :: double, op2 :: double) :: double do
+    return op1*op2
+end
+
+def one_line ()::   void do end
+
+def        f      (    ) :: void do
+
+
+
+end
+
+def id() :: char do
+
+return 'a'
+
+end
+
+def multiline (
+    arg1 :: int,
+    superLongArg
+        :: double
+    ,
+    anotherOne :: char
+    ) :: void
+    do
+end
+
+
+def main() do end

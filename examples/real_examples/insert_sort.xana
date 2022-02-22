@@ -1,0 +1,28 @@
+def main() do
+    i, j, tmp, list_size :: int
+    list :: [10 :: int]
+    list_size = 10
+
+    list[0] = 1
+    list[1] = 3
+    list[2] = 2
+    list[3] = 5
+    list[4] = 4
+    list[5] = 6
+    list[6] = 7
+    list[7] = 9
+    list[8] = 8
+    list[9] = 10
+
+    i = 1
+    while i < list_size do
+            j = i
+            while j > 0 && list[j-1] > list[j] do
+                    tmp = list[j]
+                    list[j] = list[j-1]
+                    list[j-1] = tmp
+                    j = j-1
+            end
+            i = i + 1
+    end
+end

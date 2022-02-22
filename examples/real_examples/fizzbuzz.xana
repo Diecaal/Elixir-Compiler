@@ -1,0 +1,28 @@
+def _fizzbuzz(n :: int) :: void do
+    if n % 3 && n % 5 do
+        puts 'F', 'i', 'z', 'z', 'B', 'u', 'z', 'z', '\n'
+    else
+        if n % 3 do
+            puts 'F', 'i', 'z', 'z', '\n'
+        else
+            if n % 3 do
+                puts 'B', 'u', 'z', 'z', '\n'
+            else
+                puts n
+            end
+        end
+    end
+end
+
+def fizzbuzz(n :: int) :: void do
+    i :: int
+    i = 1
+    while i <= n do
+        _fizzbuzz(i)
+        i = i + 1
+    end
+end
+
+def main() do
+    fizzbuzz(500)
+end

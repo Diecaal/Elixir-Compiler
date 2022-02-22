@@ -1,0 +1,71 @@
+def foo()::int do
+    return 'a' as int
+end
+
+def main() do
+    a :: int
+    b :: [10 :: double]
+    b_1 :: [10 :: double]
+    c :: defstruct do
+        id :: char
+    end
+
+    # Assignments
+    b[1] = 10
+    c.id = 'a'
+
+    """
+      Ifs
+    """
+    if 1 == 1 do
+    end
+
+    if a do
+        a = 1
+    end
+
+    if !((a)
+        && 1> 0) do
+    else
+        b = b_1
+    end
+
+    if 0 do else end
+
+    """
+      While
+    """
+    while 0 do
+    end
+    while 0 do end
+
+    while
+        b[0] && c.id as char
+        do
+        b[0] = 0
+    end
+
+    while 0 do
+        while 0 do
+            if 0 do
+            else
+            end
+        end
+    end
+
+
+
+    """
+      IO
+    """
+    puts 'a'
+    puts 1, 1.1
+    puts a
+    puts a, b[0], 100, c.id
+
+    in a
+    in c.id
+    in b[1]
+    in b_1[0], a, c.id
+
+end

@@ -1,0 +1,30 @@
+def exit() :: void do end
+
+def pi() :: double do
+    return 3.14
+end
+
+def sum(a :: int, b :: int) :: int do
+return a + b
+end
+
+def main() do
+    a :: int
+    array :: [1 :: [1 :: int]]
+
+    a = pi()
+    a = pi() + sum(3, 10)
+    a = sum(
+        3,
+        10
+        ) + sum(3, 10)
+
+    a = array[0][sum(a, 2)]
+    a = array[sum(a, 2)][array[0][0]]
+
+    sum(1, array[0][0])
+
+    exit()
+end
+
+

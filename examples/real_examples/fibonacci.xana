@@ -1,0 +1,12 @@
+def fibonacci(n :: int) :: int do
+    if n == 1 || n == 2 do
+        return 1
+    end
+    return fibonacci(n - 1) + fibonacci(n - 2)
+end
+
+def main() do
+    puts fibonacci(1)
+    puts fibonacci(2)
+    puts fibonacci(10)
+end

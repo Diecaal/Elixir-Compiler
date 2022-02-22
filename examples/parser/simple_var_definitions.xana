@@ -1,0 +1,13 @@
+integer :: int
+character :: char
+real :: double
+
+array :: [ 1 :: double ]
+
+simple_struct :: defstruct do
+    name :: [255 :: char]
+    age  :: int
+end
+
+
+def main() do end

@@ -1,0 +1,45 @@
+def main() do
+    a :: int
+    b :: [10 :: double]
+    matrix :: [2 :: [2 :: char]]
+    c :: defstruct do
+        id :: char
+        name :: [10 :: char]
+    end
+
+    a = 1
+    a = 1 + 1
+    a = 10 - a
+    a = a - 1
+    a = a * 3
+    a = a / 2
+    a = a % 10
+
+    a = 'a' as int
+    a = (1)
+    a = -1
+    a = !a
+
+    a = a > 1
+    a = a < 1
+    a = a >= 1
+    a = a <= 1
+    a = a == 1
+    a = a != 1
+
+    a = a && a
+    a = a || a
+
+    a = b[1] as int
+    a = b[a] as int
+    a = matrix[1][1] as int
+
+    a = c.id as int
+    a = c.name[9] as int
+
+    a = (
+        ( (1 > 1) && 50 < 10 || 10 <= 10 )
+        || a as int + 80.0 && (32 >= 1 || 1 == 1)
+    )
+
+end

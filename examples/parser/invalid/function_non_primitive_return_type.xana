@@ -1,0 +1,5 @@
+
+def invalid_return_type() :: [14 :: int] do
+end
+
+def main() do end

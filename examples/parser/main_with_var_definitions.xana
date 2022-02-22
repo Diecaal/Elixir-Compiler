@@ -1,0 +1,7 @@
+def main() do
+
+    a ::    int
+    b,c :: double
+    _2_some_char::char
+
+end

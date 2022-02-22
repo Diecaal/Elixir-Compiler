@@ -1,0 +1,5 @@
+
+not_valid_one :: [(1+1) :: int]
+
+def main() do
+end

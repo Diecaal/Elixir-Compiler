@@ -1,0 +1,91 @@
+
+# Complex variable definitions
+
+a ::int
+b:: char # There is another variable definition below
+after_comment :: double
+
+imagine,
+several,
+variables,
+like,
+this :: char
+
+c       ::      double
+
+lol_this_one ::
+    int
+
+"""
+    Some array variable definitions
+"""
+
+simple_array :: [0:: int]
+_1array, _2array :: [0:: int]
+_1_array :: [ 10 :: double ]
+_2x2_matrix ::[2::[2::char]] # This is hard to read, but it should be syntactically valid
+
+why_not :: [
+    34 # Number of wtf per second
+        :: int
+
+]
+
+#####################
+# RECORDS OVER HERE #
+#####################
+
+one_line :: defstruct do end
+
+empty_record :: defstruct do # This one will be empty
+end
+
+_person :: defstruct do
+    name :: [255 :: char]
+    age  :: int
+end
+
+
+large_one :: defstruct do
+
+
+
+
+value  :: int
+
+
+
+end
+
+
+"""
+The variable definition from hell
+"""
+
+game :: defstruct do
+    code :: char
+    title :: [255 :: char]
+    price :: double
+    maps :: [10 ::
+        defstruct do
+            title :: [250 :: char]
+            max_players :: int
+            objects :: [1000 ::
+                defstruct do
+                    x, y :: double
+                    life:: int
+
+                    owners :: [ 2 :: defstruct do end ]
+                end
+            ]
+            creator ::
+                defstruct do
+                    name :: [255::char]
+                end
+            points :: int
+        end
+    ]
+end
+
+
+def main() do end

@@ -1,0 +1,11 @@
+def main() do
+    a :: int
+
+    a = 1
+
+    puts a
+
+    b::char
+
+    in b
+end
