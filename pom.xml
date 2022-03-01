@@ -46,17 +46,17 @@
       <artifactId>antlr4</artifactId>
       <version>4.9.3</version>
     </dependency>
+    <dependency>
+      <groupId>introspector</groupId>
+      <artifactId>introspector</artifactId>
+      <version>1.0</version>
+    </dependency>
       <dependency>
           <groupId>junit</groupId>
           <artifactId>junit</artifactId>
           <version>RELEASE</version>
           <scope>compile</scope>
       </dependency>
-    <dependency>
-      <groupId>introspector</groupId>
-      <artifactId>introspector</artifactId>
-      <version>1.0</version>
-    </dependency>
   </dependencies>
 
 

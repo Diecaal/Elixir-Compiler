@@ -23,9 +23,9 @@ public class RunIntrospector {
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         XanaParser parser = new XanaParser(tokens);
 
-        // Program ast = parser.program().ast;
+        Program ast = parser.program().ast;
 
-        // IntrospectorModel model = new IntrospectorModel("Program", ast);
-        // new IntrospectorTree("Introspector", model);
+        IntrospectorModel model = new IntrospectorModel("Program", ast);
+        new IntrospectorTree("Introspector", model);
     }
 }

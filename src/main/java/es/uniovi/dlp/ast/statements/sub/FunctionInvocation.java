@@ -7,7 +7,7 @@ import es.uniovi.dlp.ast.statements.AbstractStatement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FunctionInvocation extends AbstractStatement {
+public class FunctionInvocation extends AbstractStatement implements Expression {
     private Variable variable;
     private List<Expression> parameters;
 

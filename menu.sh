@@ -1,5 +1,5 @@
 #!/bin/bash
-options=("1. Git Fetch" "2. Execute tests" "3. Generate UMLs" "4. Generate ANTLR")
+options=("1. Git Fetch" "2. Execute tests" "3. Generate UMLs" "4. Generate ANTLR" "5. Launch Introspector")
 for i in "${options[@]}"
 do
     echo $i
@@ -18,6 +18,8 @@ elif (( $choice == 3 )) ; then
 	mvn clean com.github.jeluard:plantuml-maven-plugin:generate
 elif (( $choice == 4)) ; then
 	mvn clean antlr4:antlr4
+elif (( $choice == 5)) ; then
+	mvn clean antlr4:antlr4 test-compile exec:java -Dexec.classpathScope=test -Dexec.mainClass="es.uniovi.dlp.parser.RunIntrospector" -Dexec.args="examples/basic.xana"
 else
     echo "Invalid choice!!"
 fi
