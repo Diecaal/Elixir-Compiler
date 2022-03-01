@@ -12,7 +12,7 @@ Este es el proyecto base que servirá para implementar un compilador durante el 
 - [x] [Laboratorio 2 - Implementación del AST](docs/labs/lab_02.md)
 - [x] [Laboratorio 3 - Analizador léxico](docs/labs/lab_03.md)
 - [x] [Laboratorio 4 - Analizador sintáctico](docs/labs/lab_04.md)
-- [ ] Laboratorio 5 - Construcción del AST
+- [x] [Laboratorio 5 - Construcción del AST](docs/labs/lab_05.md)
 - [ ] Laboratorio 6 - Control & ErrorHandler
 - [ ] Laboratorio 7 - Identificación de LValue
 - [ ] Laboratorio 8 - Fase de identificación
