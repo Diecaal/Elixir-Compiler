@@ -12,4 +12,12 @@ public class RecordType extends AbstractType {
         this.type = type;
         this.name = name;
     }
+
+    public Type getType() {
+        return type;
+    }
+
+    public String getName() {
+        return name;
+    }
 }

@@ -96,19 +96,19 @@ functionType returns[Type ast]
              ;
 
 type returns[Type ast]
-     locals[List<RecordType> records = new ArrayList<RecordType>()]
      : '[' i=INT_CONSTANT '::' t=type ']'
       { $ast = new ArrayType($start.getLine(), $start.getCharPositionInLine() + 1, $t.ast, LexerHelper.lexemeToInt($i.text)); }
-     | 'defstruct' 'do' recordFields 'end'
-      { for(var record : $recordFields.ast) { $records.add(record); } $ast = new StructType($start.getLine(), $start.getCharPositionInLine() + 1, $recordFields.ast); }
+     | 'defstruct' 'do' recordType 'end'
+      { $ast = ($recordType.ast == null) ? new StructType($start.getLine(), $start.getCharPositionInLine() + 1, new ArrayList<RecordType>())
+                                         : new StructType($start.getLine(), $start.getCharPositionInLine() + 1, $recordType.ast); }
      | primitiveType
       { $ast = $primitiveType.ast; }
      ;
 
-recordFields returns[List<RecordType> ast = new ArrayList<RecordType>()]
-             : ids+=ID (',' ids+=ID)* '::' type
-              { for(var id : $ids) { $ast.add(new RecordType(id.getLine(), id.getCharPositionInLine() + 1, $type.ast, id.getText())); } }
-             ;
+recordType returns[List<RecordType> ast = new ArrayList<>()]
+           : (ids+=ID (',' ids+=ID)* '::' type)*?
+            { for(var id : $ids) { $ast.add(new RecordType(id.getLine(), id.getCharPositionInLine() + 1, $type.ast, id.getText())); } }
+           ;
 
 primitiveType returns[Type ast]
               : 'int' { $ast = new IntType($start.getLine(), $start.getCharPositionInLine() + 1); }
