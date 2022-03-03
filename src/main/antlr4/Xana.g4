@@ -16,31 +16,33 @@ grammar Xana;
 }
 
 program returns[Program ast]
-        : definitions* mainFunction EOF
+        : d=definitions* m=mainFunction { $definitions.ast.add($m.ast); } EOF { $ast = new Program(0,0,$d.ast); }
         ;
 
 definitions returns[List<Definition> ast = new ArrayList<Definition>()]
-            : functionDefinition
-            | variableDefinition
+            : variableDefinition { $ast.addAll($variableDefinition.ast); }
+            | functionDefinition { $ast.addAll($functionDefinition.ast); }
             ;
 
 mainFunction returns[FunctionDefinition ast]
              : 'def' 'main' '(' ')' 'do' variableDefinition* statement* (variableDefinition|statement)* 'end'
              ;
 
-variableDefinition returns[VariableDefinition ast]
-                   : ID (',' ID)*? '::' type
+variableDefinition returns[List<VariableDefinition> ast = new ArrayList<>()]
+                   : ids+=ID (',' ids+=ID)*? '::' type
+                    { for(var variable : $ids) { $ast.add( new VariableDefinition(variable.getLine(), variable.getCharPositionInLine() + 1, $type.ast, variable.getText())); } }
                    ;
 
 functionDefinition returns[FunctionDefinition ast]
-                   : 'def' ID '(' functionParameters ')' '::' functionType 'do' functionBody 'end'
+                   : 'def' ID '(' functionParameters ')' '::' funcType=functionType 'do' funcBody=functionBody 'end'
+                    { $ast = new FunctionDefinition($start.getLine(), $start.getCharPositionInLine() + 1, $funcType.ast, $ID.text, $funcBody.ast); }
                    ;
 
 functionParameters returns[List<VariableDefinition> ast =  new ArrayList<VariableDefinition>()]
                    : (ID '::' type (',' ID '::' type)*)?
                    ;
 
-functionBody returns[Statement ast]
+functionBody returns[List<Statement> ast = new ArrayList<>()]
              : variableDefinition* statement*
              ;
 
@@ -56,7 +58,8 @@ statement returns [Statement ast]
          | 'puts' expression (',' expression)*?
          | 'in' expression (',' expression)*?
          | 'return' expression
-         | <asocc=right> expression '=' expression
+         | <asocc=right> left=expression '=' right=expression
+          { $ast = new Assignment($start.getLine(), $start.getCharPositionInLine() + 1, $left.ast, $right.ast); }
          | functionInvocation
          ;
 
@@ -66,16 +69,25 @@ conditionalBody returns[List<Statement> ast = new ArrayList<Statement>()]
 
 expression returns[Expression ast]
            : '(' expression ')'
-           | expression '[' expression ']'
-           | expression '.' expression
-           | expression 'as' primitiveType
+            { $ast = $expression.ast; }
+           | arr=expression '[' index=expression ']'
+            { $ast = new ArrayAccess($start.getLine(), $start.getCharPositionInLine() + 1, $arr.ast, $index.ast); }
+           | struct=expression '.' field=ID
+            { $ast = new StructAccess($start.getLine(), $start.getCharPositionInLine() + 1, $struct.ast, $field.getText()); }
+           | expression 'as' toCast=primitiveType
+            { $ast = new Cast($start.getLine(), $start.getCharPositionInLine() + 1, $toCast.ast, $expression.ast); }
            | '-' expression
+            { $ast = new UnaryMinus($start.getLine(), $start.getCharPositionInLine() + 1, $expression.ast); }
            | '!' expression
-           | expression ('*'|'/'|'%') expression
-           | expression ('+'|'-') expression
-           | expression ('>'|'>='|'<'|'<='|'!='|'==') expression
-           | expression ('&&'|'||') expression
-           | expression '=' expression
+            { $ast = new UnaryNegative($start.getLine(), $start.getCharPositionInLine() + 1, $expression.ast); }
+           | left=expression op=('*'|'/'|'%') right=expression
+            { $ast = new Arithmetic($start.getLine(), $start.getCharPositionInLine() + 1, $left.ast, $op.getText(), $right.ast); }
+           | left=expression op=('+'|'-') right=expression
+            { $ast = new Arithmetic($start.getLine(), $start.getCharPositionInLine() + 1, $left.ast, $op.getText(), $right.ast); }
+           | left=expression op=('>'|'>='|'<'|'<='|'!='|'==') right=expression
+            { $ast = new Relational($start.getLine(), $start.getCharPositionInLine() + 1, $left.ast, $op.getText(), $right.ast); }
+           | left=expression op=('&&'|'||') right=expression
+            { $ast = new Logical($start.getLine(), $start.getCharPositionInLine() + 1, $left.ast, $op.getText(), $right.ast); }
            | functionInvocation
             { $ast = $functionInvocation.ast; }
            | INT_CONSTANT
