@@ -21,11 +21,12 @@ program returns[Program ast]
 
 definitions returns[List<Definition> ast = new ArrayList<Definition>()]
             : variableDefinition { $ast.addAll($variableDefinition.ast); }
-            | functionDefinition { $ast.addAll($functionDefinition.ast); }
+            | functionDefinition { $ast.add($functionDefinition.ast); }
             ;
 
 mainFunction returns[FunctionDefinition ast]
-             : 'def' 'main' '(' ')' 'do' variableDefinition* statement* (variableDefinition|statement)* 'end'
+             : 'def' 'main' '(' ')' 'do' varDefs=variableDefinition* statement* 'end'
+              { $ast = new FunctionDefinition($start.getLine(), $start.getCharPositionInLine() + 1, new FunctionType($start.getLine(), $start.getCharPositionInLine(), new ArrayList<VariableDefinition>(), new VoidType($start.getLine(), $start.getCharPositionInLine())), "main", $varDefs.ast, $statement.ast ); }
              ;
 
 variableDefinition returns[List<VariableDefinition> ast = new ArrayList<>()]
@@ -34,17 +35,13 @@ variableDefinition returns[List<VariableDefinition> ast = new ArrayList<>()]
                    ;
 
 functionDefinition returns[FunctionDefinition ast]
-                   : 'def' ID '(' functionParameters ')' '::' funcType=functionType 'do' funcBody=functionBody 'end'
-                    { $ast = new FunctionDefinition($start.getLine(), $start.getCharPositionInLine() + 1, $funcType.ast, $ID.text, $funcBody.ast); }
+                   : 'def' ID '(' params=functionParameters ')' '::' returnType=functionType 'do' varDefs=variableDefinition* statement* 'end'
+                    { $ast = new FunctionDefinition($start.getLine(), $start.getCharPositionInLine() + 1, new FunctionType($start.getLine(), $start.getCharPositionInLine()+1, $params.ast, $returnType.ast), $ID.text, $varDefs.ast, $statement.ast); }
                    ;
 
 functionParameters returns[List<VariableDefinition> ast =  new ArrayList<VariableDefinition>()]
                    : (ID '::' type (',' ID '::' type)*)?
                    ;
-
-functionBody returns[List<Statement> ast = new ArrayList<>()]
-             : variableDefinition* statement*
-             ;
 
 functionInvocation returns[FunctionInvocation ast]
                    locals [List<Expression> expressions = new ArrayList<Expression>()]
@@ -52,19 +49,20 @@ functionInvocation returns[FunctionInvocation ast]
                     { $ast = new FunctionInvocation($start.getLine(), $start.getCharPositionInLine() + 1, new Variable($start.getLine(), $start.getCharPositionInLine() + 1, $ID.text), $expressions); }
                    ;
 
-statement returns [Statement ast]
+statement returns [List<Statement> ast = new ArrayList<Statement>()]
          : 'if' expression 'do' conditionalBody ('else' conditionalBody)? 'end'
          | 'while' expression 'do' conditionalBody 'end'
          | 'puts' expression (',' expression)*?
          | 'in' expression (',' expression)*?
          | 'return' expression
          | <asocc=right> left=expression '=' right=expression
-          { $ast = new Assignment($start.getLine(), $start.getCharPositionInLine() + 1, $left.ast, $right.ast); }
+          { $ast.add(new Assignment($start.getLine(), $start.getCharPositionInLine() + 1, $left.ast, $right.ast)); }
          | functionInvocation
          ;
 
 conditionalBody returns[List<Statement> ast = new ArrayList<Statement>()]
                 : statement*
+                 { $ast.addAll( $statement.ast ); }
                 ;
 
 expression returns[Expression ast]
@@ -101,8 +99,8 @@ expression returns[Expression ast]
            ;
 
 functionType returns[Type ast]
-             : primitiveType
-              { $ast = $primitiveType.ast; }
+             : t=primitiveType
+              { $ast = $t.ast; }
              | 'void'
               { $ast = new VoidType($start.getLine(), $start.getCharPositionInLine() + 1); }
              ;

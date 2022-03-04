@@ -2,10 +2,9 @@ def main() do
     a :: int
 
     a = 1
+    b::char
 
     puts a
-
-    b::char
 
     in b
 end
