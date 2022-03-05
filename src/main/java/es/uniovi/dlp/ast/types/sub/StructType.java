@@ -12,4 +12,12 @@ public class StructType extends AbstractType {
         super(line, column);
         this.records = new ArrayList<RecordType>(records);
     }
+
+    @Override
+    public String toString() {
+        String recordStr = "";
+        for(RecordType record : records)
+            recordStr += record.toString();
+        return String.format("defstruct to %s end", recordStr);
+    }
 }

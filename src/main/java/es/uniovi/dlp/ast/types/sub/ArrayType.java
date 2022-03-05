@@ -12,4 +12,9 @@ public class ArrayType extends AbstractType {
         this.arrayType = type;
         this.length = length;
     }
+
+    @Override
+    public String toString() {
+        return String.format("[%s :: %s]", String.valueOf(length), arrayType.toString());
+    }
 }

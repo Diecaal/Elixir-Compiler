@@ -15,6 +15,13 @@ public class FunctionType extends AbstractType {
         super(line, column);
         this.parameters = new ArrayList<VariableDefinition>(parameters);
         this.returnType = returnType;
+    }
 
+    @Override
+    public String toString() {
+        String paramStr = "";
+        for(VariableDefinition var : parameters)
+            paramStr += var.toString();
+        return String.format("(%s) :: %s", paramStr, returnType.toString());
     }
 }

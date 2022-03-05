@@ -20,4 +20,9 @@ public class RecordType extends AbstractType {
     public String getName() {
         return name;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s :: %s", name, type.toString());
+    }
 }
