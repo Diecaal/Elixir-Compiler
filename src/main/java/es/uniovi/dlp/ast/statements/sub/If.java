@@ -4,6 +4,7 @@ import es.uniovi.dlp.ast.expressions.Expression;
 import es.uniovi.dlp.ast.statements.AbstractStatement;
 import es.uniovi.dlp.ast.statements.Statement;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class If extends AbstractStatement {
@@ -14,7 +15,7 @@ public class If extends AbstractStatement {
     public If(int line, int column, Expression condition, List<Statement> ifBody, List<Statement> elseBody) {
         super(line, column);
         this.condition = condition;
-        this.ifBody = ifBody;
-        this.elseBody = elseBody;
+        this.ifBody = new ArrayList<Statement>(ifBody);
+        this.elseBody = new ArrayList<Statement>(elseBody);
     }
 }

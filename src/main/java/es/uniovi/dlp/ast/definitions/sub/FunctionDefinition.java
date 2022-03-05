@@ -18,7 +18,7 @@ public class FunctionDefinition extends AbstractDefinition {
         super(line, column, type, name);
 		this.type = type;
 		this.name = name;
-		this.varDefs = variableDefinitions;
+		this.varDefs = new ArrayList<VariableDefinition>(variableDefinitions);
         this.statements = new ArrayList<Statement>(statements);;
     }
 }

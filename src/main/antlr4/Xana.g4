@@ -16,32 +16,55 @@ grammar Xana;
 }
 
 program returns[Program ast]
-        : d=definitions* m=mainFunction { $definitions.ast.add($m.ast); } EOF { $ast = new Program(0,0,$d.ast); }
+        : d=definitions m=mainFunction { $definitions.ast.add($m.ast); } EOF { $ast = new Program(0,0,$d.ast); }
         ;
 
-definitions returns[List<Definition> ast = new ArrayList<Definition>()]
-            : variableDefinition { $ast.addAll($variableDefinition.ast); }
-            | functionDefinition { $ast.add($functionDefinition.ast); }
+// DEFINITIONS
+definitions returns[List<Definition> ast = new ArrayList<Definition>()]:
+            ( variableDefinition { $ast.addAll($variableDefinition.ast); }
+            | functionDefinition { $ast.add($functionDefinition.ast); } )*
             ;
-
-mainFunction returns[FunctionDefinition ast]
-             : 'def' 'main' '(' ')' 'do' varDefs=variableDefinition* statement* 'end'
-              { $ast = new FunctionDefinition($start.getLine(), $start.getCharPositionInLine() + 1, new FunctionType($start.getLine(), $start.getCharPositionInLine(), new ArrayList<VariableDefinition>(), new VoidType($start.getLine(), $start.getCharPositionInLine())), "main", $varDefs.ast, $statement.ast ); }
-             ;
 
 variableDefinition returns[List<VariableDefinition> ast = new ArrayList<>()]
                    : ids+=ID (',' ids+=ID)*? '::' type
                     { for(var variable : $ids) { $ast.add( new VariableDefinition(variable.getLine(), variable.getCharPositionInLine() + 1, $type.ast, variable.getText())); } }
                    ;
 
+// DEFINITIONS - Function
 functionDefinition returns[FunctionDefinition ast]
-                   : 'def' ID '(' params=functionParameters ')' '::' returnType=functionType 'do' varDefs=variableDefinition* statement* 'end'
-                    { $ast = new FunctionDefinition($start.getLine(), $start.getCharPositionInLine() + 1, new FunctionType($start.getLine(), $start.getCharPositionInLine()+1, $params.ast, $returnType.ast), $ID.text, $varDefs.ast, $statement.ast); }
+                   locals[List<VariableDefinition> varDefs =  new ArrayList<VariableDefinition>(),
+                          List<Statement> statements =  new ArrayList<Statement>()]
+                   : 'def' ID '(' params=functionParameters ')' '::' returnType=functionType 'do' (var=variableDefinition { $varDefs.addAll( $var.ast ); })* (s=statement { $statements.addAll( $s.ast); })* 'end'
+                    { $ast = new FunctionDefinition($start.getLine(), $start.getCharPositionInLine() + 1,
+                                                                  new FunctionType($start.getLine(), $start.getCharPositionInLine(), $params.ast, $returnType.ast),
+                                                    $ID.text, $varDefs, $statements );
+                                  }
                    ;
 
+functionType returns[Type ast]
+             : t=primitiveType
+              { $ast = $t.ast; }
+             | 'void'
+              { $ast = new VoidType($start.getLine(), $start.getCharPositionInLine() + 1); }
+             ;
+
 functionParameters returns[List<VariableDefinition> ast =  new ArrayList<VariableDefinition>()]
-                   : (ID '::' type (',' ID '::' type)*)?
+                   : '(' ')' { $ast = new ArrayList<VariableDefinition>(); }
+                   | ID '::' t=type { $ast.add( new VariableDefinition($start.getLine(), $start.getCharPositionInLine()+1, $t.ast, $ID.text) ); }
+                     (',' ID '::' t2=type { $ast.add( new VariableDefinition($start.getLine(), $start.getCharPositionInLine()+1, $t2.ast, $ID.text) ); })*
                    ;
+
+// DEFINITIONS - Function - Main
+mainFunction returns[FunctionDefinition ast]
+             locals[List<VariableDefinition> varDefs =  new ArrayList<VariableDefinition>(),
+                    List<Statement> statements =  new ArrayList<Statement>()]
+             : 'def' 'main' '(' ')' 'do' (var=variableDefinition { $varDefs.addAll( $var.ast ); })* (s=statement { $statements.addAll( $s.ast); })* 'end'
+              { $ast = new FunctionDefinition($start.getLine(), $start.getCharPositionInLine() + 1,
+                                              new FunctionType($start.getLine(), $start.getCharPositionInLine(), new ArrayList<VariableDefinition>(),
+                                                                new VoidType($start.getLine(), $start.getCharPositionInLine())
+                                              ), "main", $varDefs, $statements );
+              }
+             ;
 
 functionInvocation returns[FunctionInvocation ast]
                    locals [List<Expression> expressions = new ArrayList<Expression>()]
@@ -49,6 +72,7 @@ functionInvocation returns[FunctionInvocation ast]
                     { $ast = new FunctionInvocation($start.getLine(), $start.getCharPositionInLine() + 1, new Variable($start.getLine(), $start.getCharPositionInLine() + 1, $ID.text), $expressions); }
                    ;
 
+// STATEMENTS
 statement returns [List<Statement> ast = new ArrayList<Statement>()]
          : 'if' expression 'do' conditionalBody ('else' conditionalBody)? 'end'
          | 'while' expression 'do' conditionalBody 'end'
@@ -65,6 +89,7 @@ conditionalBody returns[List<Statement> ast = new ArrayList<Statement>()]
                  { $ast.addAll( $statement.ast ); }
                 ;
 
+// EXPRESSIONS
 expression returns[Expression ast]
            : '(' expression ')'
             { $ast = $expression.ast; }
@@ -98,13 +123,7 @@ expression returns[Expression ast]
             { $ast = new Variable($start.getLine(), $start.getCharPositionInLine() + 1, $ID.text); }
            ;
 
-functionType returns[Type ast]
-             : t=primitiveType
-              { $ast = $t.ast; }
-             | 'void'
-              { $ast = new VoidType($start.getLine(), $start.getCharPositionInLine() + 1); }
-             ;
-
+//TYPES
 type returns[Type ast]
      : '[' i=INT_CONSTANT '::' t=type ']'
       { $ast = new ArrayType($start.getLine(), $start.getCharPositionInLine() + 1, $t.ast, LexerHelper.lexemeToInt($i.text)); }

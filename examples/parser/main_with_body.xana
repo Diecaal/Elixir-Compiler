@@ -1,10 +1,8 @@
 def main() do
     a :: int
-
-    a = 1
     b::char
 
+    a = 1
     puts a
-
     in b
 end
