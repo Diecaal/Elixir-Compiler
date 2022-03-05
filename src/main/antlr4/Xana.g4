@@ -49,7 +49,7 @@ functionType returns[Type ast]
              ;
 
 functionParameters returns[List<VariableDefinition> ast =  new ArrayList<VariableDefinition>()]
-                   : '(' ')' { $ast = new ArrayList<VariableDefinition>(); }
+                   : { $ast = new ArrayList<VariableDefinition>(); } // No parameters passed to function
                    | ID '::' t=type { $ast.add( new VariableDefinition($start.getLine(), $start.getCharPositionInLine()+1, $t.ast, $ID.text) ); }
                      (',' ID '::' t2=type { $ast.add( new VariableDefinition($start.getLine(), $start.getCharPositionInLine()+1, $t2.ast, $ID.text) ); })*
                    ;
@@ -74,19 +74,26 @@ functionInvocation returns[FunctionInvocation ast]
 
 // STATEMENTS
 statement returns [List<Statement> ast = new ArrayList<Statement>()]
-         : 'if' expression 'do' conditionalBody ('else' conditionalBody)? 'end'
-         | 'while' expression 'do' conditionalBody 'end'
-         | 'puts' expression (',' expression)*?
-         | 'in' expression (',' expression)*?
+          locals[List<Statement> elseBody = new ArrayList<Statement>()]:
+           'if' condition=expression 'do' ifStm=conditionalBody ('else' elseStm=conditionalBody { $elseBody = $elseStm.ast; })? 'end'
+          { $ast.add(new If($start.getLine(), $start.getCharPositionInLine() + 1, $condition.ast, $ifStm.ast, $elseBody)); }
+         | 'while' condition=expression 'do' whileStm=conditionalBody 'end'
+          { $ast.add(new While($start.getLine(), $start.getCharPositionInLine() + 1, $condition.ast, $whileStm.ast)); }
+         | 'puts' e+=expression (',' e+=expression)*?
+          { for(var exp : $e) { $ast.add(new Write($start.getLine(), $start.getCharPositionInLine() + 1, exp.ast)); } }
+         | 'in' e+=expression (',' e+=expression)*?
+          { for(var exp : $e) { $ast.add(new Read($start.getLine(), $start.getCharPositionInLine() + 1, exp.ast)); } }
          | 'return' expression
+          { $ast.add(new Return($start.getLine(), $start.getCharPositionInLine() + 1, $expression.ast)); }
          | <asocc=right> left=expression '=' right=expression
           { $ast.add(new Assignment($start.getLine(), $start.getCharPositionInLine() + 1, $left.ast, $right.ast)); }
          | functionInvocation
+          { $ast.add($functionInvocation.ast); }
          ;
 
 conditionalBody returns[List<Statement> ast = new ArrayList<Statement>()]
-                : statement*
-                 { $ast.addAll( $statement.ast ); }
+                : statement { $ast.addAll( $statement.ast ); } (statement { $ast.addAll( $statement.ast ); })*
+                | { $ast = new ArrayList<Statement>(); }
                 ;
 
 // EXPRESSIONS
@@ -97,8 +104,8 @@ expression returns[Expression ast]
             { $ast = new ArrayAccess($start.getLine(), $start.getCharPositionInLine() + 1, $arr.ast, $index.ast); }
            | struct=expression '.' field=ID
             { $ast = new StructAccess($start.getLine(), $start.getCharPositionInLine() + 1, $struct.ast, $field.getText()); }
-           | expression 'as' toCast=primitiveType
-            { $ast = new Cast($start.getLine(), $start.getCharPositionInLine() + 1, $toCast.ast, $expression.ast); }
+           | casted=expression  'as' toCast=primitiveType
+            { $ast = new Cast($start.getLine(), $start.getCharPositionInLine() + 1, $toCast.ast, $casted.ast); }
            | '-' expression
             { $ast = new UnaryMinus($start.getLine(), $start.getCharPositionInLine() + 1, $expression.ast); }
            | '!' expression
