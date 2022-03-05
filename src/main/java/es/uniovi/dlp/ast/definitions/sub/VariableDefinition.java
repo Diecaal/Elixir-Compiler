@@ -24,4 +24,9 @@ public class VariableDefinition extends AbstractStatement implements Definition 
     public String getName() {
         return null;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s :: $s", name, type.toString());
+    }
 }

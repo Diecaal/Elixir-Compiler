@@ -21,4 +21,15 @@ public class FunctionDefinition extends AbstractDefinition {
 		this.varDefs = new ArrayList<VariableDefinition>(variableDefinitions);
         this.statements = new ArrayList<Statement>(statements);;
     }
+
+    @Override
+    public String toString() {
+        String varDefsStr = "";
+        for(VariableDefinition varDef : varDefs)
+            varDefsStr += varDef.toString();
+        String statementStr = "";
+        for(Statement s : statements)
+            statementStr += s.toString();
+        return String.format("def %s %s do %s %s end", name, type.toString(), varDefsStr, statementStr);
+    }
 }
