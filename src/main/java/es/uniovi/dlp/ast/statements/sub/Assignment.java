@@ -12,4 +12,9 @@ public class Assignment extends AbstractStatement {
         this.leftExpression = leftExpression;
         this.rightExpression = rightExpression;
     }
+
+    @Override
+    public String toString() {
+        return leftExpression.toString() + "=" + rightExpression.toString();
+    }
 }

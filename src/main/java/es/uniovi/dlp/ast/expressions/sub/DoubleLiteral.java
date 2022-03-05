@@ -9,4 +9,9 @@ public class DoubleLiteral extends AbstractExpression {
         super(line, column);
         this.value = value;
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(value);
+    }
 }

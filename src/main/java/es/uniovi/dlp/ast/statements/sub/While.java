@@ -16,4 +16,13 @@ public class While extends AbstractStatement {
         this.condition = condition;
         this.body = new ArrayList<Statement>(body);
     }
+
+    @Override
+    public String toString() {
+        String bodyStr = "";
+        for(Statement s : body)
+            bodyStr += s.toString();
+        /* Only if body */
+        return String.format("while %s do %s end", condition.toString(), bodyStr);
+    }
 }

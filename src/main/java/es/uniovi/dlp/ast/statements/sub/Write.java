@@ -10,4 +10,9 @@ public class Write extends AbstractStatement {
         super(line, column);
         this.expression = expression;
     }
+
+    @Override
+    public String toString() {
+        return "puts" + expression.toString();
+    }
 }

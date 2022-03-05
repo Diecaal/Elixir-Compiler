@@ -14,4 +14,9 @@ public class Logical extends AbstractExpression {
         this.operator = operator;
         this.rightExpression = rightExpression;
     }
+
+    @Override
+    public String toString() {
+        return leftExpression.toString() + operator + rightExpression.toString();
+    }
 }

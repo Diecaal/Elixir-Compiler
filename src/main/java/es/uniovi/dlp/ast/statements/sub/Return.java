@@ -10,4 +10,9 @@ public class Return extends AbstractStatement {
         super(line, column);
         this.expression = expression;
     }
+
+    @Override
+    public String toString() {
+        return "return" + expression.toString();
+    }
 }

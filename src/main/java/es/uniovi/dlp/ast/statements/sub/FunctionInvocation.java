@@ -16,4 +16,13 @@ public class FunctionInvocation extends AbstractStatement implements Expression 
         this.variable = variable;
         this.parameters = new ArrayList<Expression>(parameters);
     }
+
+    @Override
+    public String toString() {
+        String params = "";
+        for(Expression exp : parameters) {
+            params += exp.toString() + ";";
+        }
+        return String.format("%s (%s)", variable.toString(), params);
+    }
 }
