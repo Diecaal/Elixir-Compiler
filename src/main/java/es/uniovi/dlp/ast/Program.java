@@ -17,4 +17,11 @@ public class Program extends AbstractASTNode {
         return new ArrayList<>(this.definitions);
     }
 
+    @Override
+    public String toString() {
+        String definitionsStr = "";
+        for(Definition def : definitions)
+            definitionsStr += def.toString() + "\n";;
+        return definitionsStr;
+    }
 }

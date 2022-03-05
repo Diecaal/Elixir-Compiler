@@ -23,14 +23,14 @@ public class If extends AbstractStatement {
     public String toString() {
         String ifBodyStr = "";
         for(Statement s : ifBody)
-            ifBodyStr += s.toString();
+            ifBodyStr += s.toString() + "\n";
         /* Only if body */
         if(elseBody.size() <= 0)
             return String.format("if %s do %s end", condition.toString(), ifBodyStr);
         /* If and else body */
         String elseBodyStr = "";
         for(Statement s : elseBody)
-            elseBodyStr += s.toString();
+            elseBodyStr += s.toString() + "\n";
         return String.format("if %s do %s else %s end", condition.toString(), ifBodyStr, elseBodyStr);
     }
 }

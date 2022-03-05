@@ -21,7 +21,7 @@ public class FunctionInvocation extends AbstractStatement implements Expression 
     public String toString() {
         String params = "";
         for(Expression exp : parameters) {
-            params += exp.toString() + ";";
+            params += exp.toString() + ",";
         }
         return String.format("%s (%s)", variable.toString(), params);
     }

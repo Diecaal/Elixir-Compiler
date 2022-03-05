@@ -12,4 +12,9 @@ public class ArrayAccess extends AbstractExpression {
         this.array = array;
         this.index = index;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s[%s]", array.toString(), index.toString());
+    }
 }
