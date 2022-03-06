@@ -21,7 +21,7 @@ public class While extends AbstractStatement {
     public String toString() {
         String bodyStr = "";
         for(Statement s : body)
-            bodyStr += s.toString() + "\n";
+            bodyStr += "\n" + s.toString();
         /* Only if body */
         return String.format("while %s do %s end", condition.toString(), bodyStr);
     }

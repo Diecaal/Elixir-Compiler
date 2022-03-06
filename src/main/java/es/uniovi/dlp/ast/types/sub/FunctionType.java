@@ -21,7 +21,7 @@ public class FunctionType extends AbstractType {
     public String toString() {
         String paramStr = "";
         for(VariableDefinition var : parameters)
-            paramStr += var.toString();
+            paramStr += var.toString() + ",";
         return String.format("(%s) :: %s", paramStr, returnType.toString());
     }
 }

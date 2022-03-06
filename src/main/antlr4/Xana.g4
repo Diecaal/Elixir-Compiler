@@ -32,14 +32,17 @@ variableDefinition returns[List<VariableDefinition> ast = new ArrayList<>()]
 
 // DEFINITIONS - Function
 functionDefinition returns[FunctionDefinition ast]
-                   locals[List<VariableDefinition> varDefs =  new ArrayList<VariableDefinition>(),
-                          List<Statement> statements =  new ArrayList<Statement>()]
-                   : 'def' ID '(' params=functionParameters ')' '::' returnType=functionType 'do' (var=variableDefinition { $varDefs.addAll( $var.ast ); })* (s=statement { $statements.addAll( $s.ast); })* 'end'
+                   : 'def' ID '(' params=functionParameters ')' '::' returnType=functionType 'do' block=functionBlock 'end'
                     { $ast = new FunctionDefinition($start.getLine(), $start.getCharPositionInLine() + 1,
                                                                   new FunctionType($start.getLine(), $start.getCharPositionInLine(), $params.ast, $returnType.ast),
-                                                    $ID.text, $varDefs, $statements );
+                                                    $ID.text, $block.varDefs, $block.statements );
                                   }
                    ;
+
+functionBlock returns[List<VariableDefinition> varDefs =  new ArrayList<VariableDefinition>(),
+                      List<Statement> statements =  new ArrayList<Statement>()]:
+                (var=variableDefinition { $varDefs.addAll( $var.ast ); })* (s=statement { $statements.addAll( $s.ast); })*
+              ;
 
 functionType returns[Type ast]
              : t=primitiveType

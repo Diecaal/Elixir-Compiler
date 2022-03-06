@@ -14,7 +14,7 @@ def suma(a :: int, b :: double) :: int do
   real :: double
   c1, c2 :: char
 
-  c1 = a as char
+  c1 =  a as char
   real = c1 as double + a as double + b
 
   vacia() # Invocacion como sentencia

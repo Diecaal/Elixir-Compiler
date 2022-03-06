@@ -17,7 +17,7 @@ public class StructType extends AbstractType {
     public String toString() {
         String recordStr = "";
         for(RecordType record : records)
-            recordStr += record.toString();
-        return String.format("defstruct to %s end", recordStr);
+            recordStr += "\n" + record.toString();
+        return String.format("defstruct do %s end", recordStr);
     }
 }

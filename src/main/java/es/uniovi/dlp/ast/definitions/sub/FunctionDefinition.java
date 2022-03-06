@@ -26,10 +26,10 @@ public class FunctionDefinition extends AbstractDefinition {
     public String toString() {
         String varDefsStr = "";
         for(VariableDefinition varDef : varDefs)
-            varDefsStr += varDef.toString() + "\n";
+            varDefsStr += "\n" + varDef.toString();
         String statementStr = "";
         for(Statement s : statements)
-            statementStr += s.toString() + "\n";;
+            statementStr += "\n" + s.toString();
         return String.format("def %s %s do %s %s end", name, type.toString(), varDefsStr, statementStr);
     }
 }

@@ -13,6 +13,6 @@ public class Write extends AbstractStatement {
 
     @Override
     public String toString() {
-        return "puts" + expression.toString();
+        return "puts " + expression.toString();
     }
 }

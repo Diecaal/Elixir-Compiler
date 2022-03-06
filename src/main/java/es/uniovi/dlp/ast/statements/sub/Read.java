@@ -13,6 +13,6 @@ public class Read extends AbstractStatement {
 
     @Override
     public String toString() {
-        return "in" + expression.toString();
+        return "in " + expression.toString();
     }
 }
