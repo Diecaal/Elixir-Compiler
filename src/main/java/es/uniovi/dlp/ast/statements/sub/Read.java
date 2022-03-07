@@ -11,6 +11,10 @@ public class Read extends AbstractStatement {
         this.expression = expression;
     }
 
+    public Expression getExpression() {
+        return expression;
+    }
+
     @Override
     public String toString() {
         return "in " + expression.toString();

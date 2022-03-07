@@ -33,7 +33,7 @@ def main() do
   end
 
   # Array
-  vector :: [10 :: [10 :: int]]
+  vector :: [10 :: [5 :: int]]
 
   i = 0
   j = 0

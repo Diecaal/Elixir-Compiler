@@ -13,6 +13,14 @@ public class StructAccess extends AbstractExpression {
         this.field = field;
     }
 
+    public Expression getStruct() {
+        return struct;
+    }
+
+    public String getField() {
+        return field;
+    }
+
     @Override
     public String toString() {
         return struct.toString() + "." + field;

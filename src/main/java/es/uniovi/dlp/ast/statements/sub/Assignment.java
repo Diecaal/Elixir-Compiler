@@ -13,6 +13,14 @@ public class Assignment extends AbstractStatement {
         this.rightExpression = rightExpression;
     }
 
+    public Expression getLeftExpression() {
+        return leftExpression;
+    }
+
+    public Expression getRightExpression() {
+        return rightExpression;
+    }
+
     @Override
     public String toString() {
         return leftExpression.toString() + "=" + rightExpression.toString();

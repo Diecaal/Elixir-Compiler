@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FunctionDefinition extends AbstractDefinition {
-    List<VariableDefinition> varDefs;
-    List<Statement> statements;
+    private List<VariableDefinition> variableDefinitions;
+    private List<Statement> statements;
     private FunctionType type;
     private String name;
 
@@ -18,14 +18,22 @@ public class FunctionDefinition extends AbstractDefinition {
         super(line, column, type, name);
 		this.type = type;
 		this.name = name;
-		this.varDefs = new ArrayList<VariableDefinition>(variableDefinitions);
+		this.variableDefinitions = new ArrayList<VariableDefinition>(variableDefinitions);
         this.statements = new ArrayList<Statement>(statements);;
+    }
+
+    public List<VariableDefinition> getVariableDefinitions() {
+        return variableDefinitions;
+    }
+
+    public List<Statement> getStatements() {
+        return statements;
     }
 
     @Override
     public String toString() {
         String varDefsStr = "";
-        for(VariableDefinition varDef : varDefs)
+        for(VariableDefinition varDef : variableDefinitions)
             varDefsStr += "\n" + varDef.toString();
         String statementStr = "";
         for(Statement s : statements)

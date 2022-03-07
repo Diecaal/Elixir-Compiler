@@ -13,11 +13,15 @@ public class StructType extends AbstractType {
         this.records = new ArrayList<RecordType>(records);
     }
 
+    public List<RecordType> getRecords() {
+        return records;
+    }
+
     @Override
     public String toString() {
         String recordStr = "";
         for(RecordType record : records)
-            recordStr += "\n" + record.toString();
-        return String.format("defstruct do %s end", recordStr);
+            recordStr += "\n\t" + record.toString();
+        return String.format("defstruct do %s \nend", recordStr);
     }
 }

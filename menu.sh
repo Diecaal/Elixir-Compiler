@@ -19,7 +19,9 @@ elif (( $choice == 3 )) ; then
 elif (( $choice == 4)) ; then
 	mvn clean antlr4:antlr4
 elif (( $choice == 5)) ; then
-	mvn clean antlr4:antlr4 test-compile exec:java -Dexec.classpathScope=test -Dexec.mainClass="es.uniovi.dlp.parser.RunIntrospector" -Dexec.args="examples/basic.xana"
+	echo "Enter file to perform introspect (examples dir as root)"
+	read filePath
+	mvn clean antlr4:antlr4 test-compile exec:java -Dexec.classpathScope=test -Dexec.mainClass="es.uniovi.dlp.parser.RunIntrospector" -Dexec.args="examples/${filePath}"
 else
     echo "Invalid choice!!"
 fi

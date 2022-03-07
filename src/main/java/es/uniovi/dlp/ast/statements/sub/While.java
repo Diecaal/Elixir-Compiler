@@ -17,6 +17,14 @@ public class While extends AbstractStatement {
         this.body = new ArrayList<Statement>(body);
     }
 
+    public Expression getCondition() {
+        return condition;
+    }
+
+    public List<Statement> getBody() {
+        return body;
+    }
+
     @Override
     public String toString() {
         String bodyStr = "";

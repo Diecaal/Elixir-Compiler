@@ -19,6 +19,18 @@ public class If extends AbstractStatement {
         this.elseBody = new ArrayList<Statement>(elseBody);
     }
 
+    public Expression getCondition() {
+        return condition;
+    }
+
+    public List<Statement> getIfBody() {
+        return ifBody;
+    }
+
+    public List<Statement> getElseBody() {
+        return elseBody;
+    }
+
     @Override
     public String toString() {
         String ifBodyStr = "";

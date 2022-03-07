@@ -19,4 +19,16 @@ public class Arithmetic extends AbstractExpression {
     public String toString() {
         return leftExpression.toString() + operator + rightExpression.toString();
     }
+
+    public String getOperator() {
+        return operator;
+    }
+
+    public Expression getLeftExpression() {
+        return leftExpression;
+    }
+
+    public Expression getRightExpression() {
+        return rightExpression;
+    }
 }

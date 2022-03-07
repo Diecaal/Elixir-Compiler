@@ -15,6 +15,14 @@ public class Cast extends AbstractExpression {
         this.expression = expression;
     }
 
+    public Type getCastType() {
+        return castType;
+    }
+
+    public Expression getExpression() {
+        return expression;
+    }
+
     @Override
     public String toString() {
         return expression.toString() + " as " + castType.toString();

@@ -15,6 +15,18 @@ public class Relational extends AbstractExpression {
         this.rightExpression = rightExpression;
     }
 
+    public String getOperator() {
+        return operator;
+    }
+
+    public Expression getLeftExpression() {
+        return leftExpression;
+    }
+
+    public Expression getRightExpression() {
+        return rightExpression;
+    }
+
     @Override
     public String toString() {
         return leftExpression.toString() + operator + rightExpression.toString();
