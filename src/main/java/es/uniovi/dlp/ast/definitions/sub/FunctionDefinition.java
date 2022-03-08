@@ -11,13 +11,9 @@ import java.util.List;
 public class FunctionDefinition extends AbstractDefinition {
     private List<VariableDefinition> variableDefinitions;
     private List<Statement> statements;
-    private FunctionType type;
-    private String name;
 
     public FunctionDefinition(int line, int column, FunctionType type, String name, List<VariableDefinition> variableDefinitions, List<Statement> statements) {
         super(line, column, type, name);
-		this.type = type;
-		this.name = name;
 		this.variableDefinitions = new ArrayList<VariableDefinition>(variableDefinitions);
         this.statements = new ArrayList<Statement>(statements);;
     }
@@ -33,11 +29,11 @@ public class FunctionDefinition extends AbstractDefinition {
     @Override
     public String toString() {
         String varDefsStr = "";
-        for(VariableDefinition varDef : variableDefinitions)
+        for(VariableDefinition varDef : getVariableDefinitions())
             varDefsStr += "\n" + varDef.toString();
         String statementStr = "";
-        for(Statement s : statements)
+        for(Statement s : getStatements())
             statementStr += "\n" + s.toString();
-        return String.format("def %s %s do %s %s end", name, type.toString(), varDefsStr, statementStr);
+        return String.format("def %s %s do %s %s end", this.getName(), this.getType(), varDefsStr, statementStr);
     }
 }

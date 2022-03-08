@@ -20,8 +20,8 @@ public class StructType extends AbstractType {
     @Override
     public String toString() {
         String recordStr = "";
-        for(RecordType record : records)
-            recordStr += "\n\t" + record.toString();
+        for(RecordType record : getRecords())
+            recordStr += "\n\t" + record;
         return String.format("defstruct do %s \nend", recordStr);
     }
 }

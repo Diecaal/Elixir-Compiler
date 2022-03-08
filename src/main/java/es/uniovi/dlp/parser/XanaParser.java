@@ -1374,8 +1374,7 @@ public class XanaParser extends Parser {
 				((TypeContext)_localctx).recordType = recordType();
 				setState(300);
 				match(T__6);
-				 ((TypeContext)_localctx).ast =  (((TypeContext)_localctx).recordType.ast == null) ? new StructType(_localctx.start.getLine(), _localctx.start.getCharPositionInLine() + 1, new ArrayList<RecordType>())
-				                                         : new StructType(_localctx.start.getLine(), _localctx.start.getCharPositionInLine() + 1, ((TypeContext)_localctx).recordType.ast); 
+				 ((TypeContext)_localctx).ast =  new StructType(_localctx.start.getLine(), _localctx.start.getCharPositionInLine() + 1, ((TypeContext)_localctx).recordType.ast); 
 				}
 				break;
 			case T__35:
@@ -1432,7 +1431,7 @@ public class XanaParser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(320);
+			setState(322);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,23,_ctx);
 			while ( _alt!=1 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
@@ -1463,14 +1462,15 @@ public class XanaParser extends Parser {
 					match(T__1);
 					setState(317);
 					((RecordTypeContext)_localctx).type = type();
+					 for(var id : ((RecordTypeContext)_localctx).ids) { _localctx.ast.add(new RecordType(id.getLine(), id.getCharPositionInLine() + 1, ((RecordTypeContext)_localctx).type.ast, id.getText())); }
+					             ((RecordTypeContext)_localctx).ids.clear(); 
 					}
 					} 
 				}
-				setState(322);
+				setState(324);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,23,_ctx);
 			}
-			 for(var id : ((RecordTypeContext)_localctx).ids) { _localctx.ast.add(new RecordType(id.getLine(), id.getCharPositionInLine() + 1, ((RecordTypeContext)_localctx).type.ast, id.getText())); } 
 			}
 		}
 		catch (RecognitionException re) {
@@ -1588,13 +1588,13 @@ public class XanaParser extends Parser {
 		"\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\7\r\u0120"+
 		"\n\r\f\r\16\r\u0123\13\r\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16"+
 		"\3\16\3\16\3\16\3\16\3\16\3\16\3\16\5\16\u0135\n\16\3\17\3\17\3\17\7\17"+
-		"\u013a\n\17\f\17\16\17\u013d\13\17\3\17\3\17\7\17\u0141\n\17\f\17\16\17"+
-		"\u0144\13\17\3\17\3\17\3\20\3\20\3\20\3\20\3\20\3\20\5\20\u014e\n\20\3"+
-		"\20\6\66\u00b6\u00c1\u0142\3\30\21\2\4\6\b\n\f\16\20\22\24\26\30\32\34"+
-		"\36\2\6\3\2\31\33\4\2\27\27\34\34\3\2\35\"\3\2#$\2\u016b\2 \3\2\2\2\4"+
-		".\3\2\2\2\6\61\3\2\2\2\b=\3\2\2\2\nN\3\2\2\2\f^\3\2\2\2\16p\3\2\2\2\20"+
-		"r\3\2\2\2\22\u008a\3\2\2\2\24\u00d2\3\2\2\2\26\u00df\3\2\2\2\30\u00fa"+
-		"\3\2\2\2\32\u0134\3\2\2\2\34\u0142\3\2\2\2\36\u014d\3\2\2\2 !\5\4\3\2"+
+		"\u013a\n\17\f\17\16\17\u013d\13\17\3\17\3\17\3\17\3\17\7\17\u0143\n\17"+
+		"\f\17\16\17\u0146\13\17\3\20\3\20\3\20\3\20\3\20\3\20\5\20\u014e\n\20"+
+		"\3\20\6\66\u00b6\u00c1\u0144\3\30\21\2\4\6\b\n\f\16\20\22\24\26\30\32"+
+		"\34\36\2\6\3\2\31\33\4\2\27\27\34\34\3\2\35\"\3\2#$\2\u016b\2 \3\2\2\2"+
+		"\4.\3\2\2\2\6\61\3\2\2\2\b=\3\2\2\2\nN\3\2\2\2\f^\3\2\2\2\16p\3\2\2\2"+
+		"\20r\3\2\2\2\22\u008a\3\2\2\2\24\u00d2\3\2\2\2\26\u00df\3\2\2\2\30\u00fa"+
+		"\3\2\2\2\32\u0134\3\2\2\2\34\u0144\3\2\2\2\36\u014d\3\2\2\2 !\5\4\3\2"+
 		"!\"\5\20\t\2\"#\b\2\1\2#$\7\2\2\3$%\b\2\1\2%\3\3\2\2\2&\'\5\6\4\2\'(\b"+
 		"\3\1\2(-\3\2\2\2)*\5\b\5\2*+\b\3\1\2+-\3\2\2\2,&\3\2\2\2,)\3\2\2\2-\60"+
 		"\3\2\2\2.,\3\2\2\2./\3\2\2\2/\5\3\2\2\2\60.\3\2\2\2\61\66\7)\2\2\62\63"+
@@ -1673,14 +1673,14 @@ public class XanaParser extends Parser {
 		"\2\u0134\u012b\3\2\2\2\u0134\u0131\3\2\2\2\u0135\33\3\2\2\2\u0136\u013b"+
 		"\7)\2\2\u0137\u0138\7\3\2\2\u0138\u013a\7)\2\2\u0139\u0137\3\2\2\2\u013a"+
 		"\u013d\3\2\2\2\u013b\u0139\3\2\2\2\u013b\u013c\3\2\2\2\u013c\u013e\3\2"+
-		"\2\2\u013d\u013b\3\2\2\2\u013e\u013f\7\4\2\2\u013f\u0141\5\32\16\2\u0140"+
-		"\u0136\3\2\2\2\u0141\u0144\3\2\2\2\u0142\u0143\3\2\2\2\u0142\u0140\3\2"+
-		"\2\2\u0143\u0145\3\2\2\2\u0144\u0142\3\2\2\2\u0145\u0146\b\17\1\2\u0146"+
-		"\35\3\2\2\2\u0147\u0148\7&\2\2\u0148\u014e\b\20\1\2\u0149\u014a\7\'\2"+
-		"\2\u014a\u014e\b\20\1\2\u014b\u014c\7(\2\2\u014c\u014e\b\20\1\2\u014d"+
+		"\2\2\u013d\u013b\3\2\2\2\u013e\u013f\7\4\2\2\u013f\u0140\5\32\16\2\u0140"+
+		"\u0141\b\17\1\2\u0141\u0143\3\2\2\2\u0142\u0136\3\2\2\2\u0143\u0146\3"+
+		"\2\2\2\u0144\u0145\3\2\2\2\u0144\u0142\3\2\2\2\u0145\35\3\2\2\2\u0146"+
+		"\u0144\3\2\2\2\u0147\u0148\7&\2\2\u0148\u014e\b\20\1\2\u0149\u014a\7\'"+
+		"\2\2\u014a\u014e\b\20\1\2\u014b\u014c\7(\2\2\u014c\u014e\b\20\1\2\u014d"+
 		"\u0147\3\2\2\2\u014d\u0149\3\2\2\2\u014d\u014b\3\2\2\2\u014e\37\3\2\2"+
 		"\2\33,.\66NV^mp|\u0084\u0094\u0097\u00a4\u00b6\u00c1\u00d2\u00db\u00df"+
-		"\u00fa\u011f\u0121\u0134\u013b\u0142\u014d";
+		"\u00fa\u011f\u0121\u0134\u013b\u0144\u014d";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

@@ -138,15 +138,15 @@ type returns[Type ast]
      : '[' i=INT_CONSTANT '::' t=type ']'
       { $ast = new ArrayType($start.getLine(), $start.getCharPositionInLine() + 1, $t.ast, LexerHelper.lexemeToInt($i.text)); }
      | 'defstruct' 'do' recordType 'end'
-      { $ast = ($recordType.ast == null) ? new StructType($start.getLine(), $start.getCharPositionInLine() + 1, new ArrayList<RecordType>())
-                                         : new StructType($start.getLine(), $start.getCharPositionInLine() + 1, $recordType.ast); }
+      { $ast = new StructType($start.getLine(), $start.getCharPositionInLine() + 1, $recordType.ast); }
      | primitiveType
       { $ast = $primitiveType.ast; }
      ;
 
 recordType returns[List<RecordType> ast = new ArrayList<>()]
-           : (ids+=ID (',' ids+=ID)* '::' type)*?
-            { for(var id : $ids) { $ast.add(new RecordType(id.getLine(), id.getCharPositionInLine() + 1, $type.ast, id.getText())); } }
+           : (ids+=ID (',' ids+=ID)* '::' type
+           { for(var id : $ids) { $ast.add(new RecordType(id.getLine(), id.getCharPositionInLine() + 1, $type.ast, id.getText())); }
+             $ids.clear(); })*? // if list is no cleared, extra records will be created with new succesive types
            ;
 
 primitiveType returns[Type ast]

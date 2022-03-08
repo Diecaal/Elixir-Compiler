@@ -15,11 +15,11 @@ public abstract class AbstractDefinition extends AbstractASTNode implements Defi
 
     @Override
     public Type getType() {
-        return this.type;
+        return type;
     }
 
     @Override
     public String getName() {
-        return this.name;
+        return name;
     }
 }
