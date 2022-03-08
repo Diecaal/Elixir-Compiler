@@ -56,6 +56,6 @@ FunctionType <-- FunctionDefinition
 
 VariableDefinition "1" o-- "1" Type
 
-FunctionDefinition "0..n" o-- VariableDefinition
+FunctionDefinition o-- "0..n"  VariableDefinition
 
 @enduml
