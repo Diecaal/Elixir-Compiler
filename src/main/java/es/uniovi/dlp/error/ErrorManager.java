@@ -15,16 +15,19 @@ public class ErrorManager {
         return instance;
     }
 
+    public static void addError(Error error) {
+        getInstance().getErrors().add(error);
+    }
+
     public void clearErrors() {
         errors.clear();
     }
 
-
     public List<Error> getErrors() {
-        return new ArrayList<>();
+        return new ArrayList<Error>(errors);
     }
 
     public boolean hasErrors() {
-        return false;
+        return getErrors().size() > 0;
     }
 }
