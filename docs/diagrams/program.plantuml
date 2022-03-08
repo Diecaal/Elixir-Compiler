@@ -22,6 +22,7 @@ class Program {
 
 interface Definition {
     getType(): Type
+    getName(): String
 }
 
 class AbstractDefinition {
@@ -46,9 +47,8 @@ Definition <|.. AbstractDefinition
 
 Program o-- "0..n" Definition
 
-Definition <|.. VariableDefinition
 AbstractDefinition <|-- FunctionDefinition
-AbstractStatement <|-- VariableDefinition
+AbstractDefinition <|-- VariableDefinition
 
 Type <-- Definition
 

@@ -1,0 +1,7 @@
+a :: defstruct do
+    c :: int
+    b :: double
+    c :: char # Field already declared in struct
+end
+
+def main() do end
