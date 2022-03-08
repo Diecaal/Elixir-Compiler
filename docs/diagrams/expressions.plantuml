@@ -81,7 +81,7 @@ class Relational {
     rightExpression: Expression
 }
 
-ASTNode <|-- AbstractASTNode
+ASTNode <|.. AbstractASTNode
 
 AbstractASTNode <|-- AbstractExpression
 

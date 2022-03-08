@@ -80,6 +80,6 @@ ArrayType o-- "1" Type
 RecordType o-- "1" Type
 FunctionType o-- "1" Type
 
-StructType o-- "1..n" RecordType
-FunctionType o-- "1..n" VariableDefinition
+StructType o-- "0..n" RecordType
+FunctionType o-- "0..n" VariableDefinition
 @enduml

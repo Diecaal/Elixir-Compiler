@@ -17,7 +17,7 @@ class AbstractASTNode {
 }
 
 class Program {
-    statements: List<Statement>
+    definitions: List<Definition>
 }
 
 interface Definition {
@@ -51,11 +51,15 @@ AbstractDefinition <|-- FunctionDefinition
 AbstractDefinition <|-- VariableDefinition
 
 Type <-- Definition
+Type <-- FunctionType
 
-FunctionType <-- FunctionDefinition
+FunctionType "1" --o FunctionDefinition
 
 VariableDefinition "1" o-- "1" Type
 
 FunctionDefinition o-- "0..n"  VariableDefinition
+FunctionDefinition o-- "0..n"  Statement
+
+FunctionType o-- "0..n" VariableDefinition
 
 @enduml
