@@ -71,7 +71,7 @@ mainFunction returns[FunctionDefinition ast]
 
 functionInvocation returns[FunctionInvocation ast]
                    locals [List<Expression> expressions = new ArrayList<Expression>()]
-                   : ID '(' ( e=expression {$expressions.add($e.ast);} (',' e2=expression {$expressions.add($e.ast);})* )? ')'
+                   : ID '(' ( e=expression {$expressions.add($e.ast);} (',' e2=expression {$expressions.add($e2.ast);})* )? ')'
                     { $ast = new FunctionInvocation($start.getLine(), $start.getCharPositionInLine() + 1, new Variable($start.getLine(), $start.getCharPositionInLine() + 1, $ID.text), $expressions); }
                    ;
 

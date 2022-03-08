@@ -725,7 +725,7 @@ public class XanaParser extends Parser {
 					match(T__0);
 					setState(141);
 					((FunctionInvocationContext)_localctx).e2 = expression(0);
-					_localctx.expressions.add(((FunctionInvocationContext)_localctx).e.ast);
+					_localctx.expressions.add(((FunctionInvocationContext)_localctx).e2.ast);
 					}
 					}
 					setState(148);
