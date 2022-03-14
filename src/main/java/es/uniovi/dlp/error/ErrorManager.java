@@ -7,16 +7,20 @@ import java.util.List;
 public class ErrorManager {
     private static final ErrorManager instance = new ErrorManager();
 
-    private final List<Error> errors = new ArrayList<>();
+    private static List<Error> errors;
 
-    private ErrorManager() {}
+    private ErrorManager() {
+        errors = new ArrayList<>();
+    }
 
     public static ErrorManager getInstance() {
+        if(errors == null)
+            errors = new ArrayList<>();
         return instance;
     }
 
     public static void addError(Error error) {
-        getInstance().getErrors().add(error);
+        errors.add(error);
     }
 
     public void clearErrors() {
@@ -24,7 +28,7 @@ public class ErrorManager {
     }
 
     public List<Error> getErrors() {
-        return new ArrayList<Error>(errors);
+        return errors;
     }
 
     public boolean hasErrors() {
