@@ -1,1 +1,2 @@
-mvn clean compile exec:java -Dexec.mainClass="es.uniovi.dlp.commandline.CLI" -Dexec.args="$1" > /dev/null
+args="$@"
+mvn clean compile exec:java -Dexec.mainClass="es.uniovi.dlp.commandline.CLI" -Dexec.args="$args" > /dev/null

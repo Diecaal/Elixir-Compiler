@@ -1,0 +1,16 @@
+def f(e :: int) :: double do
+    return e as double
+end
+
+def main() do
+    i, a, j :: int
+    v :: [10 :: double]
+
+    a = 0
+    i = 0
+    j = -i * a - 2
+
+    v[v[j] as int] = a as double
+
+    puts 'f', '(', 'i', ')', '=', f(i)
+end

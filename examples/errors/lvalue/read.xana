@@ -1,0 +1,5 @@
+def main() do
+    a :: int
+
+    in a + 1 # Lvalue required
+end

@@ -19,5 +19,5 @@ Como ejemplo, tienes que ser capaz de detectar el record field duplicado en el f
 Puedes ejecutar el siguiente comando para comprobar que te reporta el error correcto:
 
 ```
-bin/xana.bat examples/errors/identification/duplicated_record_field.xana
+bin\xana.bat examples/errors/identification/duplicated_record_field.xana
 ```
