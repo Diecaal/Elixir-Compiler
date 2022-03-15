@@ -2,6 +2,7 @@ package es.uniovi.dlp.ast.statements.sub;
 
 import es.uniovi.dlp.ast.expressions.Expression;
 import es.uniovi.dlp.ast.statements.AbstractStatement;
+import es.uniovi.dlp.visitor.AbstractVisitor;
 
 public class Return extends AbstractStatement {
     private Expression expression;
@@ -18,5 +19,10 @@ public class Return extends AbstractStatement {
     @Override
     public String toString() {
         return "return" + expression.toString();
+    }
+
+    @Override
+    public <ReturnType, ParamType> ReturnType accept(AbstractVisitor<ReturnType, ParamType> visitor, ParamType param) {
+        return visitor.visit(this, param);
     }
 }

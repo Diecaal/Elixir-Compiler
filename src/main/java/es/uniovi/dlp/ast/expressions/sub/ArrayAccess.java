@@ -2,6 +2,7 @@ package es.uniovi.dlp.ast.expressions.sub;
 
 import es.uniovi.dlp.ast.expressions.AbstractExpression;
 import es.uniovi.dlp.ast.expressions.Expression;
+import es.uniovi.dlp.visitor.AbstractVisitor;
 
 public class ArrayAccess extends AbstractExpression {
     private Expression array;
@@ -24,5 +25,10 @@ public class ArrayAccess extends AbstractExpression {
     @Override
     public String toString() {
         return String.format("%s[%s]", array.toString(), index.toString());
+    }
+
+    @Override
+    public <ReturnType, ParamType> ReturnType accept(AbstractVisitor<ReturnType, ParamType> visitor, ParamType param) {
+        return visitor.visit(this, param);
     }
 }

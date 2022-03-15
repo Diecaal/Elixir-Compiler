@@ -4,6 +4,7 @@ import es.uniovi.dlp.ast.definitions.AbstractDefinition;
 import es.uniovi.dlp.ast.statements.Statement;
 import es.uniovi.dlp.ast.types.Type;
 import es.uniovi.dlp.ast.types.sub.FunctionType;
+import es.uniovi.dlp.visitor.AbstractVisitor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +27,10 @@ public class FunctionDefinition extends AbstractDefinition {
         return statements;
     }
 
+    public List<VariableDefinition> getParameters() {
+        return ((FunctionType)getType()).getParameters();
+    }
+
     @Override
     public String toString() {
         String varDefsStr = "";
@@ -35,5 +40,10 @@ public class FunctionDefinition extends AbstractDefinition {
         for(Statement s : getStatements())
             statementStr += "\n" + s.toString();
         return String.format("def %s %s do %s %s end", this.getName(), this.getType(), varDefsStr, statementStr);
+    }
+
+    @Override
+    public <ReturnType, ParamType> ReturnType accept(AbstractVisitor<ReturnType, ParamType> visitor, ParamType param) {
+        return visitor.visit(this, param);
     }
 }

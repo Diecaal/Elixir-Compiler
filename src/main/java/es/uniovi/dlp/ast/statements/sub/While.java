@@ -3,6 +3,7 @@ package es.uniovi.dlp.ast.statements.sub;
 import es.uniovi.dlp.ast.expressions.Expression;
 import es.uniovi.dlp.ast.statements.AbstractStatement;
 import es.uniovi.dlp.ast.statements.Statement;
+import es.uniovi.dlp.visitor.AbstractVisitor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,5 +33,10 @@ public class While extends AbstractStatement {
             bodyStr += "\n" + s.toString();
         /* Only if body */
         return String.format("while %s do %s end", condition.toString(), bodyStr);
+    }
+
+    @Override
+    public <ReturnType, ParamType> ReturnType accept(AbstractVisitor<ReturnType, ParamType> visitor, ParamType param) {
+        return visitor.visit(this, param);
     }
 }

@@ -1,5 +1,8 @@
 package es.uniovi.dlp.ast.expressions;
 
-public interface Expression {
+import es.uniovi.dlp.ast.ASTNode;
 
+public interface Expression extends ASTNode {
+    void setLvalue(boolean Lvalue);
+    boolean getLvalue();
 }

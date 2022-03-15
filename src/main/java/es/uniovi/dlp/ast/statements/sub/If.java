@@ -3,6 +3,7 @@ package es.uniovi.dlp.ast.statements.sub;
 import es.uniovi.dlp.ast.expressions.Expression;
 import es.uniovi.dlp.ast.statements.AbstractStatement;
 import es.uniovi.dlp.ast.statements.Statement;
+import es.uniovi.dlp.visitor.AbstractVisitor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,10 @@ public class If extends AbstractStatement {
         return elseBody;
     }
 
+    public boolean hasElse() {
+        return elseBody.size() > 0;
+    }
+
     @Override
     public String toString() {
         String ifBodyStr = "";
@@ -44,5 +49,10 @@ public class If extends AbstractStatement {
         for(Statement s : elseBody)
             elseBodyStr += "\n" + s.toString();
         return String.format("if %s do %s else %s end", condition.toString(), ifBodyStr, elseBodyStr);
+    }
+
+    @Override
+    public <ReturnType, ParamType> ReturnType accept(AbstractVisitor<ReturnType, ParamType> visitor, ParamType param) {
+        return visitor.visit(this, param);
     }
 }

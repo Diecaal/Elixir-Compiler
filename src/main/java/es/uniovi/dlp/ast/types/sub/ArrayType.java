@@ -2,6 +2,7 @@ package es.uniovi.dlp.ast.types.sub;
 
 import es.uniovi.dlp.ast.types.AbstractType;
 import es.uniovi.dlp.ast.types.Type;
+import es.uniovi.dlp.visitor.AbstractVisitor;
 
 public class ArrayType extends AbstractType {
     private Type arrayType;
@@ -24,5 +25,10 @@ public class ArrayType extends AbstractType {
     @Override
     public String toString() {
         return String.format("[%s :: %s]", String.valueOf(length), arrayType.toString());
+    }
+
+    @Override
+    public <ReturnType, ParamType> ReturnType accept(AbstractVisitor<ReturnType, ParamType> visitor, ParamType param) {
+        return visitor.visit(this, param);
     }
 }
