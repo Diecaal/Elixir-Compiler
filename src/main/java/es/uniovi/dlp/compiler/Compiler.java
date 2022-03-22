@@ -4,6 +4,7 @@ import es.uniovi.dlp.ast.Program;
 import es.uniovi.dlp.error.ErrorManager;
 import es.uniovi.dlp.parser.XanaLexer;
 import es.uniovi.dlp.parser.XanaParser;
+import es.uniovi.dlp.visitor.semantic.IdentificationVisitor;
 import es.uniovi.dlp.visitor.semantic.TypeCheckingVisitor;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
@@ -52,10 +53,13 @@ public class Compiler {
         return parser.program().ast;
     }
 
+    /* Traverse program AST with identification visitor */
     private void assignScope() {
-        // Run here your IdentificationVisitor
+        IdentificationVisitor identificationVisitor = new IdentificationVisitor();
+        identificationVisitor.visit(program, null);
     }
 
+    /* Traverse program AST with type checking visitor */
     private void assignType() {
         TypeCheckingVisitor typeCheckingVisitor = new TypeCheckingVisitor();
         typeCheckingVisitor.visit(program, null);

@@ -27,8 +27,6 @@ public class SymbolTable {
 
     public boolean insert(Definition definition) {
         if(findInCurrentScope(definition.getName()) == null) {
-            if(definition instanceof FunctionDefinition)
-                set();
             definition.setScope(scope);
             table.get(scope).put(definition.getName(), definition);
             return true;
@@ -37,7 +35,7 @@ public class SymbolTable {
     }
 
     public Definition find(String id) {
-        for(int currentScope=0; currentScope <= scope; currentScope++) {
+        for(int currentScope=scope; currentScope>=0; currentScope--) {
             if(table.get(currentScope).get(id) != null) {
                 return table.get(currentScope).get(id);
             }
