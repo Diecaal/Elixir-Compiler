@@ -1,0 +1,8 @@
+a, a :: int
+a :: int
+
+b, a :: char
+
+def main() do
+    a :: double
+end

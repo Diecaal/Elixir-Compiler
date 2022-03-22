@@ -1,12 +1,16 @@
 package es.uniovi.dlp;
 
+import es.uniovi.dlp.error.Error;
+import es.uniovi.dlp.error.ErrorManager;
 import es.uniovi.dlp.parser.XanaLexer;
 import es.uniovi.dlp.parser.XanaParser;
 import org.antlr.v4.runtime.*;
 
 import es.uniovi.dlp.compiler.Compiler;
 import java.io.IOException;
+import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 public class TestHelpers {
@@ -68,6 +72,11 @@ public class TestHelpers {
                 throw new RuntimeException(e);
             }
         });
+    }
+
+    public static void assertFoundErrors(List<Error> errors) {
+        var foundErrors = ErrorManager.getInstance().getErrors();
+        assertIterableEquals(errors, foundErrors);
     }
 
     public static void runCompiler(String file) {

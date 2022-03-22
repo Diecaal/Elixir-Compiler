@@ -1,0 +1,5 @@
+a :: int
+
+def main() do
+    b = 1
+end

@@ -1,16 +1,14 @@
 package es.uniovi.dlp.visitor.semantic;
 
 import es.uniovi.dlp.error.Error;
-import es.uniovi.dlp.error.ErrorManager;
 import es.uniovi.dlp.error.ErrorReason;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
+import static es.uniovi.dlp.TestHelpers.assertFoundErrors;
 import static es.uniovi.dlp.TestHelpers.runCompiler;
-import static org.junit.jupiter.api.Assertions.*;
 
 public class LvalueTest {
 
@@ -34,10 +32,5 @@ public class LvalueTest {
     void correctLvalue() {
         runCompiler("examples/errors/valid_examples/lvalue.xana");
         assertFoundErrors(new ArrayList<>());
-    }
-
-    private static void assertFoundErrors(List<Error> errors) {
-        var foundErrors = ErrorManager.getInstance().getErrors();
-        assertIterableEquals(foundErrors, errors);
     }
 }

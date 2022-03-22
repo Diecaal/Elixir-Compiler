@@ -1,0 +1,6 @@
+def p(a :: int) :: void do
+end
+
+def main() do
+    non_existent()
+end

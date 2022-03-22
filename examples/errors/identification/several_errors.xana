@@ -1,0 +1,13 @@
+integer :: int
+character :: char
+real, integer :: double # Error 1
+
+def p(a :: int) :: void do
+  a :: char # Error 2
+end
+
+def main() do
+  character :: double
+  in integer, i # Error 3
+  f() # Error 4
+end

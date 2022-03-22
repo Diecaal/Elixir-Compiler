@@ -1,0 +1,7 @@
+def foo() :: void do
+end
+
+def foo(a :: int) :: void do
+end
+
+def main() do end
