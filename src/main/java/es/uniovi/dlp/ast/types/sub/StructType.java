@@ -27,7 +27,7 @@ public class StructType extends AbstractType {
         HashSet<String> uniqueRecords = new HashSet<>();
         for(RecordType record : records) {
             if(!uniqueRecords.add(record.getName())){
-                ErrorManager.getInstance().addError( new Error(getLine(), getColumn(), ErrorReason.FIELD_ALREADY_DECLARED) );
+                ErrorManager.getInstance().addError( new Error(record, ErrorReason.FIELD_ALREADY_DECLARED) );
             }
         }
     }

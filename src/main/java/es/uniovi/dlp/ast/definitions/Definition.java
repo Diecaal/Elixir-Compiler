@@ -7,4 +7,7 @@ import es.uniovi.dlp.visitor.AbstractVisitor;
 public interface Definition extends ASTNode {
     Type getType();
     String getName();
+
+    void setScope(int scope);
+    int getScope();
 }

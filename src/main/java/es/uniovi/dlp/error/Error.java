@@ -1,8 +1,14 @@
 package es.uniovi.dlp.error;
 
+import es.uniovi.dlp.ast.ASTNode;
+
 public record Error(Location location, ErrorReason reason, String extraMessage) implements Comparable<Error> {
     public Error(Location location, ErrorReason reason) {
         this(location, reason, "");
+    }
+
+    public Error(ASTNode node, ErrorReason reason) {
+        this(new Location(node.getLine(), node.getColumn()), reason, "");
     }
 
     public Error(int line, int column, ErrorReason reason) {

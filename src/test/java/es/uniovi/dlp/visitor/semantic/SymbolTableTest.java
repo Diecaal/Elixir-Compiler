@@ -1,6 +1,6 @@
 package es.uniovi.dlp.visitor.semantic;
 
-import es.uniovi.dlp.ast.definitions.VarDefinition;
+import es.uniovi.dlp.ast.definitions.sub.VariableDefinition;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -10,17 +10,17 @@ public class SymbolTableTest {
     @Test
     void testInsert() {
         var st = new SymbolTable();
-        VarDefinition definition = new VarDefinition(0, 0, "a", null);
-        VarDefinition definition2 = new VarDefinition(0, 0, "a", null);
+        VariableDefinition definition = new VariableDefinition(0, 0, null,"a");
+        VariableDefinition definition2 = new VariableDefinition(0, 0, null,"a");
 
         assertTrue(st.insert(definition));
-        assertEquals(definition.getScope(), 0);
+        assertEquals(0, definition.getScope());
         assertFalse(st.insert(definition));
 
         st.set();
 
         assertTrue(st.insert(definition2));
-        assertEquals(definition2.getScope(), 1);
+        assertEquals(1, definition2.getScope());
         assertFalse(st.insert(definition2));
 
         st.reset();
@@ -31,8 +31,8 @@ public class SymbolTableTest {
     @Test
     void testFind() {
         SymbolTable st = new SymbolTable();
-        VarDefinition definition = new VarDefinition(0, 0, "a", null);
-        VarDefinition definition2 = new VarDefinition(0, 0, "b", null);
+        VariableDefinition definition = new VariableDefinition(0, 0, null,"a");
+        VariableDefinition definition2 = new VariableDefinition(0, 0, null,"b");
 
         assertTrue(st.insert(definition));
         assertNotNull(st.find("a"));
@@ -54,8 +54,8 @@ public class SymbolTableTest {
     @Test
     void testFindInCurrentScope() {
         SymbolTable st = new SymbolTable();
-        VarDefinition definition = new VarDefinition(0, 0, "a", null);
-        VarDefinition definition2 = new VarDefinition(0, 0, "b", null);
+        VariableDefinition definition = new VariableDefinition(0, 0, null,"a");
+        VariableDefinition definition2 = new VariableDefinition(0, 0, null,"b");
 
         assertTrue(st.insert(definition));
         assertNotNull(st.findInCurrentScope("a"));

@@ -19,7 +19,7 @@ public class ErrorManager {
         return instance;
     }
 
-    public static void addError(Error error) {
+    public void addError(Error error) {
         errors.add(error);
     }
 
