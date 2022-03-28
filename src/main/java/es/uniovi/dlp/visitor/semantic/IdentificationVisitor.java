@@ -18,8 +18,17 @@ public class IdentificationVisitor extends AbstractVisitor<Type, Type> {
 
     @Override
     public Type visit(FunctionDefinition funcDefinition, Type param) {
-        if(!table.insert(funcDefinition)) {
+        if(table.find(funcDefinition.getName()) != null) {
             ErrorManager.getInstance().addError( new Error(funcDefinition, ErrorReason.FUNCTION_ALREADY_DECLARED) );
+        } else {
+            // Step into function definition (scope++)
+            table.insert(funcDefinition);
+            table.set();
+            // Traverse all nodes inside the funcDefinition
+            super.visit(funcDefinition, param);
+            // Step out function definition (scope--)
+            table.reset();
+            return null;
         }
         return super.visit(funcDefinition, param);
     }
