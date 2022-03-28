@@ -45,9 +45,8 @@ public class IdentificationVisitor extends AbstractVisitor<Type, Type> {
     @Override
     public Type visit(FunctionInvocation functionInvocation, Type param) {
         if(table.find(functionInvocation.getVariable().getName()) == null) {
-            List<Error> err = ErrorManager.getInstance().getErrors();
             ErrorManager.getInstance().addError( new Error(functionInvocation, ErrorReason.FUNCTION_NOT_DECLARED) );
-            err = ErrorManager.getInstance().getErrors();
+            return null;
         }
         return super.visit(functionInvocation, param);
     }
