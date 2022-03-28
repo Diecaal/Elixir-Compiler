@@ -137,7 +137,9 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
 
     @Override
     public Type visit(Read read, Type param) {
+        super.visit(read, param);
         if(!read.getExpression().getLvalue()) {
+            read.getExpression();
             ErrorManager.getInstance().addError( new Error(read.getExpression(), ErrorReason.LVALUE_REQUIRED) );
         }
         return null;
