@@ -7,21 +7,18 @@ import es.uniovi.dlp.ast.expressions.sub.*;
 import es.uniovi.dlp.ast.statements.sub.*;
 import es.uniovi.dlp.ast.types.Type;
 import es.uniovi.dlp.ast.types.sub.*;
+import es.uniovi.dlp.error.Error;
+import es.uniovi.dlp.error.ErrorManager;
+import es.uniovi.dlp.error.ErrorReason;
 import es.uniovi.dlp.visitor.AbstractVisitor;
 
 public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
-
-    @Override
-    public Type visit(Program program, Type param) {
-        return super.visit(program, param);
-    }
 
     /* Definitions */
 
     @Override
     public Type visit(VariableDefinition variableDefinition, Type param) {
-        super.visit(variableDefinition, param);
-        return null;
+        return super.visit(variableDefinition, param);
     }
 
     @Override
@@ -29,7 +26,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
         return super.visit(funcDefinition, param);
     }
 
-    /* Expressions */
+    /* Expressions -> determine their Lvalue (true/false) */
 
     @Override
     public Type visit(Arithmetic arithmetic, Type param) {
@@ -115,18 +112,21 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
         return null;
     }
 
+    @Override
+    public Type visit(FunctionInvocation functionInvocation, Type param) {
+        super.visit(functionInvocation, param);
+        functionInvocation.setLvalue(false);
+        return null;
+    }
+
     /* Statements */
 
     @Override
     public Type visit(Assignment assignment, Type param) {
         super.visit(assignment, param);
-        return null;
-    }
-
-    @Override
-    public Type visit(FunctionInvocation functionInvocation, Type param) {
-        super.visit(functionInvocation, param);
-        functionInvocation.setLvalue(false);
+        if(!assignment.getLeftExpression().getLvalue()) {
+            ErrorManager.getInstance().addError( new Error(assignment.getLeftExpression(), ErrorReason.LVALUE_REQUIRED) );
+        }
         return null;
     }
 
@@ -137,6 +137,9 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
 
     @Override
     public Type visit(Read read, Type param) {
+        if(!read.getExpression().getLvalue()) {
+            ErrorManager.getInstance().addError( new Error(read.getExpression(), ErrorReason.LVALUE_REQUIRED) );
+        }
         return null;
     }
 

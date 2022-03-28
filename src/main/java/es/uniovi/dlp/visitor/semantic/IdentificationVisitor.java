@@ -10,6 +10,8 @@ import es.uniovi.dlp.error.ErrorManager;
 import es.uniovi.dlp.error.ErrorReason;
 import es.uniovi.dlp.visitor.AbstractVisitor;
 
+import java.util.List;
+
 public class IdentificationVisitor extends AbstractVisitor<Type, Type> {
 
     SymbolTable table = new SymbolTable();
@@ -43,7 +45,9 @@ public class IdentificationVisitor extends AbstractVisitor<Type, Type> {
     @Override
     public Type visit(FunctionInvocation functionInvocation, Type param) {
         if(table.find(functionInvocation.getVariable().getName()) == null) {
+            List<Error> err = ErrorManager.getInstance().getErrors();
             ErrorManager.getInstance().addError( new Error(functionInvocation, ErrorReason.FUNCTION_NOT_DECLARED) );
+            err = ErrorManager.getInstance().getErrors();
         }
         return super.visit(functionInvocation, param);
     }
