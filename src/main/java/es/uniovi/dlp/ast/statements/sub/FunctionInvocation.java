@@ -3,6 +3,7 @@ package es.uniovi.dlp.ast.statements.sub;
 import es.uniovi.dlp.ast.expressions.Expression;
 import es.uniovi.dlp.ast.expressions.sub.Variable;
 import es.uniovi.dlp.ast.statements.AbstractStatement;
+import es.uniovi.dlp.ast.types.Type;
 import es.uniovi.dlp.visitor.AbstractVisitor;
 
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ public class FunctionInvocation extends AbstractStatement implements Expression 
     private Variable variable;
     private List<Expression> parameters;
     private boolean Lvalue;
+    private Type type;
 
     public FunctionInvocation(int line, int column, Variable variable, List<Expression> parameters) {
         super(line, column);
@@ -49,5 +51,15 @@ public class FunctionInvocation extends AbstractStatement implements Expression 
     @Override
     public boolean getLvalue() {
         return this.Lvalue;
+    }
+
+    @Override
+    public Type getType() {
+        return this.type;
+    }
+
+    @Override
+    public void setType(Type type) {
+        this.type = type;
     }
 }

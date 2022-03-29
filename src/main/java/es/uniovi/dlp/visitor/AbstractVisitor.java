@@ -208,4 +208,9 @@ public abstract class AbstractVisitor<ReturnType, ParamType> implements Visitor<
         /* No information to be given to visitor */
         return null;
     }
+
+    @Override
+    public ReturnType visit(ErrorType errorType, ParamType param) {
+        return null;
+    }
 }

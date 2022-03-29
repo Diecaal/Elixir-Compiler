@@ -32,6 +32,12 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
     public Type visit(Arithmetic arithmetic, Type param) {
         super.visit(arithmetic, param);
         arithmetic.setLvalue(false);
+
+        arithmetic.setType( arithmetic.getLeftExpression().getType().arithmetic(arithmetic.getRightExpression().getType()) );
+
+        if(!arithmetic.getType().isArithmetic())
+            ErrorManager.getInstance().addError( new Error(arithmetic, ErrorReason.INVALID_ARITHMETIC) );
+
         return null;
     }
 
@@ -39,6 +45,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
     public Type visit(ArrayAccess arrayAccess, Type param) {
         super.visit(arrayAccess, param);
         arrayAccess.setLvalue(true);
+
         return null;
     }
 
@@ -46,6 +53,11 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
     public Type visit(Cast cast, Type param) {
         super.visit(cast, param);
         cast.setLvalue(false);
+
+        cast.setType( cast.getCastType().cast(cast.getExpression().getType()) );
+        if( cast.getType() instanceof ErrorType )
+            ErrorManager.getInstance().addError(new Error(cast, ErrorReason.INVALID_CAST));
+
         return null;
     }
 
@@ -81,6 +93,9 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
     public Type visit(Relational relational, Type param) {
         super.visit(relational, param);
         relational.setLvalue(false);
+
+        relational.setType( relational.getLeftExpression().getType().comparison(relational.getRightExpression().getType()) );
+
         return null;
     }
 
