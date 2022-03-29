@@ -1,0 +1,10 @@
+def main() do
+    name :: [10 :: char]
+    letter :: char
+
+    name[0] = '1'
+    name[0] = name['a'] # Error
+    letter = name[2.2] # Error
+
+    puts letter[1] # Error
+end

@@ -1,0 +1,20 @@
+def main() do
+    name :: [10 :: char]
+    letter :: char
+    id :: int
+    money :: double
+    person :: defstruct do
+        age :: int
+    end
+
+    id = letter as int
+    id = money as int
+    id = name as int # Error
+    id = person as int # Error
+    id = id as int
+    id = person.age
+    id = person.age as int
+    money = id as double
+    money = letter
+    money = id as char
+end

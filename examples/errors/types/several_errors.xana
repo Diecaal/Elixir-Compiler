@@ -1,0 +1,50 @@
+integer :: int
+character :: char
+real :: double
+array :: [10 :: int]
+
+date :: defstruct do
+    day :: int
+    month :: int
+    day :: double # Error
+end
+
+def f(a :: int) :: int do
+    a :: double # Error
+    return 34.5 # Error
+end
+
+def g(b :: int, b :: double) :: void do # Error
+    return 3 # Error
+end
+
+def g() :: void do # Error
+end
+
+def main() do
+    in integer
+    character = 8.5 # Error
+    3 = integer # Error
+    in integer + 2 # Error
+
+    in date.year # Error
+
+    puts integer && 1
+    puts real && integer # Error
+    puts 1.0 >= 1
+    puts date >= 3 # Error
+
+    while real do # Error
+        if real do # Error
+            puts !real # Error
+        end
+    end
+
+    f() # Error
+    f(3.2) # Error
+    integer = g(f(1), 1.0) # Error
+
+    integer[0] = 0 # Error
+    array[3] = 3.4 # Error
+    array[1][2] = 'a' # Error
+end

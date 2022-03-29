@@ -1,0 +1,22 @@
+def main() do
+    a :: defstruct do
+    end
+
+    puts a.name # Error
+
+    person :: defstruct do
+        name :: [10 :: char]
+        friend :: defstruct do
+            id :: int
+        end
+    end
+
+    puts person.age # Error
+    puts person.name[0]
+    puts person.friend.id
+    puts person.friend.name # Error
+
+    b :: int
+
+    puts b.a # Error
+end

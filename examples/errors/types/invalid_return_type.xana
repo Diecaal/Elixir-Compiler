@@ -1,0 +1,11 @@
+def p(a :: int) :: int do
+  return 10.2 # Error
+end
+
+def empty() :: void do
+    return 3 # Error
+end
+
+def main() do
+  p(1)
+end

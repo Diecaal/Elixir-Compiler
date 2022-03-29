@@ -1,0 +1,20 @@
+def always_true() :: int do
+    return 1
+end
+
+def main() do
+    if always_true() do
+        puts 't', 'r', 'u', 'e', '\n'
+    end
+
+    if 'a' do # Error
+    end
+
+    while 1.2 do # Error
+    end
+
+    condition :: int
+    condition = !10.2 # Error
+    condition = 1 && (2.2) # Error
+    condition = 1 || (2.2) # Error
+end

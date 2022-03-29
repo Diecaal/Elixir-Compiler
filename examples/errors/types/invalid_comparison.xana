@@ -1,0 +1,14 @@
+def main() do
+    a :: int
+
+    a = 1 > 2
+    a = 2 < 10.2
+    a = 2 <= 'a'
+
+    arr :: [2 :: int]
+    if arr[1] < 1 do
+    end
+
+    while arr >= 2 do # Error
+    end
+end

@@ -1,0 +1,13 @@
+def main() do
+    id :: int
+    letter :: char
+    real :: double
+
+    id = 1
+    real = 2
+    real = id
+    id = 10.2 # Error
+    letter = id # Error
+    letter = 12.2 # Error
+    real = letter
+end

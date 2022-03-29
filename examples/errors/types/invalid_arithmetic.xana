@@ -1,0 +1,12 @@
+array :: [10 :: int]
+
+def main() do
+    a :: double
+    a = -1
+    a = 20.2 + 1
+
+    a = -'a'
+    a = -array # Error
+    puts 2 + 'a'
+    puts 2 + array # Error
+end

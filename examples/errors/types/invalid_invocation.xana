@@ -1,0 +1,18 @@
+def sum(a :: int, b :: double) :: double do
+    return a as double + b
+end
+
+def empty() :: void do
+end
+
+def main() do
+    empty()
+    empty(1) # Error
+
+    sum(1, 2.0)
+    sum(1) # Error
+    sum() # Error
+
+    a :: int
+    a() # Error
+end
