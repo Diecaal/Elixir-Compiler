@@ -2,7 +2,6 @@ package es.uniovi.dlp.ast.types.sub;
 
 import es.uniovi.dlp.ast.types.AbstractType;
 import es.uniovi.dlp.ast.types.Type;
-import es.uniovi.dlp.error.ErrorReason;
 import es.uniovi.dlp.visitor.AbstractVisitor;
 
 public class CharType extends AbstractType {
@@ -19,15 +18,24 @@ public class CharType extends AbstractType {
     }
 
     @Override
-    public Type cast(Type from) {
-        if(from instanceof CharType || from instanceof IntType)
-            return from;
-        return super.cast(from);
+    public boolean isArithmetic() {
+        return true;
     }
 
     @Override
-    public boolean isArithmetic() {
-        return true;
+    public boolean promotableTo(Type to) {
+        if(to instanceof IntType || to instanceof CharType)
+            return true;
+
+        return super.promotableTo(to);
+    }
+
+    @Override
+    public Type cast(Type toCast) {
+        if(toCast instanceof CharType || toCast instanceof IntType)
+            return toCast;
+
+        return super.cast(toCast);
     }
 
     @Override

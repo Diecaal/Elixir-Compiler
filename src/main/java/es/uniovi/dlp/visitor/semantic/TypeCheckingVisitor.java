@@ -45,20 +45,18 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
         super.visit(arrayAccess, param);
         arrayAccess.setLvalue(true);
 
-        /* BAD STRUCTURE working -> now refactor */
-
         if(!arrayAccess.getIndex().getType().isIndexable()) {
             arrayAccess.setType(new ErrorType(arrayAccess.getIndex().getLine(), arrayAccess.getIndex().getColumn()));
             ErrorManager.getInstance().addError(new Error(arrayAccess.getIndex(), ErrorReason.INVALID_INDEX_EXPRESSION));
             return null;
         }
 
-        if(!(arrayAccess.getArray().getType() instanceof ArrayType)) {
+        Type arrayType = arrayAccess.getArray().getType();
+        Type indexingType = arrayAccess.getIndex().getType();
+        arrayAccess.setType( arrayType.indexing(indexingType) );
+        if(arrayAccess.getType() instanceof ErrorType) {
             arrayAccess.setType(new ErrorType(arrayAccess.getArray().getLine(), arrayAccess.getArray().getColumn()));
             ErrorManager.getInstance().addError(new Error(arrayAccess.getArray(), ErrorReason.INVALID_INDEXING));
-            return null;
-        } else {
-            arrayAccess.setType( arrayAccess.getArray().getType() );
         }
 
         return null;
@@ -69,9 +67,15 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
         super.visit(cast, param);
         cast.setLvalue(false);
 
-        cast.setType( cast.getCastType().cast(cast.getExpression().getType()) );
-        if( cast.getType() instanceof ErrorType )
+        Type fromCastType = cast.getExpression().getType();
+        Type toCastType = cast.getCastType();
+
+        if(!fromCastType.promotableTo(toCastType)) {
+            cast.setType( new ErrorType(cast.getLine(), cast.getColumn()));
             ErrorManager.getInstance().addError(new Error(cast, ErrorReason.INVALID_CAST));
+        } else {
+            cast.setType( fromCastType.cast(toCastType) );
+        }
 
         return null;
     }
@@ -146,6 +150,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
         super.visit(variable, param);
         variable.setLvalue(true);
         variable.setType(variable.getDefinition().getType());
+        System.out.println(String.format("assigned %s -> %s", variable.getName(), variable.getType()));
         return null;
     }
 

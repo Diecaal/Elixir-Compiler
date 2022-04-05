@@ -32,15 +32,6 @@ public class IntType extends AbstractType {
     }
 
     @Override
-    public Type cast(Type from) {
-        if(from instanceof IntType || from instanceof CharType)
-            return from;
-        else if(from instanceof DoubleType)
-            return new IntType(from.getLine(), from.getColumn());
-        return super.cast(from);
-    }
-
-    @Override
     public boolean isArithmetic() {
         return true;
     }
@@ -53,6 +44,23 @@ public class IntType extends AbstractType {
     @Override
     public boolean isIndexable() {
         return true;
+    }
+
+    @Override
+    public boolean promotableTo(Type to) {
+        if(to instanceof DoubleType || to instanceof CharType || to instanceof IntType)
+            return true;
+
+        return super.promotableTo(to);
+    }
+
+    @Override
+    public Type cast(Type toCast) {
+        if(toCast instanceof IntType || toCast instanceof CharType)
+            return this;
+        else if(toCast instanceof DoubleType)
+            return new DoubleType(toCast.getLine(), toCast.getColumn());
+        return super.cast(toCast);
     }
 
     @Override

@@ -7,7 +7,7 @@ public interface Type extends ASTNode {
     Type logical(Type otherType);
     Type indexing(Type indexType);
     Type dot(Type field);
-    Type cast(Type from);
+    Type cast(Type toCast);
     Type comparison(Type otherType);
 
     boolean promotableTo(Type to);

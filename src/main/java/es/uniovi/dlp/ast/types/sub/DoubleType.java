@@ -25,11 +25,21 @@ public class DoubleType extends AbstractType {
     }
 
     @Override
-    public Type cast(Type from) {
-        if(from instanceof DoubleType)
-            return from;
+    public boolean promotableTo(Type to) {
+        if(to instanceof IntType || to instanceof DoubleType)
+            return true;
 
-        return super.cast(from);
+        return super.promotableTo(to);
+    }
+
+    @Override
+    public Type cast(Type toCast) {
+        if(toCast instanceof DoubleType)
+            return this;
+        else if(toCast instanceof IntType)
+            return new IntType(getLine(), getColumn());
+
+        return super.cast(toCast);
     }
 
     @Override

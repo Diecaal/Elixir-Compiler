@@ -30,7 +30,7 @@ public abstract class AbstractType extends AbstractASTNode implements Type {
     }
 
     @Override
-    public Type cast(Type from) {
+    public Type cast(Type toCast) {
         return new ErrorType(getLine(), getColumn());
     }
 
