@@ -1,0 +1,13 @@
+i :: char
+j :: int
+
+def suma(a :: int, b :: double) :: double do
+  real :: double
+  letra :: char
+  return a + b
+end
+
+
+def main() do
+    suma(1, 2.0)
+end

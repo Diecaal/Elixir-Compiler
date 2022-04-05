@@ -17,7 +17,7 @@ Este es el proyecto base que servirá para implementar un compilador durante el 
 - [x] [Laboratorio 7 - Identificación de LValue](docs/labs/lab_07.md)
 - [x] [Laboratorio 8 - Fase de identificación](docs/labs/lab_08.md)
 - [x] [Laboratorio 9 - Comprobación de tipos](docs/labs/lab_09.md)
-- [ ] Laboratorio 10 - Cálculo de offsets
+- [x] [Laboratorio 10 - Cálculo de offsets](docs/labs/lab_10.md)
 - [ ] Laboratorio 11 - Generación de código I
 - [ ] Laboratorio 12 - Generación de código II
 - [ ] Laboratorio 13 - Generación de código III
