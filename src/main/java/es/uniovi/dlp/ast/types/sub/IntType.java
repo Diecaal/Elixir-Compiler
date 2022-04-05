@@ -19,9 +19,16 @@ public class IntType extends AbstractType {
         if(otherType instanceof CharType || otherType instanceof IntType) {
             return this;
         } else if(otherType instanceof DoubleType) {
-            return otherType;
+            return new DoubleType(getLine(), getColumn());
         }
         return super.arithmetic(otherType);
+    }
+
+    @Override
+    public Type logical(Type otherType) {
+        if(otherType.isLogical())
+            return this;
+        return super.logical(otherType);
     }
 
     @Override
@@ -35,6 +42,16 @@ public class IntType extends AbstractType {
 
     @Override
     public boolean isArithmetic() {
+        return true;
+    }
+
+    @Override
+    public boolean isLogical() {
+        return true;
+    }
+
+    @Override
+    public boolean isIndexable() {
         return true;
     }
 

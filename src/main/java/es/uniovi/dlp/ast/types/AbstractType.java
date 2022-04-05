@@ -11,34 +11,22 @@ public abstract class AbstractType extends AbstractASTNode implements Type {
 
     @Override
     public Type arithmetic(Type otherType) {
-        if(otherType instanceof ErrorType) {
-            return otherType;
-        }
-        return null;
+        return new ErrorType(otherType.getLine(), otherType.getColumn());
     }
 
     @Override
     public Type logical(Type otherType) {
-        if(otherType instanceof ErrorType) {
-            return otherType;
-        }
-        return null;
+        return new ErrorType(otherType.getLine(), otherType.getColumn());
     }
 
     @Override
     public Type indexing(Type indexType) {
-        if(indexType instanceof ErrorType) {
-            return indexType;
-        }
-        return null;
+        return new ErrorType(indexType.getLine(), indexType.getColumn());
     }
 
     @Override
     public Type dot(Type field) {
-        if(field instanceof ErrorType) {
-            return field;
-        }
-        return null;
+        return new ErrorType(field.getLine(), field.getColumn());
     }
 
     @Override
@@ -78,4 +66,5 @@ public abstract class AbstractType extends AbstractASTNode implements Type {
     public boolean allowDot() {
         return false;
     }
+
 }

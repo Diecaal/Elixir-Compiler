@@ -23,6 +23,11 @@ public class ArrayType extends AbstractType {
     }
 
     @Override
+    public Type indexing(Type indexType) {
+        return arrayType;
+    }
+
+    @Override
     public String toString() {
         return String.format("[%s :: %s]", String.valueOf(length), arrayType.toString());
     }

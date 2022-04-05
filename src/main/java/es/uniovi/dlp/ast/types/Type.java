@@ -3,7 +3,6 @@ package es.uniovi.dlp.ast.types;
 import es.uniovi.dlp.ast.ASTNode;
 
 public interface Type extends ASTNode {
-    // definir metodos aqui, luego al albstract (error default behaviour), luego subclases
     Type arithmetic(Type otherType);
     Type logical(Type otherType);
     Type indexing(Type indexType);

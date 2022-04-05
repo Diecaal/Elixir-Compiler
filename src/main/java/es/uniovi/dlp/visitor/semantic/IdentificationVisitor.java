@@ -1,5 +1,6 @@
 package es.uniovi.dlp.visitor.semantic;
 
+import es.uniovi.dlp.ast.definitions.Definition;
 import es.uniovi.dlp.ast.definitions.sub.FunctionDefinition;
 import es.uniovi.dlp.ast.definitions.sub.VariableDefinition;
 import es.uniovi.dlp.ast.expressions.sub.Variable;
@@ -43,10 +44,14 @@ public class IdentificationVisitor extends AbstractVisitor<Type, Type> {
 
     @Override
     public Type visit(Variable variable, Type param) {
-        if(table.find(variable.getName()) == null) {
+        Definition def = table.find(variable.getName());
+        if(def == null) {
             ErrorManager.getInstance().addError( new Error(variable, ErrorReason.VARIABLE_NOT_DECLARED) );
         }
-        // Assign variableDefinition to found variable if correct finding
+        else { // Assign variableDefinition to found variable if correct finding
+            if(variable.getDefinition() == null)
+                variable.setDefinition(def);
+        }
 
         return super.visit(variable, param);
     }

@@ -19,7 +19,7 @@ public class DoubleType extends AbstractType {
         if(otherType instanceof DoubleType) {
             return this;
         } else if(otherType instanceof IntType) {
-            return otherType;
+            return new DoubleType(otherType.getLine(), otherType.getColumn());
         }
         return super.arithmetic(otherType);
     }

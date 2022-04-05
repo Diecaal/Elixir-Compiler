@@ -1,6 +1,5 @@
 package es.uniovi.dlp.visitor.semantic;
 
-import es.uniovi.dlp.ast.Program;
 import es.uniovi.dlp.ast.definitions.sub.FunctionDefinition;
 import es.uniovi.dlp.ast.definitions.sub.VariableDefinition;
 import es.uniovi.dlp.ast.expressions.sub.*;
@@ -35,8 +34,8 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
 
         arithmetic.setType( arithmetic.getLeftExpression().getType().arithmetic(arithmetic.getRightExpression().getType()) );
 
-        if(!arithmetic.getType().isArithmetic())
-            ErrorManager.getInstance().addError( new Error(arithmetic, ErrorReason.INVALID_ARITHMETIC) );
+        if(arithmetic.getType() instanceof ErrorType)
+            ErrorManager.getInstance().addError( new Error(arithmetic.getRightExpression(), ErrorReason.INVALID_ARITHMETIC) );
 
         return null;
     }
@@ -45,6 +44,22 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
     public Type visit(ArrayAccess arrayAccess, Type param) {
         super.visit(arrayAccess, param);
         arrayAccess.setLvalue(true);
+
+        /* BAD STRUCTURE working -> now refactor */
+
+        if(!arrayAccess.getIndex().getType().isIndexable()) {
+            arrayAccess.setType(new ErrorType(arrayAccess.getIndex().getLine(), arrayAccess.getIndex().getColumn()));
+            ErrorManager.getInstance().addError(new Error(arrayAccess.getIndex(), ErrorReason.INVALID_INDEX_EXPRESSION));
+            return null;
+        }
+
+        if(!(arrayAccess.getArray().getType() instanceof ArrayType)) {
+            arrayAccess.setType(new ErrorType(arrayAccess.getArray().getLine(), arrayAccess.getArray().getColumn()));
+            ErrorManager.getInstance().addError(new Error(arrayAccess.getArray(), ErrorReason.INVALID_INDEXING));
+            return null;
+        } else {
+            arrayAccess.setType( arrayAccess.getArray().getType() );
+        }
 
         return null;
     }
@@ -65,6 +80,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
     public Type visit(CharLiteral charLiteral, Type param) {
         super.visit(charLiteral, param);
         charLiteral.setLvalue(false);
+        charLiteral.setType( new CharType(charLiteral.getLine(), charLiteral.getColumn()));
         return null;
     }
 
@@ -72,6 +88,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
     public Type visit(DoubleLiteral doubleLiteral, Type param) {
         super.visit(doubleLiteral, param);
         doubleLiteral.setLvalue(false);
+        doubleLiteral.setType( new DoubleType(doubleLiteral.getLine(), doubleLiteral.getColumn()));
         return null;
     }
 
@@ -79,6 +96,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
     public Type visit(IntLiteral intLiteral, Type param) {
         super.visit(intLiteral, param);
         intLiteral.setLvalue(false);
+        intLiteral.setType( new IntType(intLiteral.getLine(), intLiteral.getColumn()));
         return null;
     }
 
@@ -86,6 +104,9 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
     public Type visit(Logical logical, Type param) {
         super.visit(logical, param);
         logical.setLvalue(false);
+
+        logical.setType(logical.getLeftExpression().getType().logical(logical.getRightExpression().getType()));
+
         return null;
     }
 
@@ -124,6 +145,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
     public Type visit(Variable variable, Type param) {
         super.visit(variable, param);
         variable.setLvalue(true);
+        variable.setType(variable.getDefinition().getType());
         return null;
     }
 
@@ -147,6 +169,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
 
     @Override
     public Type visit(If ifStm, Type param) {
+        super.visit(ifStm, param);
         return null;
     }
 
@@ -162,6 +185,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
 
     @Override
     public Type visit(Return returnStm, Type param) {
+        super.visit(returnStm, param);
         return null;
     }
 
@@ -172,6 +196,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
 
     @Override
     public Type visit(Write write, Type param) {
+        super.visit(write, param);
         return null;
     }
 
@@ -179,41 +204,49 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
 
     @Override
     public Type visit(ArrayType arrayType, Type param) {
+        super.visit(arrayType, param);
         return null;
     }
 
     @Override
     public Type visit(CharType charType, Type param) {
+        super.visit(charType, param);
         return null;
     }
 
     @Override
     public Type visit(DoubleType doubleType, Type param) {
+        super.visit(doubleType, param);
         return null;
     }
 
     @Override
     public Type visit(FunctionType functionType, Type param) {
+        super.visit(functionType, param);
         return null;
     }
 
     @Override
     public Type visit(IntType intType, Type param) {
+        super.visit(intType, param);
         return null;
     }
 
     @Override
     public Type visit(RecordType recordType, Type param) {
+        super.visit(recordType, param);
         return null;
     }
 
     @Override
     public Type visit(StructType structType, Type param) {
+        super.visit(structType, param);
         return null;
     }
 
     @Override
     public Type visit(VoidType voidType, Type param) {
+        super.visit(voidType, param);
         return null;
     }
 }
