@@ -7,6 +7,7 @@ import es.uniovi.dlp.visitor.AbstractVisitor;
 public class RecordType extends AbstractType {
     private Type type;
     private String name;
+    private int offset;
 
     public RecordType(int line, int column, Type type, String name) {
         super(line, column);
@@ -22,9 +23,22 @@ public class RecordType extends AbstractType {
         return name;
     }
 
+    public int getOffset() {
+        return offset;
+    }
+
+    public void setOffset(int offset) {
+        this.offset = offset;
+    }
+
     @Override
     public String toString() {
         return String.format("%s :: %s", name, type.toString());
+    }
+
+    @Override
+    public int getNumberBytes() {
+        return type.getNumberBytes();
     }
 
     @Override

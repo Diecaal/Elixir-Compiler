@@ -24,7 +24,7 @@ elif (( $choice == 5)) ; then
 	echo "Enter file to perform introspect (examples dir as root)"
 	cd ..
 	read filePath
-	mvn clean antlr4:antlr4 test-compile exec:java -Dexec.classpathScope=test -Dexec.mainClass="es.uniovi.dlp.parser.RunIntrospector" -Dexec.args="examples/${filePath}"
+	bin/xana.bat examples/${filePath} --introspector
 else
     echo "Invalid choice!!"
 fi

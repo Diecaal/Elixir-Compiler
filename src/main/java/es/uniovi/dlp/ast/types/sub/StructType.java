@@ -40,6 +40,13 @@ public class StructType extends AbstractType {
         return String.format("defstruct do %s \nend", recordStr);
     }
 
+    @Override
+    public int getNumberBytes() {
+        int numBytes = 0;
+        for(RecordType record : getRecords())
+            numBytes += record.getNumberBytes();
+        return numBytes;
+    }
 
     @Override
     public <ReturnType, ParamType> ReturnType accept(AbstractVisitor<ReturnType, ParamType> visitor, ParamType param) {

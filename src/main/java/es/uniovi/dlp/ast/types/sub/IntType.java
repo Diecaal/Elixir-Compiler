@@ -64,6 +64,11 @@ public class IntType extends AbstractType {
     }
 
     @Override
+    public int getNumberBytes() {
+        return 2;
+    }
+
+    @Override
     public <ReturnType, ParamType> ReturnType accept(AbstractVisitor<ReturnType, ParamType> visitor, ParamType param) {
         return visitor.visit(this, param);
     }

@@ -67,4 +67,8 @@ public abstract class AbstractType extends AbstractASTNode implements Type {
         return false;
     }
 
+    @Override
+    public int getNumberBytes() {
+        return 0;
+    }
 }

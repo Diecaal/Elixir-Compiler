@@ -28,6 +28,11 @@ public class ArrayType extends AbstractType {
     }
 
     @Override
+    public int getNumberBytes() {
+        return arrayType.getNumberBytes() * length;
+    }
+
+    @Override
     public String toString() {
         return String.format("[%s :: %s]", String.valueOf(length), arrayType.toString());
     }

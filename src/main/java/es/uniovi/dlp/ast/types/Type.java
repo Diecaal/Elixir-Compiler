@@ -15,4 +15,6 @@ public interface Type extends ASTNode {
     boolean isIndexable();
     boolean isArithmetic();
     boolean allowDot();
+
+    int getNumberBytes();
 }

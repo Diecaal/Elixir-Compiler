@@ -48,6 +48,11 @@ public class DoubleType extends AbstractType {
     }
 
     @Override
+    public int getNumberBytes() {
+        return 4;
+    }
+
+    @Override
     public <ReturnType, ParamType> ReturnType accept(AbstractVisitor<ReturnType, ParamType> visitor, ParamType param) {
         return visitor.visit(this, param);
     }
