@@ -1,5 +1,6 @@
 package es.uniovi.dlp.ast.types.sub;
 
+import es.uniovi.dlp.ast.ASTNode;
 import es.uniovi.dlp.ast.types.AbstractType;
 import es.uniovi.dlp.ast.types.Type;
 import es.uniovi.dlp.visitor.AbstractVisitor;
@@ -10,11 +11,11 @@ public class CharType extends AbstractType {
     }
 
     @Override
-    public Type arithmetic(Type otherType) {
+    public Type arithmetic(Type otherType, ASTNode ast) {
         if(otherType instanceof CharType) {
             return new CharType(otherType.getLine(), otherType.getColumn());
         }
-        return super.arithmetic(otherType);
+        return super.arithmetic(otherType, ast);
     }
 
     @Override
@@ -31,11 +32,11 @@ public class CharType extends AbstractType {
     }
 
     @Override
-    public Type cast(Type toCast) {
+    public Type cast(Type toCast, ASTNode ast) {
         if(toCast instanceof CharType || toCast instanceof IntType)
             return toCast;
 
-        return super.cast(toCast);
+        return super.cast(toCast, ast);
     }
 
     @Override

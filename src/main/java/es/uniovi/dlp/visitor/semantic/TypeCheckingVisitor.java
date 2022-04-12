@@ -32,7 +32,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
         super.visit(arithmetic, param);
         arithmetic.setLvalue(false);
 
-        arithmetic.setType( arithmetic.getLeftExpression().getType().arithmetic(arithmetic.getRightExpression().getType()) );
+        arithmetic.setType( arithmetic.getLeftExpression().getType().arithmetic(arithmetic.getRightExpression().getType(), arithmetic) );
 
         if(arithmetic.getType() instanceof ErrorType)
             ErrorManager.getInstance().addError( new Error(arithmetic.getRightExpression(), ErrorReason.INVALID_ARITHMETIC) );
@@ -45,18 +45,16 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
         super.visit(arrayAccess, param);
         arrayAccess.setLvalue(true);
 
-        if(!arrayAccess.getIndex().getType().isIndexable()) {
-            arrayAccess.setType(new ErrorType(arrayAccess.getIndex().getLine(), arrayAccess.getIndex().getColumn()));
-            ErrorManager.getInstance().addError(new Error(arrayAccess.getIndex(), ErrorReason.INVALID_INDEX_EXPRESSION));
-            return null;
-        }
-
         Type arrayType = arrayAccess.getArray().getType();
         Type indexingType = arrayAccess.getIndex().getType();
-        arrayAccess.setType( arrayType.indexing(indexingType) );
-        if(arrayAccess.getType() instanceof ErrorType) {
-            arrayAccess.setType(new ErrorType(arrayAccess.getArray().getLine(), arrayAccess.getArray().getColumn()));
-            ErrorManager.getInstance().addError(new Error(arrayAccess.getArray(), ErrorReason.INVALID_INDEXING));
+        arrayAccess.setType( arrayType.indexing(indexingType,arrayAccess) );
+
+        if(arrayAccess.getType().isError()) {
+            Type err = arrayAccess.getType();
+            if(!arrayAccess.getIndex().getType().isIndexable())
+                ErrorManager.getInstance().addError(new Error(arrayAccess.getIndex().getLine(), arrayAccess.getIndex().getColumn(), ErrorReason.INVALID_INDEX_EXPRESSION));
+            else
+                ErrorManager.getInstance().addError(new Error(err.getLine(), err.getColumn(), ErrorReason.INVALID_INDEXING));
         }
 
         return null;
@@ -69,12 +67,11 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
 
         Type fromCastType = cast.getExpression().getType();
         Type toCastType = cast.getCastType();
+        cast.setType(fromCastType.cast(toCastType, cast));
 
-        if(!fromCastType.promotableTo(toCastType)) {
-            cast.setType( new ErrorType(cast.getLine(), cast.getColumn()));
-            ErrorManager.getInstance().addError(new Error(cast, ErrorReason.INVALID_CAST));
-        } else {
-            cast.setType( fromCastType.cast(toCastType) );
+        if(cast.getType().isError()) {
+            Type err = cast.getType();
+            ErrorManager.getInstance().addError(new Error(err.getLine(), err.getColumn(), ErrorReason.INVALID_CAST));
         }
 
         return null;
@@ -109,8 +106,13 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
         super.visit(logical, param);
         logical.setLvalue(false);
 
-        logical.setType(logical.getLeftExpression().getType().logical(logical.getRightExpression().getType()));
+        Type left = logical.getLeftExpression().getType();
+        Type right = logical.getRightExpression().getType();
+        logical.setType(left.logical(right, logical));
 
+        if(logical.getType().isError()) {
+
+        }
         return null;
     }
 
@@ -119,7 +121,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
         super.visit(relational, param);
         relational.setLvalue(false);
 
-        relational.setType( relational.getLeftExpression().getType().comparison(relational.getRightExpression().getType()) );
+        relational.setType( relational.getLeftExpression().getType().comparison(relational.getRightExpression().getType(), relational) );
 
         return null;
     }
@@ -128,6 +130,9 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
     public Type visit(StructAccess structAccess, Type param) {
         super.visit(structAccess, param);
         structAccess.setLvalue(true);
+
+        structAccess.setType(structAccess.getStruct().getType().dot(structAccess.getField(), structAccess));
+
         return null;
     }
 
@@ -150,7 +155,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
         super.visit(variable, param);
         variable.setLvalue(true);
         variable.setType(variable.getDefinition().getType());
-        System.out.println(String.format("assigned %s -> %s", variable.getName(), variable.getType()));
+        //System.out.println(String.format("assigned %s -> %s", variable.getName(), variable.getType()));
         return null;
     }
 
@@ -166,9 +171,12 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
     @Override
     public Type visit(Assignment assignment, Type param) {
         super.visit(assignment, param);
-        if(!assignment.getLeftExpression().getLvalue()) {
+        if(!assignment.getLeftExpression().getLvalue())
             ErrorManager.getInstance().addError( new Error(assignment.getLeftExpression(), ErrorReason.LVALUE_REQUIRED) );
-        }
+
+        Type leftType = assignment.getLeftExpression().getType();
+        Type rightType = assignment.getRightExpression().getType();
+
         return null;
     }
 

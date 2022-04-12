@@ -21,6 +21,11 @@ public class ErrorType extends AbstractType {
     }
 
     @Override
+    public boolean isError() {
+        return true;
+    }
+
+    @Override
     public <ReturnType, ParamType> ReturnType accept(AbstractVisitor<ReturnType, ParamType> visitor, ParamType param) {
         return visitor.visit(this, param);
     }

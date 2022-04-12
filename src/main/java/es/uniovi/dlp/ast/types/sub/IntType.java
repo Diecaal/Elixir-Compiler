@@ -1,5 +1,6 @@
 package es.uniovi.dlp.ast.types.sub;
 
+import es.uniovi.dlp.ast.ASTNode;
 import es.uniovi.dlp.ast.types.AbstractType;
 import es.uniovi.dlp.ast.types.Type;
 import es.uniovi.dlp.visitor.AbstractVisitor;
@@ -15,20 +16,20 @@ public class IntType extends AbstractType {
     }
 
     @Override
-    public Type arithmetic(Type otherType) {
+    public Type arithmetic(Type otherType, ASTNode ast) {
         if(otherType instanceof CharType || otherType instanceof IntType) {
             return this;
         } else if(otherType instanceof DoubleType) {
             return new DoubleType(getLine(), getColumn());
         }
-        return super.arithmetic(otherType);
+        return super.arithmetic(otherType, ast);
     }
 
     @Override
-    public Type logical(Type otherType) {
+    public Type logical(Type otherType, ASTNode ast) {
         if(otherType.isLogical())
             return this;
-        return super.logical(otherType);
+        return super.logical(otherType, ast);
     }
 
     @Override
@@ -55,12 +56,12 @@ public class IntType extends AbstractType {
     }
 
     @Override
-    public Type cast(Type toCast) {
+    public Type cast(Type toCast, ASTNode ast) {
         if(toCast instanceof IntType || toCast instanceof CharType)
             return this;
         else if(toCast instanceof DoubleType)
             return new DoubleType(toCast.getLine(), toCast.getColumn());
-        return super.cast(toCast);
+        return super.cast(toCast, ast);
     }
 
     @Override

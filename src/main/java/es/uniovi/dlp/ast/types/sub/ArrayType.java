@@ -1,5 +1,6 @@
 package es.uniovi.dlp.ast.types.sub;
 
+import es.uniovi.dlp.ast.ASTNode;
 import es.uniovi.dlp.ast.types.AbstractType;
 import es.uniovi.dlp.ast.types.Type;
 import es.uniovi.dlp.visitor.AbstractVisitor;
@@ -23,8 +24,11 @@ public class ArrayType extends AbstractType {
     }
 
     @Override
-    public Type indexing(Type indexType) {
-        return arrayType;
+    public Type indexing(Type indexType, ASTNode ast) {
+        if(indexType.isIndexable())
+            return arrayType;
+
+        return super.indexing(indexType, ast);
     }
 
     @Override

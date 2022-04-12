@@ -1,5 +1,6 @@
 package es.uniovi.dlp.ast.types;
 
+import es.uniovi.dlp.ast.ASTNode;
 import es.uniovi.dlp.ast.AbstractASTNode;
 import es.uniovi.dlp.ast.types.sub.ErrorType;
 
@@ -10,36 +11,38 @@ public abstract class AbstractType extends AbstractASTNode implements Type {
     }
 
     @Override
-    public Type arithmetic(Type otherType) {
-        return new ErrorType(otherType.getLine(), otherType.getColumn());
+    public Type arithmetic(Type otherType, ASTNode ast) {
+        return new ErrorType(ast.getLine(), ast.getColumn());
     }
 
     @Override
-    public Type logical(Type otherType) {
-        return new ErrorType(otherType.getLine(), otherType.getColumn());
+    public Type logical(Type otherType, ASTNode ast) {
+        return new ErrorType(ast.getLine(), ast.getColumn());
     }
 
     @Override
-    public Type indexing(Type indexType) {
-        return new ErrorType(indexType.getLine(), indexType.getColumn());
+    public Type indexing(Type indexType, ASTNode ast) {
+        return new ErrorType(ast.getLine(), ast.getColumn());
     }
 
     @Override
-    public Type dot(Type field) {
-        return new ErrorType(field.getLine(), field.getColumn());
+    public Type dot(String field, ASTNode ast) {
+        return new ErrorType(ast.getLine(), ast.getColumn());
     }
 
     @Override
-    public Type cast(Type toCast) {
-        return new ErrorType(getLine(), getColumn());
+    public Type cast(Type toCast, ASTNode ast) {
+        return new ErrorType(ast.getLine(), ast.getColumn());
     }
 
     @Override
-    public Type comparison(Type otherType) {
-        if(otherType instanceof ErrorType) {
-            return otherType;
-        }
-        return null;
+    public Type comparison(Type otherType, ASTNode ast) {
+        return new ErrorType(ast.getLine(), ast.getColumn());
+    }
+
+    @Override
+    public Type assignment(Type rightType, ASTNode ast) {
+        return new ErrorType(ast.getLine(), ast.getColumn());
     }
 
     @Override
@@ -64,6 +67,11 @@ public abstract class AbstractType extends AbstractASTNode implements Type {
 
     @Override
     public boolean allowDot() {
+        return false;
+    }
+
+    @Override
+    public boolean isError() {
         return false;
     }
 

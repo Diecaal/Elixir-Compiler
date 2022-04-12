@@ -19,10 +19,7 @@ elif (( $choice == 3 )) ; then
 elif (( $choice == 4)) ; then
 	mvn clean antlr4:antlr4
 elif (( $choice == 5)) ; then
-	cd examples
-	cmd //c tree //f
 	echo "Enter file to perform introspect (examples dir as root)"
-	cd ..
 	read filePath
 	bin/xana.bat examples/${filePath} --introspector
 else
