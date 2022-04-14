@@ -61,7 +61,7 @@ functionParameters returns[List<VariableDefinition> ast =  new ArrayList<Variabl
 mainFunction returns[FunctionDefinition ast]
              locals[List<VariableDefinition> varDefs =  new ArrayList<VariableDefinition>(),
                     List<Statement> statements =  new ArrayList<Statement>()]
-             : 'def' 'main' '(' ')' 'do' (var=variableDefinition { $varDefs.addAll( $var.ast ); })* (s=statement { $statements.addAll( $s.ast); })* 'end'
+             : 'def' 'main' '(' ')' 'do' (var=variableDefinition { $varDefs.addAll( $var.ast ); } | s=statement { $statements.addAll( $s.ast); })* 'end'
               { $ast = new FunctionDefinition($start.getLine(), $start.getCharPositionInLine() + 1,
                                               new FunctionType($start.getLine(), $start.getCharPositionInLine(), new ArrayList<VariableDefinition>(),
                                                                 new VoidType($start.getLine(), $start.getCharPositionInLine())

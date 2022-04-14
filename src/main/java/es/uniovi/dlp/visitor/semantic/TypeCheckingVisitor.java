@@ -111,7 +111,11 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
         logical.setType(left.logical(right, logical));
 
         if(logical.getType().isError()) {
-
+            Type err = logical.getType();
+            if(!logical.getLeftExpression().getType().isLogical() || !logical.getRightExpression().getType().isLogical())
+                ErrorManager.getInstance().addError(new Error(err.getLine(), err.getColumn(), ErrorReason.NOT_LOGICAL));
+            else
+                ErrorManager.getInstance().addError(new Error(err.getLine(), err.getColumn(), ErrorReason.INVALID_LOGICAL));
         }
         return null;
     }
