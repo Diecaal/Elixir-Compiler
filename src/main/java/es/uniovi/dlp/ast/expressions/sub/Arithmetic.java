@@ -9,11 +9,19 @@ public class Arithmetic extends AbstractExpression {
     private Expression leftExpression;
     private Expression rightExpression;
 
+    private int[] operatorPosition = new int[2];
+
     public Arithmetic(int line, int column, Expression leftExpression, String operator, Expression rightExpression) {
         super(line, column);
         this.leftExpression = leftExpression;
         this.operator = operator;
         this.rightExpression = rightExpression;
+    }
+
+    public Arithmetic(int line, int column, Expression leftExpression, String operator, int operatorLine, int operatorColumn, Expression rightExpression) {
+        this(line,column,leftExpression,operator,rightExpression);
+        operatorPosition[0] = operatorLine;
+        operatorPosition[1] = operatorColumn;
     }
 
     @Override
@@ -23,6 +31,14 @@ public class Arithmetic extends AbstractExpression {
 
     public String getOperator() {
         return operator;
+    }
+
+    public int getOperatorLine() {
+        return operatorPosition[0];
+    }
+
+    public int getOperatorColumn() {
+        return operatorPosition[1];
     }
 
     public Expression getLeftExpression() {

@@ -16,6 +16,15 @@ public class IntType extends AbstractType {
     }
 
     @Override
+    public Type assignment(Type rightType, ASTNode ast) {
+        if(rightType instanceof IntType)
+            return this;
+        if(rightType instanceof CharType)
+            return new CharType(ast.getLine(), ast.getColumn());
+        return super.assignment(rightType, ast);
+    }
+
+    @Override
     public Type arithmetic(Type otherType, ASTNode ast) {
         if(otherType instanceof CharType || otherType instanceof IntType) {
             return this;
@@ -48,20 +57,19 @@ public class IntType extends AbstractType {
     }
 
     @Override
-    public boolean promotableTo(Type to) {
-        if(to instanceof DoubleType || to instanceof CharType || to instanceof IntType)
-            return true;
-
-        return super.promotableTo(to);
-    }
-
-    @Override
     public Type cast(Type toCast, ASTNode ast) {
         if(toCast instanceof IntType || toCast instanceof CharType)
             return this;
         else if(toCast instanceof DoubleType)
             return new DoubleType(toCast.getLine(), toCast.getColumn());
         return super.cast(toCast, ast);
+    }
+
+    @Override
+    public Type comparison(Type otherType, ASTNode ast) {
+        if(otherType instanceof IntType || otherType instanceof CharType || otherType instanceof DoubleType)
+            return this;
+        return super.comparison(otherType, ast);
     }
 
     @Override

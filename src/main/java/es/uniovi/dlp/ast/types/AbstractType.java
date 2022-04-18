@@ -2,7 +2,10 @@ package es.uniovi.dlp.ast.types;
 
 import es.uniovi.dlp.ast.ASTNode;
 import es.uniovi.dlp.ast.AbstractASTNode;
+import es.uniovi.dlp.ast.expressions.Expression;
 import es.uniovi.dlp.ast.types.sub.ErrorType;
+
+import java.util.List;
 
 public abstract class AbstractType extends AbstractASTNode implements Type {
 
@@ -46,8 +49,15 @@ public abstract class AbstractType extends AbstractASTNode implements Type {
     }
 
     @Override
-    public boolean promotableTo(Type to) {
-        return false;
+    public Type invocation(List<Expression> parameters, ASTNode ast) {
+        return new ErrorType(ast.getLine(), ast.getColumn());
+    }
+
+    @Override
+    public Type typesMatch(Type otherType, ASTNode ast) {
+        if(this.getClass().equals(otherType.getClass()))
+            return this;
+        return new ErrorType(ast.getLine(), ast.getColumn());
     }
 
     @Override
@@ -67,6 +77,11 @@ public abstract class AbstractType extends AbstractASTNode implements Type {
 
     @Override
     public boolean allowDot() {
+        return false;
+    }
+
+    @Override
+    public boolean isInvocable() {
         return false;
     }
 

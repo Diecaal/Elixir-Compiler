@@ -16,21 +16,24 @@ public class DoubleType extends AbstractType {
     }
 
     @Override
-    public Type arithmetic(Type otherType, ASTNode ast) {
-        if(otherType instanceof DoubleType) {
+    public Type assignment(Type rightType, ASTNode ast) {
+        if(rightType instanceof DoubleType)
             return this;
-        } else if(otherType instanceof IntType) {
-            return new DoubleType(otherType.getLine(), otherType.getColumn());
-        }
-        return super.arithmetic(otherType, ast);
+        else if(rightType instanceof IntType)
+            return new IntType(ast.getLine(), ast.getColumn());
+        else if(rightType instanceof CharType)
+            return new CharType(ast.getLine(), ast.getColumn());
+        return super.assignment(rightType, ast);
     }
 
     @Override
-    public boolean promotableTo(Type to) {
-        if(to instanceof IntType || to instanceof DoubleType)
-            return true;
+    public Type arithmetic(Type otherType, ASTNode ast) {
+        if(otherType instanceof DoubleType)
+            return this;
+        else if(otherType instanceof IntType)
+            return new DoubleType(otherType.getLine(), otherType.getColumn());
 
-        return super.promotableTo(to);
+        return super.arithmetic(otherType, ast);
     }
 
     @Override
@@ -41,6 +44,13 @@ public class DoubleType extends AbstractType {
             return new IntType(getLine(), getColumn());
 
         return super.cast(toCast, ast);
+    }
+
+    @Override
+    public Type comparison(Type otherType, ASTNode ast) {
+        if(otherType instanceof DoubleType || otherType instanceof IntType)
+            return this;
+        return super.comparison(otherType, ast);
     }
 
     @Override

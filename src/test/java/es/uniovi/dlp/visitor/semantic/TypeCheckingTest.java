@@ -1,10 +1,17 @@
 package es.uniovi.dlp.visitor.semantic;
 
 import es.uniovi.dlp.error.Error;
+import es.uniovi.dlp.error.ErrorManager;
 import es.uniovi.dlp.error.ErrorReason;
+import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static es.uniovi.dlp.TestHelpers.assertFoundErrors;
 import static es.uniovi.dlp.TestHelpers.runCompiler;
@@ -103,6 +110,7 @@ public class TypeCheckingTest {
     @Test
     void severalErrors() {
         runCompiler("examples/errors/types/several_errors.xana");
+        Collections.sort(ErrorManager.getInstance().getErrors());
         assertFoundErrors(Arrays.asList(
                 new Error(9, 5, ErrorReason.FIELD_ALREADY_DECLARED),
                 new Error(13, 5, ErrorReason.VARIABLE_ALREADY_DECLARED),

@@ -5,7 +5,7 @@ def main() do
 
     id = 1
     real = 2
-    real = id
+    real = id # real var is set to int type?
     id = 10.2 # Error
     letter = id # Error
     letter = 12.2 # Error

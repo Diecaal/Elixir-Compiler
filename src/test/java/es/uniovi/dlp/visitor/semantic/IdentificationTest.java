@@ -58,7 +58,6 @@ public class IdentificationTest {
     @Test
     void identificationErrors() {
         runCompiler("examples/errors/identification/several_errors.xana");
-        ErrorManager.getInstance().getErrors().forEach(error -> System.out.println(error));
         assertFoundErrors(Arrays.asList(
                 new Error(3, 7, ErrorReason.VARIABLE_ALREADY_DECLARED),
                 new Error(6, 3, ErrorReason.VARIABLE_ALREADY_DECLARED),

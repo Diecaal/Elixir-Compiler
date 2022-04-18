@@ -45,6 +45,11 @@ public class StructType extends AbstractType {
     }
 
     @Override
+    public boolean allowDot() {
+        return true;
+    }
+
+    @Override
     public String toString() {
         String recordStr = "";
         for(RecordType record : getRecords())

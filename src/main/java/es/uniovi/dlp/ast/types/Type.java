@@ -1,6 +1,9 @@
 package es.uniovi.dlp.ast.types;
 
 import es.uniovi.dlp.ast.ASTNode;
+import es.uniovi.dlp.ast.expressions.Expression;
+
+import java.util.List;
 
 public interface Type extends ASTNode {
     Type arithmetic(Type otherType, ASTNode ast);
@@ -10,13 +13,16 @@ public interface Type extends ASTNode {
     Type cast(Type toCast, ASTNode ast);
     Type comparison(Type otherType, ASTNode ast);
     Type assignment(Type rightType, ASTNode ast);
+    Type invocation(List<Expression> parameters, ASTNode ast);
+    Type typesMatch(Type otherType, ASTNode ast);
 
-    boolean promotableTo(Type to);
     boolean isLogical();
     boolean isIndexable();
     boolean isArithmetic();
     boolean allowDot();
     boolean isError();
+    boolean isInvocable();
 
     int getNumberBytes();
+
 }
