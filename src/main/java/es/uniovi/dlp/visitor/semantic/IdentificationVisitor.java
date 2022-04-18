@@ -31,7 +31,7 @@ public class IdentificationVisitor extends AbstractVisitor<Type, Type> {
             table.reset();
             return null;
         }
-        return super.visit(funcDefinition, param);
+        return null;
     }
 
     @Override

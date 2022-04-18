@@ -3,7 +3,10 @@ package es.uniovi.dlp.error;
 public record Location(int line, int column) implements Comparable<Location>  {
     @Override
     public int compareTo(Location location) {
-        return this.compareTo(location);
+        int comparison = 0;
+        comparison = this.line > location.line ? 1 : -1;
+        if(comparison == 0) comparison = this.column > location.column ? 1 : -1;
+        return comparison;
     }
 
     @Override

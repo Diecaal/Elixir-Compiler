@@ -1,5 +1,6 @@
 package es.uniovi.dlp.ast.types.sub;
 
+import es.uniovi.dlp.ast.ASTNode;
 import es.uniovi.dlp.ast.types.AbstractType;
 import es.uniovi.dlp.error.ErrorReason;
 import es.uniovi.dlp.visitor.AbstractVisitor;
@@ -16,8 +17,17 @@ public class ErrorType extends AbstractType {
         this.errorReason = errorReason;
     }
 
+    public ErrorType(ASTNode ast) {
+        super(ast.getLine(), ast.getColumn());
+    }
+
     public ErrorReason getErrorReason() {
         return errorReason;
+    }
+
+    @Override
+    public boolean isError() {
+        return true;
     }
 
     @Override

@@ -1,6 +1,8 @@
 package es.uniovi.dlp.ast.types.sub;
 
+import es.uniovi.dlp.ast.ASTNode;
 import es.uniovi.dlp.ast.types.AbstractType;
+import es.uniovi.dlp.ast.types.Type;
 import es.uniovi.dlp.error.Error;
 import es.uniovi.dlp.error.ErrorManager;
 import es.uniovi.dlp.error.ErrorReason;
@@ -30,6 +32,21 @@ public class StructType extends AbstractType {
                 ErrorManager.getInstance().addError( new Error(record, ErrorReason.FIELD_ALREADY_DECLARED) );
             }
         }
+    }
+
+    @Override
+    public Type dot(String field, ASTNode ast) {
+        for(RecordType record : getRecords()) {
+            if(record.getName().equals(field))
+                return record.getType();
+        }
+
+        return super.dot(field, ast);
+    }
+
+    @Override
+    public boolean allowDot() {
+        return true;
     }
 
     @Override

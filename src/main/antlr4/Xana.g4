@@ -53,15 +53,15 @@ functionType returns[Type ast]
 
 functionParameters returns[List<VariableDefinition> ast =  new ArrayList<VariableDefinition>()]
                    : { $ast = new ArrayList<VariableDefinition>(); } // No parameters passed to function
-                   | ID '::' t=type { $ast.add( new VariableDefinition($start.getLine(), $start.getCharPositionInLine()+1, $t.ast, $ID.text) ); }
-                     (',' ID '::' t2=type { $ast.add( new VariableDefinition($start.getLine(), $start.getCharPositionInLine()+1, $t2.ast, $ID.text) ); })*
+                   | ID '::' t=type { $ast.add( new VariableDefinition($ID.getLine(), $ID.getCharPositionInLine()+1, $t.ast, $ID.text) ); }
+                     (',' ID '::' t2=type { $ast.add( new VariableDefinition($ID.getLine(), $ID.getCharPositionInLine()+1, $t2.ast, $ID.text) ); })*
                    ;
 
 // DEFINITIONS - Function - Main
 mainFunction returns[FunctionDefinition ast]
              locals[List<VariableDefinition> varDefs =  new ArrayList<VariableDefinition>(),
                     List<Statement> statements =  new ArrayList<Statement>()]
-             : 'def' 'main' '(' ')' 'do' (var=variableDefinition { $varDefs.addAll( $var.ast ); })* (s=statement { $statements.addAll( $s.ast); })* 'end'
+             : 'def' 'main' '(' ')' 'do' (var=variableDefinition { $varDefs.addAll( $var.ast ); } | s=statement { $statements.addAll( $s.ast); })* 'end'
               { $ast = new FunctionDefinition($start.getLine(), $start.getCharPositionInLine() + 1,
                                               new FunctionType($start.getLine(), $start.getCharPositionInLine(), new ArrayList<VariableDefinition>(),
                                                                 new VoidType($start.getLine(), $start.getCharPositionInLine())
@@ -114,13 +114,13 @@ expression returns[Expression ast]
            | '!' expression
             { $ast = new UnaryNegative($start.getLine(), $start.getCharPositionInLine() + 1, $expression.ast); }
            | left=expression op=('*'|'/'|'%') right=expression
-            { $ast = new Arithmetic($start.getLine(), $start.getCharPositionInLine() + 1, $left.ast, $op.getText(), $right.ast); }
+            { $ast = new Arithmetic($start.getLine(), $start.getCharPositionInLine() + 1, $left.ast, $op.getText(), $op.getLine(), $op.getCharPositionInLine() + 1, $right.ast); }
            | left=expression op=('+'|'-') right=expression
-            { $ast = new Arithmetic($start.getLine(), $start.getCharPositionInLine() + 1, $left.ast, $op.getText(), $right.ast); }
+            { $ast = new Arithmetic($start.getLine(), $start.getCharPositionInLine() + 1, $left.ast, $op.getText(), $op.getLine(), $op.getCharPositionInLine() + 1, $right.ast); }
            | left=expression op=('>'|'>='|'<'|'<='|'!='|'==') right=expression
-            { $ast = new Relational($start.getLine(), $start.getCharPositionInLine() + 1, $left.ast, $op.getText(), $right.ast); }
+            { $ast = new Relational($start.getLine(), $start.getCharPositionInLine() + 1, $left.ast, $op.getText(), $op.getLine(), $op.getCharPositionInLine() + 1, $right.ast); }
            | left=expression op=('&&'|'||') right=expression
-            { $ast = new Logical($start.getLine(), $start.getCharPositionInLine() + 1, $left.ast, $op.getText(), $right.ast); }
+            { $ast = new Logical($start.getLine(), $start.getCharPositionInLine() + 1, $left.ast, $op.getText(), $op.getLine(), $op.getCharPositionInLine() + 1, $right.ast); }
            | functionInvocation
             { $ast = $functionInvocation.ast; }
            | INT_CONSTANT

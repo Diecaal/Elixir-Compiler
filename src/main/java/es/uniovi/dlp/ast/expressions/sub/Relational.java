@@ -9,6 +9,8 @@ public class Relational extends AbstractExpression {
     private Expression leftExpression;
     private Expression rightExpression;
 
+    private int[] operatorPosition = new int[2];
+
     public Relational(int line, int column, Expression leftExpression, String operator, Expression rightExpression) {
         super(line, column);
         this.leftExpression = leftExpression;
@@ -16,8 +18,22 @@ public class Relational extends AbstractExpression {
         this.rightExpression = rightExpression;
     }
 
+    public Relational(int line, int column, Expression leftExpression, String operator, int operatorLine, int operatorColumn, Expression rightExpression) {
+        this(line,column,leftExpression,operator,rightExpression);
+        operatorPosition[0] = operatorLine;
+        operatorPosition[1] = operatorColumn;
+    }
+
     public String getOperator() {
         return operator;
+    }
+
+    public int getOperatorLine() {
+        return operatorPosition[0];
+    }
+
+    public int getOperatorColumn() {
+        return operatorPosition[1];
     }
 
     public Expression getLeftExpression() {
@@ -30,7 +46,7 @@ public class Relational extends AbstractExpression {
 
     @Override
     public String toString() {
-        return leftExpression.toString() + operator + rightExpression.toString();
+        return leftExpression.toString() + getOperator() + rightExpression.toString();
     }
 
     @Override
