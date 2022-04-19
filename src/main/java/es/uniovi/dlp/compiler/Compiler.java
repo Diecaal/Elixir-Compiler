@@ -1,9 +1,11 @@
 package es.uniovi.dlp.compiler;
 
 import es.uniovi.dlp.ast.Program;
+import es.uniovi.dlp.error.Error;
 import es.uniovi.dlp.error.ErrorManager;
 import es.uniovi.dlp.parser.XanaLexer;
 import es.uniovi.dlp.parser.XanaParser;
+import es.uniovi.dlp.visitor.codegeneration.ExecuteCGVisitor;
 import es.uniovi.dlp.visitor.codegeneration.OffsetVisitor;
 import es.uniovi.dlp.visitor.semantic.IdentificationVisitor;
 import es.uniovi.dlp.visitor.semantic.TypeCheckingVisitor;
@@ -11,15 +13,25 @@ import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 
 public class Compiler {
     private final String filename;
     private Program program;
     private boolean reportErrors = true;
+    private OutputStreamWriter out;
+    private boolean showDebug = true;
 
     public Compiler(String filename) {
         this.filename = filename;
+    }
+
+    public Compiler(String filename, OutputStreamWriter out) {
+        this.filename = filename;
+        this.out = out;
     }
 
     public void run() throws IOException {
@@ -27,8 +39,18 @@ public class Compiler {
         program = parse(filename);
         assignScope();
         assignType();
-        assignOffset();
+
         checkErrors();
+        if(ErrorManager.getInstance().hasErrors()) return;
+
+        assignOffset();
+        generateTargetCode();
+    }
+
+    private void generateTargetCode() {
+        File file= new File(filename);
+        this.assignDefaultOutput();
+        ExecuteCGVisitor executeCGVisitor = new ExecuteCGVisitor(file.getName(), out, showDebug);
     }
 
     private void checkErrors() {
@@ -38,6 +60,14 @@ public class Compiler {
         if (errorManager.hasErrors()) {
             errorManager.getErrors().forEach(System.err::println);
             System.exit(-1);
+        }
+    }
+
+    private void assignDefaultOutput() {
+        try {
+            this.out = new FileWriter(filename + ".mp");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -75,6 +105,10 @@ public class Compiler {
 
     public void setReportErrors(boolean reportErrors) {
         this.reportErrors = reportErrors;
+    }
+
+    public void setShowDebug(boolean showDebug) {
+        this.showDebug = showDebug;
     }
 }
 

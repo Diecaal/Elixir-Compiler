@@ -12,9 +12,11 @@ import java.util.List;
 public class FunctionDefinition extends AbstractDefinition {
     private List<VariableDefinition> variableDefinitions;
     private List<Statement> statements;
+    private FunctionType functionType;
 
     public FunctionDefinition(int line, int column, FunctionType type, String name, List<VariableDefinition> variableDefinitions, List<Statement> statements) {
         super(line, column, type, name);
+        this.functionType = type;
 		this.variableDefinitions = new ArrayList<VariableDefinition>(variableDefinitions);
         this.statements = new ArrayList<Statement>(statements);;
     }
@@ -29,6 +31,11 @@ public class FunctionDefinition extends AbstractDefinition {
 
     public List<VariableDefinition> getParameters() {
         return ((FunctionType)getType()).getParameters();
+    }
+
+    @Override
+    public Type getType() {
+        return this.functionType;
     }
 
     @Override
