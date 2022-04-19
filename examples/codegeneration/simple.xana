@@ -1,0 +1,21 @@
+c :: char
+a :: int
+r :: double
+
+def main() do
+    a, i :: int
+
+    c = 'a'
+    puts c, '\n'
+
+    a = 1
+    i = '0' as int * 3
+    puts a, ' ', i, '\n'
+
+    in r
+    puts 2 as double * r, '\n'
+
+    puts 3 as double - 4.5, ' ', '0' as double / 48.0, ' ', '0' % '1', ' ', '0' + '1', '\n'
+
+    puts 1 < 2, ' ', 4 >= 3, ' ', 5 == 5, ' ', 1 && 2, ' ', 0 || 3, ' ', !0, '\n'
+end

@@ -18,7 +18,7 @@ Este es el proyecto base que servirá para implementar un compilador durante el 
 - [x] [Laboratorio 8 - Fase de identificación](docs/labs/lab_08.md)
 - [x] [Laboratorio 9 - Comprobación de tipos](docs/labs/lab_09.md)
 - [x] [Laboratorio 10 - Cálculo de offsets](docs/labs/lab_10.md)
-- [ ] Laboratorio 11 - Generación de código I
+- [x] [Laboratorio 11 - Generación de código I](docs/labs/lab_11.md)
 - [ ] Laboratorio 12 - Generación de código II
 - [ ] Laboratorio 13 - Generación de código III
 
