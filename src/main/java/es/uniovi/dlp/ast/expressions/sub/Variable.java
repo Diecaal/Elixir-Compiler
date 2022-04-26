@@ -1,6 +1,7 @@
 package es.uniovi.dlp.ast.expressions.sub;
 
 import es.uniovi.dlp.ast.definitions.Definition;
+import es.uniovi.dlp.ast.definitions.sub.VariableDefinition;
 import es.uniovi.dlp.ast.expressions.AbstractExpression;
 import es.uniovi.dlp.visitor.AbstractVisitor;
 

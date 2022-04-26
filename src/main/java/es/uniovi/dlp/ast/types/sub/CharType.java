@@ -34,6 +34,8 @@ public class CharType extends AbstractType {
     public Type cast(Type toCast, ASTNode ast) {
         if(toCast instanceof CharType || toCast instanceof IntType)
             return toCast;
+        else if(toCast instanceof DoubleType)
+            return new DoubleType(getLine(), getColumn());
 
         return super.cast(toCast, ast);
     }

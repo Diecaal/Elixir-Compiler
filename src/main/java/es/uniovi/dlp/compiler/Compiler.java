@@ -27,6 +27,7 @@ public class Compiler {
 
     public Compiler(String filename) {
         this.filename = filename;
+        assignDefaultOutput();
     }
 
     public Compiler(String filename, OutputStreamWriter out) {
@@ -49,8 +50,8 @@ public class Compiler {
 
     private void generateTargetCode() {
         File file= new File(filename);
-        this.assignDefaultOutput();
         ExecuteCGVisitor executeCGVisitor = new ExecuteCGVisitor(file.getName(), out, showDebug);
+        executeCGVisitor.visit(program, null);
     }
 
     private void checkErrors() {
