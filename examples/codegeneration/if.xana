@@ -1,0 +1,14 @@
+def main() do
+    if 1 == 1 do
+        puts 'a','l','w','a','y','s', ' ', 't','r','u','e', '\n'
+    end
+    puts '\n'
+
+    value :: int
+    in value
+    if 1 == value do
+        puts 't','r','u','e', '\n'
+    else
+        puts 'f','a','l','s','e', '\n'
+    end
+end

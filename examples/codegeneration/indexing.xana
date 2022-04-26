@@ -1,0 +1,24 @@
+def main() do
+    vector :: [10 :: int]
+    matrix :: [5 :: [3 :: double]]
+
+    vector[9] = 1
+    puts vector[9], '\n'
+
+
+    i :: int
+    i = 0
+    while i < 15 do
+        matrix[i % 5][i / 5] = i
+        i = i + 1
+    end
+
+    i = 0
+    while i < 15 do
+        if i % 5 == 0 do
+            puts '\n'
+        end
+        puts matrix[i % 5][i / 5], '\t'
+        i = i + 1
+    end
+end

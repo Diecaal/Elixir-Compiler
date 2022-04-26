@@ -1,0 +1,42 @@
+def main() do
+    date :: defstruct do
+        day, month, year :: int
+    end
+
+    date.day = 28
+    date.month = 12
+    date.year = 2021
+    puts date.day, '/', date.month, '/', date.year, '\n'
+
+    player :: defstruct do
+        lives :: int
+        name :: [4 :: char]
+        weapon :: defstruct do
+            attack :: int
+            life_span :: double
+        end
+    end
+
+    player.lives = 10
+    player.name[0] = 'l'
+    player.name[1] = 'i'
+    player.name[2] = 'n'
+    player.name[3] = 'k'
+    player.weapon.attack = 10
+    player.weapon.life_span = 2.5
+
+    i :: int
+    i = 0
+
+    puts 'l','i','v','e','s',':',' ', player.lives, '\n'
+
+    puts 'n','a','m','e',':',' '
+    while i < 4 do
+        puts player.name[i]
+        i = i + 1
+    end
+    puts '\n'
+
+    puts 'a','t','t','a','c','k',':',' ', player.weapon.attack, '\n'
+    puts 's','p','a','n',':',' ', player.weapon.life_span, '\n'
+end
