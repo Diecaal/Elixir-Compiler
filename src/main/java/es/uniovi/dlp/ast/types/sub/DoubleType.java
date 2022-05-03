@@ -28,6 +28,8 @@ public class DoubleType extends AbstractType {
 
     @Override
     public Type arithmetic(Type otherType, ASTNode ast) {
+        // if(otherType instanceof CharType || otherType instanceof IntType ||otherType instanceof DoubleType)
+        // return this;
         if(otherType instanceof DoubleType)
             return this;
         else if(otherType instanceof IntType)
@@ -61,6 +63,15 @@ public class DoubleType extends AbstractType {
     @Override
     public int getNumberBytes() {
         return 4;
+    }
+
+
+    @Override
+    public boolean isPromotableTo(Type to) {
+        if(to instanceof IntType || to instanceof DoubleType)
+            return true;
+
+        return super.isPromotableTo(to);
     }
 
     @Override

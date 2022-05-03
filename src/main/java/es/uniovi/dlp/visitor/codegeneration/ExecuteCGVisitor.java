@@ -6,9 +6,7 @@ import es.uniovi.dlp.ast.definitions.sub.FunctionDefinition;
 import es.uniovi.dlp.ast.definitions.sub.VariableDefinition;
 import es.uniovi.dlp.ast.expressions.sub.Cast;
 import es.uniovi.dlp.ast.statements.Statement;
-import es.uniovi.dlp.ast.statements.sub.Assignment;
-import es.uniovi.dlp.ast.statements.sub.Read;
-import es.uniovi.dlp.ast.statements.sub.Write;
+import es.uniovi.dlp.ast.statements.sub.*;
 import es.uniovi.dlp.ast.types.sub.FunctionType;
 import es.uniovi.dlp.visitor.AbstractVisitor;
 
@@ -98,8 +96,55 @@ public class ExecuteCGVisitor extends AbstractVisitor<Void, Void> {
         assignment.getLeftExpression().accept(addressVisitor, param);
         assignment.getRightExpression().accept(this, param);
         cg.writeInstruction(String.format("store%s", cg.getSuffix(assignment.getRightExpression().getType())));
-        return super.visit(assignment, param);
+        return null;
     }
 
+    @Override
+    public Void visit(If ifStm, Void param) {
+        cg.writeLine(ifStm.getLine());
+        cg.writeComment("If");
 
+        String elseBodyLabel = cg.requestLabel();
+        String exitIfLabel =  cg.requestLabel();
+
+        cg.writeComment("If condition");
+        ifStm.getCondition().accept(valueVisitor, param);
+        cg.writeInstruction( String.format("jz\t%s", elseBodyLabel) );
+
+        cg.writeComment("If branch body");
+        ifStm.getIfBody().forEach(statement -> statement.accept(this, param));
+        cg.writeInstruction( String.format("jmp\t%s", exitIfLabel));
+
+        cg.writeLabel(elseBodyLabel); /* ENTER ELSE */
+
+        cg.writeComment("Else branch body");
+        ifStm.getElseBody().forEach(statement -> statement.accept(this, param));
+
+        cg.writeLabel(exitIfLabel); /* EXIT IF */
+
+        return null;
+    }
+
+    @Override
+    public Void visit(While whileStm, Void param) {
+        cg.writeLine(whileStm.getLine());
+        cg.writeComment("While");
+
+        String startWhileLabel = cg.requestLabel();
+        String exitWhileLabel = cg.requestLabel();
+
+        cg.writeLabel(startWhileLabel); /* ENTER WHILE */
+
+        cg.writeComment("While condition");
+        whileStm.getCondition().accept(valueVisitor, param);
+        cg.writeInstruction( String.format("jz\t%s", exitWhileLabel) );
+
+        cg.writeComment("While body");
+        whileStm.getBody().forEach(statement -> statement.accept(this, param));
+
+        cg.writeInstruction(String.format("jmp\t%s", startWhileLabel));
+        cg.writeLabel(exitWhileLabel); /* EXIT WHILE */
+
+        return null;
+    }
 }

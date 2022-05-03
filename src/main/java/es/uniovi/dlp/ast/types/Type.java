@@ -14,7 +14,7 @@ public interface Type extends ASTNode {
     Type comparison(Type otherType, ASTNode ast);
     Type assignment(Type rightType, ASTNode ast);
     Type invocation(List<Expression> parameters, ASTNode ast);
-    Type typesMatch(Type otherType, ASTNode ast);
+//    Type typesMatch(Type otherType, ASTNode ast);
 
     boolean isLogical();
     boolean isIndexable();
@@ -25,4 +25,6 @@ public interface Type extends ASTNode {
 
     int getNumberBytes();
 
+    Type getIntermediateType(Type to);
+    boolean isPromotableTo(Type to);
 }

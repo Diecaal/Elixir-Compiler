@@ -60,4 +60,20 @@ public class ValueCGVisitor extends AbstractVisitor<Void, Void> {
         cg.writeInstruction( String.format("pushf\t%s", doubleLiteral.getValue()) );
         return null;
     }
+
+    @Override
+    public Void visit(ArrayAccess arrayAccess, Void param) {
+        cg.writeComment("Indexing");
+        arrayAccess.accept(addressVisitor, param);
+        cg.writeInstruction( String.format("load%s", cg.getSuffix(arrayAccess.getType())));
+        return null;
+    }
+
+    @Override
+    public Void visit(StructAccess structAccess, Void param) {
+        cg.writeComment("Field Access");
+        structAccess.accept(addressVisitor, param);
+        cg.writeInstruction( String.format("load%s", cg.getSuffix(structAccess.getType())));
+        return null;
+    }
 }

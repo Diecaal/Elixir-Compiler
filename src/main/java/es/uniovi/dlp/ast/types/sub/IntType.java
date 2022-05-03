@@ -78,6 +78,24 @@ public class IntType extends AbstractType {
     }
 
     @Override
+    public Type getIntermediateType(Type to) {
+        if(to instanceof DoubleType)
+            return new DoubleType(getLine(), getColumn());
+        else if(to instanceof CharType)
+            return new CharType(getLine(), getColumn());
+
+        return super.getIntermediateType(to);
+    }
+
+    @Override
+    public boolean isPromotableTo(Type to) {
+        if(to instanceof IntType || to instanceof DoubleType)
+            return true;
+
+        return super.isPromotableTo(to);
+    }
+
+    @Override
     public <ReturnType, ParamType> ReturnType accept(AbstractVisitor<ReturnType, ParamType> visitor, ParamType param) {
         return visitor.visit(this, param);
     }

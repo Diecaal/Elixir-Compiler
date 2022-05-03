@@ -11,6 +11,8 @@ public class CodeGenerator {
     private final OutputStreamWriter out;
     private boolean showDebug;
 
+    private int currentLabel = 0;
+
     public CodeGenerator(OutputStreamWriter out, boolean showDebug) {
         this.out = out;
         this.showDebug = showDebug;
@@ -37,6 +39,22 @@ public class CodeGenerator {
     public void writeLine(int line) {
         try {
             out.write(String.format("\n#Line\t%d\n", line));
+            out.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String requestLabel() {
+        String label = String.format("label%s", currentLabel);
+        currentLabel++;
+        return label;
+    }
+
+    public void writeLabel(String label) {
+
+        try {
+            out.write(String.format("\t%s:", label));
             out.flush();
         } catch (IOException e) {
             e.printStackTrace();
@@ -87,8 +105,22 @@ public class CodeGenerator {
         };
     }
 
-
     public void convertTo(Type fromType, Type toType) {
+        // Usados para los cast implicitos, ie: int -> float
 
+        // int -> float, puede upgradear / float -> int, no puede (downgrade)
+    }
+
+    public void promote(Type from, Type to) {
+        if(from.isPromotableTo(to))
+            castIntermediate(from, to);
+    }
+
+    private void castIntermediate(Type from, Type to) {
+        if(from.equals(to)) return;
+
+        Type intermediate = from.getIntermediateType(to);
+        writeInstruction(String.format("%s2%s", getSuffix(from), getSuffix(to)));
+        castIntermediate(intermediate, to);
     }
 }
