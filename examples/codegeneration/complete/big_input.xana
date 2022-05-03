@@ -1,0 +1,92 @@
+pair :: defstruct do
+    integer :: int
+    character :: char
+end
+
+acme :: [2 :: defstruct do
+    employees :: [2 :: defstruct do
+        age :: int
+    end]
+end]
+
+fibonacci :: [8 :: [3 :: int]]
+
+#-------------------------------
+
+def p() :: void do
+end
+
+def f(r :: double, e :: int) :: int do
+  real :: double
+  c :: char
+  result :: int
+  real = r * 10.0
+  c = '0'
+  if e < 256 do
+    c = e as char
+    result = c as int
+  else
+    result = real as int
+  end
+  return result
+end
+
+def initialize() :: void do
+  i :: int
+  fibonacci[0][0] = 0
+  fibonacci[0][1] = 1
+  fibonacci[0][2] = 1
+  i = 1
+  while i < 8 do
+    fibonacci[i][0] = fibonacci[i - 1][1]
+    fibonacci[i][1] = fibonacci[i - 1][2]
+    fibonacci[i][2] = fibonacci[i][0] + fibonacci[i][1]
+    i = i + 1
+  end
+end
+
+#-------------------------------
+
+def main() do
+  i, j :: int
+  p()
+  i = 0
+  pair.character = '0'
+  pair.integer = '0' as int
+
+  # Shows 48 (decimal value of '0')
+  puts f(i as double, (pair.character) as int), '\n'
+  f(1.3, 2)
+
+  initialize()
+  i = 0
+  while i < 8  do
+    # Shows the Fib sequence, from 1 to 8 (34)
+    puts '(', i + 1, ')', fibonacci[i][0], '+', fibonacci[i][1] , '=' , fibonacci[i][2] , '\n'
+    i = i + 1
+  end
+
+  acme[1].employees[1].age = 56
+  # Shows 56
+  puts acme[1].employees[1].age, '\n'
+  i = 0
+  while i < 2  do
+    j = 0
+    while j < 2 do
+      acme[i].employees[j].age = i + j
+      j = j + 1
+    end
+    i = i + 1
+  end
+
+  i = 0
+  while i < 2 do
+    j = 0
+    while j < 2 do
+      # Shows 0 1 1 2
+      puts acme[i].employees[j].age, ' '
+      j = j + 1
+    end
+    i = i + 1
+  end
+end
