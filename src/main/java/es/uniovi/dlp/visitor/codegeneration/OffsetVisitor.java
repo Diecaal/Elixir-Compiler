@@ -16,12 +16,12 @@ public class OffsetVisitor extends AbstractVisitor<Void, Integer> {
         int localNumberBytes = 0;
 
         // Annotate function parameters
-        funcDefinition.getType().accept(this, localNumberBytes);
+        funcDefinition.getType().accept(this, param);
 
         // Proceed to annotate body's variable definitions
         for(VariableDefinition varDef : funcDefinition.getVariableDefinitions()) {
-            varDef.accept(this, localNumberBytes);
             localNumberBytes += varDef.getType().getNumberBytes();
+            varDef.accept(this, -localNumberBytes);
         }
 
         return super.visit(funcDefinition, param);
@@ -44,9 +44,9 @@ public class OffsetVisitor extends AbstractVisitor<Void, Integer> {
     public Void visit(FunctionType functionType, Integer param) {
         int localParamsBytes = 0;
 
-        for(VariableDefinition parameter : functionType.getParameters()) {
-            parameter.setOffset(localParamsBytes);
-            localParamsBytes += parameter.getType().getNumberBytes();
+        for(int i = functionType.getParameters().size()-1; i >= 0; i--) {
+            VariableDefinition var = functionType.getParameters().get(i);
+            localParamsBytes += var.getType().getNumberBytes();
         }
         return super.visit(functionType, param);
     }

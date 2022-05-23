@@ -21,6 +21,7 @@ public class IntType extends AbstractType {
             return this;
         if(rightType instanceof CharType)
             return new CharType(ast.getLine(), ast.getColumn());
+
         return super.assignment(rightType, ast);
     }
 
@@ -75,6 +76,24 @@ public class IntType extends AbstractType {
     @Override
     public int getNumberBytes() {
         return 2;
+    }
+
+    @Override
+    public Type getIntermediateType(Type to) {
+        if(to instanceof DoubleType)
+            return new DoubleType(getLine(), getColumn());
+        else if(to instanceof CharType)
+            return new CharType(getLine(), getColumn());
+
+        return super.getIntermediateType(to);
+    }
+
+    @Override
+    public boolean isPromotableTo(Type to) {
+        if(to instanceof IntType || to instanceof DoubleType)
+            return true;
+
+        return super.isPromotableTo(to);
     }
 
     @Override

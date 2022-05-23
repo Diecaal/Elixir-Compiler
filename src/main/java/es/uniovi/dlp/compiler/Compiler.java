@@ -66,7 +66,7 @@ public class Compiler {
 
     private void assignDefaultOutput() {
         try {
-            this.out = new FileWriter(filename + ".mp");
+            this.out = new FileWriter(filename + "-demo.mp");
         } catch (IOException e) {
             e.printStackTrace();
         }

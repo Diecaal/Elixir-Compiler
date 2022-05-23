@@ -19,9 +19,17 @@ public class CharType extends AbstractType {
 
     @Override
     public Type arithmetic(Type otherType, ASTNode ast) {
+        /**
+         * if(otherType instanceof CharType)
+         *  return IntType.getInstance();
+         */
         if(otherType instanceof CharType) {
             return new CharType(otherType.getLine(), otherType.getColumn());
         }
+        /**
+         * if(otherType instanceof IntType || otherType instanceof DoubleType)
+         *  return otherType;
+         */
         return super.arithmetic(otherType, ast);
     }
 
@@ -58,6 +66,22 @@ public class CharType extends AbstractType {
     @Override
     public String toString() {
         return "char";
+    }
+
+    @Override
+    public Type getIntermediateType(Type to) {
+        if(to instanceof IntType || to instanceof DoubleType)
+            return new IntType(getLine(), getColumn());
+
+        return super.getIntermediateType(to);
+    }
+
+    @Override
+    public boolean isPromotableTo(Type to) {
+        if(to instanceof CharType || to instanceof IntType || to instanceof DoubleType)
+            return true;
+
+        return super.isPromotableTo(to);
     }
 
     @Override

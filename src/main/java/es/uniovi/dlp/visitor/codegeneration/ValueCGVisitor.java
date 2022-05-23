@@ -1,6 +1,8 @@
 package es.uniovi.dlp.visitor.codegeneration;
 
+import es.uniovi.dlp.ast.definitions.sub.VariableDefinition;
 import es.uniovi.dlp.ast.expressions.sub.*;
+import es.uniovi.dlp.ast.statements.sub.FunctionInvocation;
 import es.uniovi.dlp.visitor.AbstractVisitor;
 
 public class ValueCGVisitor extends AbstractVisitor<Void, Void> {
@@ -58,6 +60,36 @@ public class ValueCGVisitor extends AbstractVisitor<Void, Void> {
     @Override
     public Void visit(DoubleLiteral doubleLiteral, Void param) {
         cg.writeInstruction( String.format("pushf\t%s", doubleLiteral.getValue()) );
+        return null;
+    }
+
+    @Override
+    public Void visit(ArrayAccess arrayAccess, Void param) {
+        cg.writeComment("Indexing");
+        arrayAccess.accept(addressVisitor, param);
+        cg.writeInstruction( String.format("load%s", cg.getSuffix(arrayAccess.getType())));
+        return null;
+    }
+
+    @Override
+    public Void visit(StructAccess structAccess, Void param) {
+        cg.writeComment("Field Access");
+        structAccess.accept(addressVisitor, param);
+        cg.writeInstruction( String.format("load%s", cg.getSuffix(structAccess.getType())));
+        return null;
+    }
+
+    @Override
+    public Void visit(Variable variable, Void param) {
+        variable.accept(addressVisitor, param);
+        cg.writeInstruction(String.format("load%s", cg.getSuffix(variable.getType())));
+        return null;
+    }
+
+    @Override
+    public Void visit(FunctionInvocation functionInvocation, Void param) {
+        functionInvocation.getParameters().forEach(parameter -> parameter.accept(this, param));
+        cg.call(functionInvocation.getVariable().getName());
         return null;
     }
 }

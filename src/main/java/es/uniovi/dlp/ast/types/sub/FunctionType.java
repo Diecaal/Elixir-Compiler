@@ -32,7 +32,7 @@ public class FunctionType extends AbstractType {
     public Type invocation(List<Expression> parameters, ASTNode ast) {
         if(parameters.size() == getParameters().size()) {
             for(int i=0; i<parameters.size();i++) {
-                Type paramAssignCheck = parameters.get(i).getType().typesMatch(this.getParameters().get(i).getType(), ast);
+                Type paramAssignCheck = this.getParameters().get(i).getType().assignment(parameters.get(i).getType(), ast);
                 /* Incompatible parameter type passed and function signature */
                 if(paramAssignCheck.isError()) {
                     parameters.get(i).setType(paramAssignCheck);

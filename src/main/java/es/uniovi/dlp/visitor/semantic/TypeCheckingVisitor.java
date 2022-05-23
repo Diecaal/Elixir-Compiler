@@ -269,7 +269,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
     public Type visit(Return returnStm, Type param) {
         super.visit(returnStm, param);
         /* Param: type coming from function return type SIGNATURE */
-        if(returnStm.getExpression().getType().typesMatch(param, returnStm).isError()) {
+        if(param.assignment(returnStm.getExpression().getType(), returnStm).isError()) {
             ErrorManager.getInstance().addError(new Error(returnStm.getExpression(), ErrorReason.INVALID_RETURN_TYPE));
         }
         return null;
