@@ -29,6 +29,8 @@ public class DoubleType extends AbstractType {
 
     @Override
     public Type arithmetic(Type otherType, ASTNode ast) {
+        // if(otherType instanceof CharType || otherType instanceof IntType ||otherType instanceof DoubleType)
+        // return this;
         if(otherType instanceof DoubleType)
             return this;
         if(otherType instanceof IntType)

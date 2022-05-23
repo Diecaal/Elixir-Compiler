@@ -78,7 +78,6 @@ public class ValueCGVisitor extends AbstractVisitor<Void, Void> {
         cg.writeInstruction( String.format("load%s", cg.getSuffix(structAccess.getType())));
         return null;
     }
-
     @Override
     public Void visit(Variable variable, Void param) {
         variable.accept(addressVisitor, param);

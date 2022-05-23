@@ -128,7 +128,6 @@ public class CodeGenerator {
 
     public void convertTo(Type fromType, Type toType) {
         // Usados para los cast implicitos, ie: int -> float
-
         // int -> float, puede upgradear / float -> int, no puede (downgrade)
     }
 
@@ -149,6 +148,7 @@ public class CodeGenerator {
         this.write(String.format("#source \"%s\"", sourceFile));
         this.write("\n");
 
+        // int -> float, puede upgradear / float -> int, no puede (downgrade)
     }
 
     public void callMain() {
