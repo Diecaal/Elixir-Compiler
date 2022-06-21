@@ -1,19 +1,25 @@
 package es.uniovi.dlp.visitor.codegeneration;
 
+import es.uniovi.dlp.ast.definitions.sub.VariableDefinition;
 import es.uniovi.dlp.ast.expressions.sub.CharLiteral;
 import es.uniovi.dlp.ast.expressions.sub.DoubleLiteral;
 import es.uniovi.dlp.ast.types.Type;
 import es.uniovi.dlp.ast.types.sub.CharType;
 import es.uniovi.dlp.ast.types.sub.DoubleType;
+import es.uniovi.dlp.visitor.codegeneration.util.ReturnStatementDTO;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.Stack;
 
 public class CodeGenerator {
     private final OutputStreamWriter out;
     private boolean showDebug;
 
     private int currentLabel = 0;
+    // Prevents line repetitions inside output .mp file
+    private Stack<Integer> linesPrinted = new Stack<>();
 
     public CodeGenerator(OutputStreamWriter out, boolean showDebug) {
         this.out = out;
@@ -28,6 +34,8 @@ public class CodeGenerator {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        } else {
+            writeInstruction(message);
         }
     }
 
@@ -37,6 +45,19 @@ public class CodeGenerator {
             out.flush();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void writeComment(String comment, int ident) {
+        if (ident == 0) {
+            try {
+                out.write(String.format("' %s\n", comment));
+                out.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            writeComment(comment);
         }
     }
 
@@ -50,11 +71,14 @@ public class CodeGenerator {
     }
 
     public void writeLine(int line) {
-        try {
-            out.write(String.format("\n#Line\t%d\n", line));
-            out.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
+        if(linesPrinted.isEmpty() || linesPrinted.peek() != line) {
+            try {
+                out.write(String.format("\n#line\t%d\n", line));
+                out.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            linesPrinted.push(line);
         }
     }
 
@@ -75,7 +99,7 @@ public class CodeGenerator {
 
     public void writeLabel(String label) {
         try {
-            out.write(String.format("%s: \n", label));
+            out.write(String.format("%s:\n", label));
             out.flush();
         } catch (IOException e) {
             e.printStackTrace();
@@ -126,42 +150,60 @@ public class CodeGenerator {
         };
     }
 
+    /**
+     * Code generation used for implicit casting (var as type)
+     * char <-> int <-> double
+     * @param fromType
+     * @param toType
+     */
     public void convertTo(Type fromType, Type toType) {
-        // Usados para los cast implicitos, ie: int -> float
-        // int -> float, puede upgradear / float -> int, no puede (downgrade)
+        castIntermediate(fromType, toType);
     }
 
+    /**
+     * Code generation used for explicit casting
+     * char -> int -> double
+     * @param from
+     * @param to
+     */
     public void promote(Type from, Type to) {
         if (from.isPromotableTo(to))
             castIntermediate(from, to);
     }
 
     private void castIntermediate(Type from, Type to) {
-        if (from.equals(to)) return;
-
+        if (from.getClass().equals(to.getClass())) return;
         Type intermediate = from.getIntermediateType(to);
-        writeInstruction(String.format("%s2%s", getSuffix(from), getSuffix(to)));
+        writeInstruction(String.format("%s2%s", getSuffix(from), getSuffix(intermediate)));
         castIntermediate(intermediate, to);
     }
 
     public void source(String sourceFile) {
-        this.write(String.format("#source \"%s\"", sourceFile));
-        this.write("\n");
-
-        // int -> float, puede upgradear / float -> int, no puede (downgrade)
+        this.write(String.format("\n#source \"%s\"\n\n", sourceFile));
     }
 
     public void callMain() {
-        this.writeComment("Invocation to the main function");
+        this.writeInstruction("\n");
+        this.writeComment("Invocation to the main function", 0);
         this.writeInstruction("call main", 0);
         this.writeInstruction("halt", 0);
     }
 
     public void enter(int localBytes) {
-        this.writeInstruction(String.format("enter %s", localBytes));
+        this.writeInstruction(String.format("enter\t%s", localBytes));
     }
 
     public void call(String name) {
-        this.writeInstruction(String.format("call %s", name));
+        this.writeInstruction(String.format("call\t%s", name));
+    }
+
+    public void returnCG(ReturnStatementDTO param) {
+        writeInstruction(String.format("ret\t%s, %s, %s", param.bytesReturn, param.bytesLocals, param.bytesParams));
+    }
+
+    public void variableDefinitionComment(VariableDefinition variableDefinition) {
+        writeComment(String.format("%s :: %s (offset %s)",
+                variableDefinition.getName(), variableDefinition.getType(), variableDefinition.getOffset())
+        );
     }
 }

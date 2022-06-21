@@ -46,6 +46,7 @@ public class OffsetVisitor extends AbstractVisitor<Void, Integer> {
 
         for(int i = functionType.getParameters().size()-1; i >= 0; i--) {
             VariableDefinition var = functionType.getParameters().get(i);
+            var.accept(this, localParamsBytes+4);
             localParamsBytes += var.getType().getNumberBytes();
         }
         return super.visit(functionType, param);

@@ -59,7 +59,9 @@ public class IntType extends AbstractType {
 
     @Override
     public Type cast(Type toCast, ASTNode ast) {
-        if(toCast instanceof IntType || toCast instanceof CharType)
+        if(toCast instanceof CharType)
+            return new CharType(toCast.getLine(), toCast.getColumn());
+        else if(toCast instanceof IntType)
             return this;
         else if(toCast instanceof DoubleType)
             return new DoubleType(toCast.getLine(), toCast.getColumn());

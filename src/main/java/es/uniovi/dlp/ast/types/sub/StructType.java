@@ -1,6 +1,7 @@
 package es.uniovi.dlp.ast.types.sub;
 
 import es.uniovi.dlp.ast.ASTNode;
+import es.uniovi.dlp.ast.definitions.sub.VariableDefinition;
 import es.uniovi.dlp.ast.types.AbstractType;
 import es.uniovi.dlp.ast.types.Type;
 import es.uniovi.dlp.error.Error;
@@ -34,6 +35,10 @@ public class StructType extends AbstractType {
         }
     }
 
+    public RecordType findRecordByName(String name) {
+        return records.stream().filter(record -> record.getName().equals(name)).findFirst().orElse(null);
+    }
+
     @Override
     public Type dot(String field, ASTNode ast) {
         for(RecordType record : getRecords()) {
@@ -51,10 +56,15 @@ public class StructType extends AbstractType {
 
     @Override
     public String toString() {
-        String recordStr = "";
-        for(RecordType record : getRecords())
-            recordStr += "\n\t" + record;
-        return String.format("defstruct do %s \nend", recordStr);
+        String struct = "record(";
+        if(!getRecords().isEmpty()) {
+            struct += String.format("(%s x %s)", getRecords().get(0).getName(), getRecords().get(0).getType());
+        }
+        for(int i = 1; i < getRecords().size(); i++) {
+            struct += String.format(" x (%s x %s)", getRecords().get(i).getName(), getRecords().get(i).getType());
+        }
+        struct += ")";
+        return struct;
     }
 
     @Override

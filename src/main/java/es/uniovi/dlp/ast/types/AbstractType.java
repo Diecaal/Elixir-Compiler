@@ -102,7 +102,7 @@ public abstract class AbstractType extends AbstractASTNode implements Type {
 
     @Override
     public Type getIntermediateType(Type to) {
-        if(this.equals(to))
+        if(this.getClass().equals(to.getClass()))
             return this;
         return null;
     }

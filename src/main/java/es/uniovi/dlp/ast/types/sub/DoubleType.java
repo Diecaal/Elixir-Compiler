@@ -57,6 +57,14 @@ public class DoubleType extends AbstractType {
     }
 
     @Override
+    public Type getIntermediateType(Type to) {
+        if(to instanceof IntType || to instanceof CharType)
+            return new IntType(getLine(), getColumn());
+
+        return super.getIntermediateType(to);
+    }
+
+    @Override
     public boolean isArithmetic() {
         return true;
     }

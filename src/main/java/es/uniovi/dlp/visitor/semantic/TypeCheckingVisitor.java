@@ -30,6 +30,8 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
         arithmetic.setLvalue(false);
 
         arithmetic.setType( arithmetic.getLeftExpression().getType().arithmetic(arithmetic.getRightExpression().getType(), arithmetic) );
+        if(arithmetic.getType() instanceof CharType)
+            arithmetic.setType(new IntType(arithmetic.getType().getLine(), arithmetic.getType().getColumn()));
 
         if(arithmetic.getType() instanceof ErrorType)
             ErrorManager.getInstance().addError( new Error(arithmetic.getOperatorLine(), arithmetic.getOperatorColumn(), ErrorReason.INVALID_ARITHMETIC) );
@@ -229,7 +231,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
         Type assignmentType = leftType.assignment(rightType, assignment);
         assignment.getLeftExpression().accept(this, assignmentType);
 
-
+        //System.out.println(String.format("[%s] %s + %s -> %s", assignment.getLine(), leftType,rightType, assignmentType));
         if(leftType.assignment(rightType, assignment).isError())
             ErrorManager.getInstance().addError(new Error(assignment, ErrorReason.INCOMPATIBLE_TYPES));
 
