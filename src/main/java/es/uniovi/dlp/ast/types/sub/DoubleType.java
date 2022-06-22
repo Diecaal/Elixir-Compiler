@@ -52,7 +52,7 @@ public class DoubleType extends AbstractType {
     @Override
     public Type comparison(Type otherType, ASTNode ast) {
         if(otherType instanceof DoubleType || otherType instanceof IntType)
-            return this;
+            return new BoolType(getLine(), getColumn());
         return super.comparison(otherType, ast);
     }
 

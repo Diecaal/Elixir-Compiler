@@ -53,13 +53,6 @@ public abstract class AbstractType extends AbstractASTNode implements Type {
         return new ErrorType(ast.getLine(), ast.getColumn());
     }
 
-//    @Override
-//    public Type typesMatch(Type otherType, ASTNode ast) {
-//        if(this.getClass().equals(otherType.getClass()))
-//            return this;
-//        return new ErrorType(ast.getLine(), ast.getColumn());
-//    }
-
     @Override
     public boolean isLogical() {
         return false;

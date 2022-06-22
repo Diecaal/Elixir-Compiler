@@ -1,5 +1,5 @@
-def always_true() :: int do
-    return 1
+def always_true() :: bool do
+    return true
 end
 
 def main() do
@@ -7,14 +7,18 @@ def main() do
         puts 't', 'r', 'u', 'e', '\n'
     end
 
-    if 'a' do # Error
+    if false do # Error
     end
 
-    while 1.2 do # Error
+    aux :: bool
+    aux = false
+
+    while !aux do
+        aux = true
     end
 
-    condition :: int
-    condition = !10.2 # Error
-    condition = 1 && (2.2) # Error
-    condition = 1 || (2.2) # Error
+    condition :: bool
+    condition = !false
+    condition = true && false
+    condition = false || true
 end

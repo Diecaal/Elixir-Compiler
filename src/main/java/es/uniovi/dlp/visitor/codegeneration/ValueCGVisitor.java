@@ -22,7 +22,8 @@ public class ValueCGVisitor extends AbstractVisitor<Void, Void> {
         arithmetic.getRightExpression().accept(this, param);
         /* Promotes right expression type to type of arithmetic (Expression) if needed */
         cg.promote(arithmetic.getRightExpression().getType(), arithmetic.getType());
-        cg.writeInstruction(String.format("%s%s", cg.getArithmeticOperand(arithmetic.getOperator()), cg.getSuffix(arithmetic.getType())));
+
+        cg.arithmeticOperation(arithmetic.getOperator(), arithmetic.getType());
         return null;
     }
 
@@ -30,7 +31,8 @@ public class ValueCGVisitor extends AbstractVisitor<Void, Void> {
     public Void visit(Logical logical, Void param) {
         logical.getLeftExpression().accept(this, param);
         logical.getRightExpression().accept(this, param);
-        cg.writeInstruction(String.format("%s%s", cg.getLogicalOperand(logical.getOperator()), cg.getSuffix(logical.getType())));
+
+        cg.logicalOperation(logical.getOperator(), logical.getType());
         return null;
     }
 
@@ -38,7 +40,8 @@ public class ValueCGVisitor extends AbstractVisitor<Void, Void> {
     public Void visit(Relational relational, Void param) {
         relational.getLeftExpression().accept(this, param);
         relational.getRightExpression().accept(this, param);
-        cg.writeInstruction(String.format("%s%s", cg.getRelationalOperand(relational.getOperator()), cg.getSuffix(relational.getType())));
+
+        cg.relationalOperation(relational.getOperator(), relational.getType());
         return null;
     }
 
@@ -53,7 +56,7 @@ public class ValueCGVisitor extends AbstractVisitor<Void, Void> {
     public Void visit(ArrayAccess arrayAccess, Void param) {
         cg.writeComment("Indexing");
         arrayAccess.accept(addressVisitor, param);
-        cg.writeInstruction( String.format("load%s", cg.getSuffix(arrayAccess.getType())));
+        cg.load(arrayAccess.getType());
         return null;
     }
 
@@ -61,13 +64,13 @@ public class ValueCGVisitor extends AbstractVisitor<Void, Void> {
     public Void visit(StructAccess structAccess, Void param) {
         cg.writeComment("Field Access");
         structAccess.accept(addressVisitor, param);
-        cg.writeInstruction( String.format("load%s", cg.getSuffix(structAccess.getType())));
+        cg.load(structAccess.getType());
         return null;
     }
     @Override
     public Void visit(Variable variable, Void param) {
         variable.accept(addressVisitor, param);
-        cg.writeInstruction(String.format("load%s", cg.getSuffix(variable.getType())));
+        cg.load(variable.getType());
         return null;
     }
 
@@ -81,32 +84,38 @@ public class ValueCGVisitor extends AbstractVisitor<Void, Void> {
     @Override
     public Void visit(UnaryNegative ast, Void param) {
         ast.getExpression().accept(this, param);
-        cg.writeInstruction("not");
+        cg.not();
         return null;
     }
 
     @Override
     public Void visit(UnaryMinus ast, Void param) {
         ast.getExpression().accept(this, param);
-        cg.writeInstruction("-");
+        cg.minus();
         return null;
     }
 
     @Override
     public Void visit(CharLiteral charLiteral, Void param) {
-        cg.writeInstruction( String.format("pushb\t%s", (int) charLiteral.getValue()) );
+        cg.push(charLiteral.getType(), String.valueOf(charLiteral.getValue()));
         return null;
     }
 
     @Override
     public Void visit(IntLiteral intLiteral, Void param) {
-        cg.writeInstruction( String.format("pushi\t%s", intLiteral.getValue()) );
+        cg.push(intLiteral.getType(), String.valueOf(intLiteral.getValue()));
         return null;
     }
 
     @Override
     public Void visit(DoubleLiteral doubleLiteral, Void param) {
-        cg.writeInstruction( String.format("pushf\t%s", doubleLiteral.getValue()) );
+        cg.push(doubleLiteral.getType(), String.valueOf(doubleLiteral.getValue()));
         return null;
+    }
+
+    @Override
+    public Void visit(BoolLiteral boolLiteral, Void param) {
+        cg.push(boolLiteral.getType(), String.valueOf(boolLiteral.getValue()));
+        return super.visit(boolLiteral, param);
     }
 }

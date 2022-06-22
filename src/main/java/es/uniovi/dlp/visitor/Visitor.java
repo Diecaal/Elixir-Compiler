@@ -21,6 +21,7 @@ public interface Visitor<ReturnType, ParamType> {
     ReturnType visit(CharLiteral charLiteral, ParamType param);
     ReturnType visit(DoubleLiteral doubleLiteral, ParamType param);
     ReturnType visit(IntLiteral intLiteral, ParamType param);
+    ReturnType visit(BoolLiteral boolLiteral, ParamType param);
     ReturnType visit(Logical logical, ParamType param);
     ReturnType visit(Relational relational, ParamType param);
     ReturnType visit(StructAccess structAccess, ParamType param);
@@ -43,6 +44,7 @@ public interface Visitor<ReturnType, ParamType> {
     ReturnType visit(DoubleType doubleType, ParamType param);
     ReturnType visit(FunctionType functionType, ParamType param);
     ReturnType visit(IntType intType, ParamType param);
+    ReturnType visit(BoolType boolType, ParamType param);
     ReturnType visit(RecordType recordType, ParamType param);
     ReturnType visit(StructType structType, ParamType param);
     ReturnType visit(VoidType voidType, ParamType param);

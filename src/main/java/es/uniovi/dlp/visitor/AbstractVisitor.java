@@ -74,6 +74,12 @@ public abstract class AbstractVisitor<ReturnType, ParamType> implements Visitor<
     }
 
     @Override
+    public ReturnType visit(BoolLiteral boolLiteral, ParamType param) {
+        /* No information to be given to visitor */
+        return null;
+    }
+
+    @Override
     public ReturnType visit(Logical logical, ParamType param) {
         logical.getLeftExpression().accept(this, param);
         logical.getRightExpression().accept(this, param);
@@ -187,6 +193,12 @@ public abstract class AbstractVisitor<ReturnType, ParamType> implements Visitor<
 
     @Override
     public ReturnType visit(IntType intType, ParamType param) {
+        /* No information to be given to visitor */
+        return null;
+    }
+
+    @Override
+    public ReturnType visit(BoolType boolType, ParamType param) {
         /* No information to be given to visitor */
         return null;
     }

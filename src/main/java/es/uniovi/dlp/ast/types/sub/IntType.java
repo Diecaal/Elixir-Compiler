@@ -36,19 +36,7 @@ public class IntType extends AbstractType {
     }
 
     @Override
-    public Type logical(Type otherType, ASTNode ast) {
-        if(otherType.isLogical())
-            return this;
-        return super.logical(otherType, ast);
-    }
-
-    @Override
     public boolean isArithmetic() {
-        return true;
-    }
-
-    @Override
-    public boolean isLogical() {
         return true;
     }
 
@@ -71,7 +59,7 @@ public class IntType extends AbstractType {
     @Override
     public Type comparison(Type otherType, ASTNode ast) {
         if(otherType instanceof IntType || otherType instanceof CharType || otherType instanceof DoubleType)
-            return this;
+            return new BoolType(this.getLine(), this.getColumn());
         return super.comparison(otherType, ast);
     }
 

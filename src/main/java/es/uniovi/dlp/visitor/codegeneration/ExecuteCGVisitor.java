@@ -113,7 +113,7 @@ public class ExecuteCGVisitor extends AbstractVisitor<Void, ReturnStatementDTO> 
         cg.writeLine(write.getLine());
         cg.writeComment("Write");
         write.getExpression().accept(valueVisitor, null);
-        cg.writeInstruction(String.format("out%s", cg.getSuffix(write.getExpression().getType())));
+        cg.out(write.getExpression().getType());
         return null;
     }
 
@@ -122,8 +122,8 @@ public class ExecuteCGVisitor extends AbstractVisitor<Void, ReturnStatementDTO> 
         cg.writeLine(read.getLine());
         cg.writeComment("Read");
         read.getExpression().accept(addressVisitor, null);
-        cg.writeInstruction(String.format("in%s", cg.getSuffix(read.getExpression().getType())));
-        cg.writeInstruction(String.format("store%s", cg.getSuffix(read.getExpression().getType())));
+        cg.in(read.getExpression().getType());
+        cg.store(read.getExpression().getType());
         return null;
     }
 
@@ -134,7 +134,7 @@ public class ExecuteCGVisitor extends AbstractVisitor<Void, ReturnStatementDTO> 
         assignment.getLeftExpression().accept(addressVisitor, null);
         assignment.getRightExpression().accept(valueVisitor, null);
         cg.promote(assignment.getRightExpression().getType(), assignment.getLeftExpression().getType());
-        cg.writeInstruction(String.format("store%s", cg.getSuffix(assignment.getLeftExpression().getType())));
+        cg.store(assignment.getLeftExpression().getType());
         return null;
     }
 
@@ -206,7 +206,7 @@ public class ExecuteCGVisitor extends AbstractVisitor<Void, ReturnStatementDTO> 
         cg.call(functionInvocation.getVariable().getName());
 
         if ( !( functionInvocation.getType() instanceof VoidType) )
-            cg.writeInstruction(String.format("pop%s", cg.getSuffix(functionInvocation.getType())));
+            cg.pop(functionInvocation.getType());
 
         return null;
     }

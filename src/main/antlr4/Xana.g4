@@ -129,6 +129,8 @@ expression returns[Expression ast]
             { $ast = new DoubleLiteral($start.getLine(), $start.getCharPositionInLine() + 1, LexerHelper.lexemeToReal($REAL_CONSTANT.text)); }
            | CHAR_CONSTANT
             { $ast = new CharLiteral($start.getLine(), $start.getCharPositionInLine() + 1, LexerHelper.lexemeToChar($CHAR_CONSTANT.text)); }
+           | BOOL_CONSTANT
+            { $ast = new BoolLiteral($start.getLine(), $start.getCharPositionInLine() + 1, LexerHelper.lexemeToBool($BOOL_CONSTANT.text)); }
            | ID
             { $ast = new Variable($start.getLine(), $start.getCharPositionInLine() + 1, $ID.text); }
            ;
@@ -153,10 +155,8 @@ primitiveType returns[Type ast]
               : 'int' { $ast = new IntType($start.getLine(), $start.getCharPositionInLine() + 1); }
               | 'double' { $ast = new DoubleType($start.getLine(), $start.getCharPositionInLine() + 1); }
               | 'char' { $ast = new CharType($start.getLine(), $start.getCharPositionInLine() + 1); }
+              | 'bool' { $ast = new BoolType($start.getLine(), $start.getCharPositionInLine() + 1); }
               ;
-
-ID: ([a-zA-Z]|'_') ([a-zA-Z]|'_'|[0-9])*
-  ;
 
 COMMENT: ('#' .*? (EOL|EOF) | '"""' .*? '"""' )+ -> skip
        ;
@@ -173,6 +173,9 @@ REAL_CONSTANT: ('-')? INT_CONSTANT '.' ('-')? INT_CONSTANT ([Ee] ('-')? INT_CONS
 INT_CONSTANT: [0-9]+
             ;
 
+BOOL_CONSTANT: 'true'
+             | 'false'
+             ;
 
 CHAR_CONSTANT: '\'' .*? '\''
              | '\'\\ ' INT_CONSTANT '\''
@@ -180,3 +183,6 @@ CHAR_CONSTANT: '\'' .*? '\''
 
 EOL : ('\r'|'\n')+
     ;
+
+ID: ([a-zA-Z]|'_') ([a-zA-Z]|'_'|[0-9])*
+  ;

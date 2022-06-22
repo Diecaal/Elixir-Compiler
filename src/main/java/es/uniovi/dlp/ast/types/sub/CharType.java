@@ -50,10 +50,8 @@ public class CharType extends AbstractType {
 
     @Override
     public Type comparison(Type otherType, ASTNode ast) {
-        if (otherType instanceof CharType)
-            return this;
-        else if (otherType instanceof IntType)
-            return new IntType(ast.getLine(), ast.getColumn());
+        if (otherType instanceof IntType || otherType instanceof CharType)
+            return new BoolType(getLine(), getColumn());
 
         return super.comparison(otherType, ast);
     }

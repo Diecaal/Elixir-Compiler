@@ -35,8 +35,8 @@ public class XanaParser extends Parser {
 		T__17=18, T__18=19, T__19=20, T__20=21, T__21=22, T__22=23, T__23=24, 
 		T__24=25, T__25=26, T__26=27, T__27=28, T__28=29, T__29=30, T__30=31, 
 		T__31=32, T__32=33, T__33=34, T__34=35, T__35=36, T__36=37, T__37=38, 
-		ID=39, COMMENT=40, WS=41, REAL_CONSTANT=42, INT_CONSTANT=43, CHAR_CONSTANT=44, 
-		EOL=45;
+		T__38=39, COMMENT=40, WS=41, REAL_CONSTANT=42, INT_CONSTANT=43, BOOL_CONSTANT=44, 
+		CHAR_CONSTANT=45, EOL=46, ID=47;
 	public static final int
 		RULE_program = 0, RULE_definitions = 1, RULE_variableDefinition = 2, RULE_functionDefinition = 3, 
 		RULE_functionBlock = 4, RULE_functionType = 5, RULE_functionParameters = 6, 
@@ -59,7 +59,7 @@ public class XanaParser extends Parser {
 			"'main'", "'if'", "'else'", "'while'", "'puts'", "'in'", "'return'", 
 			"'='", "'['", "']'", "'.'", "'as'", "'-'", "'!'", "'*'", "'/'", "'%'", 
 			"'+'", "'>'", "'>='", "'<'", "'<='", "'!='", "'=='", "'&&'", "'||'", 
-			"'defstruct'", "'int'", "'double'", "'char'"
+			"'defstruct'", "'int'", "'double'", "'char'", "'bool'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
@@ -68,8 +68,8 @@ public class XanaParser extends Parser {
 			null, null, null, null, null, null, null, null, null, null, null, null, 
 			null, null, null, null, null, null, null, null, null, null, null, null, 
 			null, null, null, null, null, null, null, null, null, null, null, null, 
-			null, null, null, "ID", "COMMENT", "WS", "REAL_CONSTANT", "INT_CONSTANT", 
-			"CHAR_CONSTANT", "EOL"
+			null, null, null, null, "COMMENT", "WS", "REAL_CONSTANT", "INT_CONSTANT", 
+			"BOOL_CONSTANT", "CHAR_CONSTANT", "EOL", "ID"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -423,7 +423,7 @@ public class XanaParser extends Parser {
 			setState(84);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__3) | (1L << T__9) | (1L << T__11) | (1L << T__12) | (1L << T__13) | (1L << T__14) | (1L << T__20) | (1L << T__21) | (1L << ID) | (1L << REAL_CONSTANT) | (1L << INT_CONSTANT) | (1L << CHAR_CONSTANT))) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__3) | (1L << T__9) | (1L << T__11) | (1L << T__12) | (1L << T__13) | (1L << T__14) | (1L << T__20) | (1L << T__21) | (1L << REAL_CONSTANT) | (1L << INT_CONSTANT) | (1L << BOOL_CONSTANT) | (1L << CHAR_CONSTANT) | (1L << ID))) != 0)) {
 				{
 				{
 				setState(79);
@@ -470,6 +470,7 @@ public class XanaParser extends Parser {
 			case T__35:
 			case T__36:
 			case T__37:
+			case T__38:
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(87);
@@ -627,7 +628,7 @@ public class XanaParser extends Parser {
 			setState(125);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__3) | (1L << T__9) | (1L << T__11) | (1L << T__12) | (1L << T__13) | (1L << T__14) | (1L << T__20) | (1L << T__21) | (1L << ID) | (1L << REAL_CONSTANT) | (1L << INT_CONSTANT) | (1L << CHAR_CONSTANT))) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__3) | (1L << T__9) | (1L << T__11) | (1L << T__12) | (1L << T__13) | (1L << T__14) | (1L << T__20) | (1L << T__21) | (1L << REAL_CONSTANT) | (1L << INT_CONSTANT) | (1L << BOOL_CONSTANT) | (1L << CHAR_CONSTANT) | (1L << ID))) != 0)) {
 				{
 				setState(123);
 				_errHandler.sync(this);
@@ -705,7 +706,7 @@ public class XanaParser extends Parser {
 			setState(144);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__3) | (1L << T__20) | (1L << T__21) | (1L << ID) | (1L << REAL_CONSTANT) | (1L << INT_CONSTANT) | (1L << CHAR_CONSTANT))) != 0)) {
+			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__3) | (1L << T__20) | (1L << T__21) | (1L << REAL_CONSTANT) | (1L << INT_CONSTANT) | (1L << BOOL_CONSTANT) | (1L << CHAR_CONSTANT) | (1L << ID))) != 0)) {
 				{
 				setState(133);
 				((FunctionInvocationContext)_localctx).e = expression(0);
@@ -967,10 +968,11 @@ public class XanaParser extends Parser {
 			case T__14:
 			case T__20:
 			case T__21:
-			case ID:
 			case REAL_CONSTANT:
 			case INT_CONSTANT:
+			case BOOL_CONSTANT:
 			case CHAR_CONSTANT:
+			case ID:
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(205);
@@ -979,7 +981,7 @@ public class XanaParser extends Parser {
 				setState(212);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-				while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__3) | (1L << T__9) | (1L << T__11) | (1L << T__12) | (1L << T__13) | (1L << T__14) | (1L << T__20) | (1L << T__21) | (1L << ID) | (1L << REAL_CONSTANT) | (1L << INT_CONSTANT) | (1L << CHAR_CONSTANT))) != 0)) {
+				while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__3) | (1L << T__9) | (1L << T__11) | (1L << T__12) | (1L << T__13) | (1L << T__14) | (1L << T__20) | (1L << T__21) | (1L << REAL_CONSTANT) | (1L << INT_CONSTANT) | (1L << BOOL_CONSTANT) | (1L << CHAR_CONSTANT) | (1L << ID))) != 0)) {
 					{
 					{
 					setState(207);
@@ -1026,6 +1028,7 @@ public class XanaParser extends Parser {
 		public Token INT_CONSTANT;
 		public Token REAL_CONSTANT;
 		public Token CHAR_CONSTANT;
+		public Token BOOL_CONSTANT;
 		public Token ID;
 		public Token op;
 		public ExpressionContext right;
@@ -1044,6 +1047,7 @@ public class XanaParser extends Parser {
 		public TerminalNode INT_CONSTANT() { return getToken(XanaParser.INT_CONSTANT, 0); }
 		public TerminalNode REAL_CONSTANT() { return getToken(XanaParser.REAL_CONSTANT, 0); }
 		public TerminalNode CHAR_CONSTANT() { return getToken(XanaParser.CHAR_CONSTANT, 0); }
+		public TerminalNode BOOL_CONSTANT() { return getToken(XanaParser.BOOL_CONSTANT, 0); }
 		public TerminalNode ID() { return getToken(XanaParser.ID, 0); }
 		public PrimitiveTypeContext primitiveType() {
 			return getRuleContext(PrimitiveTypeContext.class,0);
@@ -1070,7 +1074,7 @@ public class XanaParser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(243);
+			setState(245);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,18,_ctx) ) {
 			case 1:
@@ -1089,7 +1093,7 @@ public class XanaParser extends Parser {
 				setState(224);
 				match(T__20);
 				setState(225);
-				((ExpressionContext)_localctx).expression = expression(11);
+				((ExpressionContext)_localctx).expression = expression(12);
 				 ((ExpressionContext)_localctx).ast =  new UnaryMinus(_localctx.start.getLine(), _localctx.start.getCharPositionInLine() + 1, ((ExpressionContext)_localctx).expression.ast); 
 				}
 				break;
@@ -1098,7 +1102,7 @@ public class XanaParser extends Parser {
 				setState(228);
 				match(T__21);
 				setState(229);
-				((ExpressionContext)_localctx).expression = expression(10);
+				((ExpressionContext)_localctx).expression = expression(11);
 				 ((ExpressionContext)_localctx).ast =  new UnaryNegative(_localctx.start.getLine(), _localctx.start.getCharPositionInLine() + 1, ((ExpressionContext)_localctx).expression.ast); 
 				}
 				break;
@@ -1133,13 +1137,20 @@ public class XanaParser extends Parser {
 			case 8:
 				{
 				setState(241);
+				((ExpressionContext)_localctx).BOOL_CONSTANT = match(BOOL_CONSTANT);
+				 ((ExpressionContext)_localctx).ast =  new BoolLiteral(_localctx.start.getLine(), _localctx.start.getCharPositionInLine() + 1, LexerHelper.lexemeToBool((((ExpressionContext)_localctx).BOOL_CONSTANT!=null?((ExpressionContext)_localctx).BOOL_CONSTANT.getText():null))); 
+				}
+				break;
+			case 9:
+				{
+				setState(243);
 				((ExpressionContext)_localctx).ID = match(ID);
 				 ((ExpressionContext)_localctx).ast =  new Variable(_localctx.start.getLine(), _localctx.start.getCharPositionInLine() + 1, (((ExpressionContext)_localctx).ID!=null?((ExpressionContext)_localctx).ID.getText():null)); 
 				}
 				break;
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(282);
+			setState(284);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,20,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
@@ -1147,7 +1158,7 @@ public class XanaParser extends Parser {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
 					_prevctx = _localctx;
 					{
-					setState(280);
+					setState(282);
 					_errHandler.sync(this);
 					switch ( getInterpreter().adaptivePredict(_input,19,_ctx) ) {
 					case 1:
@@ -1156,9 +1167,9 @@ public class XanaParser extends Parser {
 						_localctx.left = _prevctx;
 						_localctx.left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
-						setState(245);
-						if (!(precpred(_ctx, 9))) throw new FailedPredicateException(this, "precpred(_ctx, 9)");
-						setState(246);
+						setState(247);
+						if (!(precpred(_ctx, 10))) throw new FailedPredicateException(this, "precpred(_ctx, 10)");
+						setState(248);
 						((ExpressionContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__22) | (1L << T__23) | (1L << T__24))) != 0)) ) {
@@ -1169,8 +1180,8 @@ public class XanaParser extends Parser {
 							_errHandler.reportMatch(this);
 							consume();
 						}
-						setState(247);
-						((ExpressionContext)_localctx).right = ((ExpressionContext)_localctx).expression = expression(10);
+						setState(249);
+						((ExpressionContext)_localctx).right = ((ExpressionContext)_localctx).expression = expression(11);
 						 ((ExpressionContext)_localctx).ast =  new Arithmetic(_localctx.start.getLine(), _localctx.start.getCharPositionInLine() + 1, ((ExpressionContext)_localctx).left.ast, ((ExpressionContext)_localctx).op.getText(), ((ExpressionContext)_localctx).op.getLine(), ((ExpressionContext)_localctx).op.getCharPositionInLine() + 1, ((ExpressionContext)_localctx).right.ast); 
 						}
 						break;
@@ -1180,9 +1191,9 @@ public class XanaParser extends Parser {
 						_localctx.left = _prevctx;
 						_localctx.left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
-						setState(250);
-						if (!(precpred(_ctx, 8))) throw new FailedPredicateException(this, "precpred(_ctx, 8)");
-						setState(251);
+						setState(252);
+						if (!(precpred(_ctx, 9))) throw new FailedPredicateException(this, "precpred(_ctx, 9)");
+						setState(253);
 						((ExpressionContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !(_la==T__20 || _la==T__25) ) {
@@ -1193,8 +1204,8 @@ public class XanaParser extends Parser {
 							_errHandler.reportMatch(this);
 							consume();
 						}
-						setState(252);
-						((ExpressionContext)_localctx).right = ((ExpressionContext)_localctx).expression = expression(9);
+						setState(254);
+						((ExpressionContext)_localctx).right = ((ExpressionContext)_localctx).expression = expression(10);
 						 ((ExpressionContext)_localctx).ast =  new Arithmetic(_localctx.start.getLine(), _localctx.start.getCharPositionInLine() + 1, ((ExpressionContext)_localctx).left.ast, ((ExpressionContext)_localctx).op.getText(), ((ExpressionContext)_localctx).op.getLine(), ((ExpressionContext)_localctx).op.getCharPositionInLine() + 1, ((ExpressionContext)_localctx).right.ast); 
 						}
 						break;
@@ -1204,9 +1215,9 @@ public class XanaParser extends Parser {
 						_localctx.left = _prevctx;
 						_localctx.left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
-						setState(255);
-						if (!(precpred(_ctx, 7))) throw new FailedPredicateException(this, "precpred(_ctx, 7)");
-						setState(256);
+						setState(257);
+						if (!(precpred(_ctx, 8))) throw new FailedPredicateException(this, "precpred(_ctx, 8)");
+						setState(258);
 						((ExpressionContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__26) | (1L << T__27) | (1L << T__28) | (1L << T__29) | (1L << T__30) | (1L << T__31))) != 0)) ) {
@@ -1217,8 +1228,8 @@ public class XanaParser extends Parser {
 							_errHandler.reportMatch(this);
 							consume();
 						}
-						setState(257);
-						((ExpressionContext)_localctx).right = ((ExpressionContext)_localctx).expression = expression(8);
+						setState(259);
+						((ExpressionContext)_localctx).right = ((ExpressionContext)_localctx).expression = expression(9);
 						 ((ExpressionContext)_localctx).ast =  new Relational(_localctx.start.getLine(), _localctx.start.getCharPositionInLine() + 1, ((ExpressionContext)_localctx).left.ast, ((ExpressionContext)_localctx).op.getText(), ((ExpressionContext)_localctx).op.getLine(), ((ExpressionContext)_localctx).op.getCharPositionInLine() + 1, ((ExpressionContext)_localctx).right.ast); 
 						}
 						break;
@@ -1228,9 +1239,9 @@ public class XanaParser extends Parser {
 						_localctx.left = _prevctx;
 						_localctx.left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
-						setState(260);
-						if (!(precpred(_ctx, 6))) throw new FailedPredicateException(this, "precpred(_ctx, 6)");
-						setState(261);
+						setState(262);
+						if (!(precpred(_ctx, 7))) throw new FailedPredicateException(this, "precpred(_ctx, 7)");
+						setState(263);
 						((ExpressionContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !(_la==T__32 || _la==T__33) ) {
@@ -1241,8 +1252,8 @@ public class XanaParser extends Parser {
 							_errHandler.reportMatch(this);
 							consume();
 						}
-						setState(262);
-						((ExpressionContext)_localctx).right = ((ExpressionContext)_localctx).expression = expression(7);
+						setState(264);
+						((ExpressionContext)_localctx).right = ((ExpressionContext)_localctx).expression = expression(8);
 						 ((ExpressionContext)_localctx).ast =  new Logical(_localctx.start.getLine(), _localctx.start.getCharPositionInLine() + 1, ((ExpressionContext)_localctx).left.ast, ((ExpressionContext)_localctx).op.getText(), ((ExpressionContext)_localctx).op.getLine(), ((ExpressionContext)_localctx).op.getCharPositionInLine() + 1, ((ExpressionContext)_localctx).right.ast); 
 						}
 						break;
@@ -1252,13 +1263,13 @@ public class XanaParser extends Parser {
 						_localctx.arr = _prevctx;
 						_localctx.arr = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
-						setState(265);
-						if (!(precpred(_ctx, 14))) throw new FailedPredicateException(this, "precpred(_ctx, 14)");
-						setState(266);
-						match(T__16);
 						setState(267);
-						((ExpressionContext)_localctx).index = ((ExpressionContext)_localctx).expression = expression(0);
+						if (!(precpred(_ctx, 15))) throw new FailedPredicateException(this, "precpred(_ctx, 15)");
 						setState(268);
+						match(T__16);
+						setState(269);
+						((ExpressionContext)_localctx).index = ((ExpressionContext)_localctx).expression = expression(0);
+						setState(270);
 						match(T__17);
 						 ((ExpressionContext)_localctx).ast =  new ArrayAccess(_localctx.start.getLine(), _localctx.start.getCharPositionInLine() + 1, ((ExpressionContext)_localctx).arr.ast, ((ExpressionContext)_localctx).index.ast); 
 						}
@@ -1269,11 +1280,11 @@ public class XanaParser extends Parser {
 						_localctx.struct = _prevctx;
 						_localctx.struct = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
-						setState(271);
-						if (!(precpred(_ctx, 13))) throw new FailedPredicateException(this, "precpred(_ctx, 13)");
-						setState(272);
-						match(T__18);
 						setState(273);
+						if (!(precpred(_ctx, 14))) throw new FailedPredicateException(this, "precpred(_ctx, 14)");
+						setState(274);
+						match(T__18);
+						setState(275);
 						((ExpressionContext)_localctx).field = match(ID);
 						 ((ExpressionContext)_localctx).ast =  new StructAccess(_localctx.start.getLine(), _localctx.start.getCharPositionInLine() + 1, ((ExpressionContext)_localctx).struct.ast, ((ExpressionContext)_localctx).field.getText()); 
 						}
@@ -1284,11 +1295,11 @@ public class XanaParser extends Parser {
 						_localctx.casted = _prevctx;
 						_localctx.casted = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
-						setState(275);
-						if (!(precpred(_ctx, 12))) throw new FailedPredicateException(this, "precpred(_ctx, 12)");
-						setState(276);
-						match(T__19);
 						setState(277);
+						if (!(precpred(_ctx, 13))) throw new FailedPredicateException(this, "precpred(_ctx, 13)");
+						setState(278);
+						match(T__19);
+						setState(279);
 						((ExpressionContext)_localctx).toCast = primitiveType();
 						 ((ExpressionContext)_localctx).ast =  new Cast(_localctx.start.getLine(), _localctx.start.getCharPositionInLine() + 1, ((ExpressionContext)_localctx).toCast.ast, ((ExpressionContext)_localctx).casted.ast); 
 						}
@@ -1296,7 +1307,7 @@ public class XanaParser extends Parser {
 					}
 					} 
 				}
-				setState(284);
+				setState(286);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,20,_ctx);
 			}
@@ -1339,21 +1350,21 @@ public class XanaParser extends Parser {
 		TypeContext _localctx = new TypeContext(_ctx, getState());
 		enterRule(_localctx, 24, RULE_type);
 		try {
-			setState(301);
+			setState(303);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case T__16:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(285);
-				match(T__16);
-				setState(286);
-				((TypeContext)_localctx).i = match(INT_CONSTANT);
 				setState(287);
-				match(T__1);
+				match(T__16);
 				setState(288);
-				((TypeContext)_localctx).t = type();
+				((TypeContext)_localctx).i = match(INT_CONSTANT);
 				setState(289);
+				match(T__1);
+				setState(290);
+				((TypeContext)_localctx).t = type();
+				setState(291);
 				match(T__17);
 				 ((TypeContext)_localctx).ast =  new ArrayType(_localctx.start.getLine(), _localctx.start.getCharPositionInLine() + 1, ((TypeContext)_localctx).t.ast, LexerHelper.lexemeToInt((((TypeContext)_localctx).i!=null?((TypeContext)_localctx).i.getText():null))); 
 				}
@@ -1361,13 +1372,13 @@ public class XanaParser extends Parser {
 			case T__34:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(292);
-				match(T__34);
-				setState(293);
-				match(T__5);
 				setState(294);
-				((TypeContext)_localctx).recordType = recordType();
+				match(T__34);
 				setState(295);
+				match(T__5);
+				setState(296);
+				((TypeContext)_localctx).recordType = recordType();
+				setState(297);
 				match(T__6);
 				 ((TypeContext)_localctx).ast =  new StructType(_localctx.start.getLine(), _localctx.start.getCharPositionInLine() + 1, ((TypeContext)_localctx).recordType.ast); 
 				}
@@ -1375,9 +1386,10 @@ public class XanaParser extends Parser {
 			case T__35:
 			case T__36:
 			case T__37:
+			case T__38:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(298);
+				setState(300);
 				((TypeContext)_localctx).primitiveType = primitiveType();
 				 ((TypeContext)_localctx).ast =  ((TypeContext)_localctx).primitiveType.ast; 
 				}
@@ -1426,43 +1438,43 @@ public class XanaParser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(317);
+			setState(319);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,23,_ctx);
 			while ( _alt!=1 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1+1 ) {
 					{
 					{
-					setState(303);
+					setState(305);
 					((RecordTypeContext)_localctx).ID = match(ID);
 					((RecordTypeContext)_localctx).ids.add(((RecordTypeContext)_localctx).ID);
-					setState(308);
+					setState(310);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 					while (_la==T__0) {
 						{
 						{
-						setState(304);
+						setState(306);
 						match(T__0);
-						setState(305);
+						setState(307);
 						((RecordTypeContext)_localctx).ID = match(ID);
 						((RecordTypeContext)_localctx).ids.add(((RecordTypeContext)_localctx).ID);
 						}
 						}
-						setState(310);
+						setState(312);
 						_errHandler.sync(this);
 						_la = _input.LA(1);
 					}
-					setState(311);
+					setState(313);
 					match(T__1);
-					setState(312);
+					setState(314);
 					((RecordTypeContext)_localctx).type = type();
 					 for(var id : ((RecordTypeContext)_localctx).ids) { _localctx.ast.add(new RecordType(id.getLine(), id.getCharPositionInLine() + 1, ((RecordTypeContext)_localctx).type.ast, id.getText())); }
 					             ((RecordTypeContext)_localctx).ids.clear(); 
 					}
 					} 
 				}
-				setState(319);
+				setState(321);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,23,_ctx);
 			}
@@ -1491,13 +1503,13 @@ public class XanaParser extends Parser {
 		PrimitiveTypeContext _localctx = new PrimitiveTypeContext(_ctx, getState());
 		enterRule(_localctx, 28, RULE_primitiveType);
 		try {
-			setState(326);
+			setState(330);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case T__35:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(320);
+				setState(322);
 				match(T__35);
 				 ((PrimitiveTypeContext)_localctx).ast =  new IntType(_localctx.start.getLine(), _localctx.start.getCharPositionInLine() + 1); 
 				}
@@ -1505,7 +1517,7 @@ public class XanaParser extends Parser {
 			case T__36:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(322);
+				setState(324);
 				match(T__36);
 				 ((PrimitiveTypeContext)_localctx).ast =  new DoubleType(_localctx.start.getLine(), _localctx.start.getCharPositionInLine() + 1); 
 				}
@@ -1513,9 +1525,17 @@ public class XanaParser extends Parser {
 			case T__37:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(324);
+				setState(326);
 				match(T__37);
 				 ((PrimitiveTypeContext)_localctx).ast =  new CharType(_localctx.start.getLine(), _localctx.start.getCharPositionInLine() + 1); 
+				}
+				break;
+			case T__38:
+				enterOuterAlt(_localctx, 4);
+				{
+				setState(328);
+				match(T__38);
+				 ((PrimitiveTypeContext)_localctx).ast =  new BoolType(_localctx.start.getLine(), _localctx.start.getCharPositionInLine() + 1); 
 				}
 				break;
 			default:
@@ -1543,138 +1563,140 @@ public class XanaParser extends Parser {
 	private boolean expression_sempred(ExpressionContext _localctx, int predIndex) {
 		switch (predIndex) {
 		case 0:
-			return precpred(_ctx, 9);
+			return precpred(_ctx, 10);
 		case 1:
-			return precpred(_ctx, 8);
+			return precpred(_ctx, 9);
 		case 2:
-			return precpred(_ctx, 7);
+			return precpred(_ctx, 8);
 		case 3:
-			return precpred(_ctx, 6);
+			return precpred(_ctx, 7);
 		case 4:
-			return precpred(_ctx, 14);
+			return precpred(_ctx, 15);
 		case 5:
-			return precpred(_ctx, 13);
+			return precpred(_ctx, 14);
 		case 6:
-			return precpred(_ctx, 12);
+			return precpred(_ctx, 13);
 		}
 		return true;
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3/\u014b\4\2\t\2\4"+
-		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t"+
-		"\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\3\2\3\2\3\2\3\2\3\2"+
-		"\3\2\3\3\3\3\3\3\3\3\3\3\3\3\7\3-\n\3\f\3\16\3\60\13\3\3\4\3\4\3\4\7\4"+
-		"\65\n\4\f\4\16\48\13\4\3\4\3\4\3\4\3\4\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5"+
-		"\3\5\3\5\3\5\3\5\3\6\3\6\3\6\7\6M\n\6\f\6\16\6P\13\6\3\6\3\6\3\6\7\6U"+
-		"\n\6\f\6\16\6X\13\6\3\7\3\7\3\7\3\7\3\7\5\7_\n\7\3\b\3\b\3\b\3\b\3\b\3"+
-		"\b\3\b\3\b\3\b\3\b\3\b\7\bl\n\b\f\b\16\bo\13\b\5\bq\n\b\3\t\3\t\3\t\3"+
-		"\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\7\t~\n\t\f\t\16\t\u0081\13\t\3\t\3\t\3"+
-		"\t\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\7\n\u008e\n\n\f\n\16\n\u0091\13\n\5"+
-		"\n\u0093\n\n\3\n\3\n\3\n\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\5\13"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\61\u014f\4\2\t\2"+
+		"\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13"+
+		"\t\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\3\2\3\2\3\2\3\2\3"+
+		"\2\3\2\3\3\3\3\3\3\3\3\3\3\3\3\7\3-\n\3\f\3\16\3\60\13\3\3\4\3\4\3\4\7"+
+		"\4\65\n\4\f\4\16\48\13\4\3\4\3\4\3\4\3\4\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3"+
+		"\5\3\5\3\5\3\5\3\5\3\6\3\6\3\6\7\6M\n\6\f\6\16\6P\13\6\3\6\3\6\3\6\7\6"+
+		"U\n\6\f\6\16\6X\13\6\3\7\3\7\3\7\3\7\3\7\5\7_\n\7\3\b\3\b\3\b\3\b\3\b"+
+		"\3\b\3\b\3\b\3\b\3\b\3\b\7\bl\n\b\f\b\16\bo\13\b\5\bq\n\b\3\t\3\t\3\t"+
+		"\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\7\t~\n\t\f\t\16\t\u0081\13\t\3\t\3\t"+
+		"\3\t\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\7\n\u008e\n\n\f\n\16\n\u0091\13\n"+
+		"\5\n\u0093\n\n\3\n\3\n\3\n\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\5\13"+
 		"\u00a0\n\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13"+
 		"\3\13\3\13\7\13\u00b0\n\13\f\13\16\13\u00b3\13\13\3\13\3\13\3\13\3\13"+
 		"\3\13\3\13\7\13\u00bb\n\13\f\13\16\13\u00be\13\13\3\13\3\13\3\13\3\13"+
 		"\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\5\13\u00ce\n\13\3\f"+
 		"\3\f\3\f\3\f\3\f\7\f\u00d5\n\f\f\f\16\f\u00d8\13\f\3\f\5\f\u00db\n\f\3"+
 		"\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r"+
-		"\3\r\3\r\3\r\3\r\3\r\3\r\3\r\5\r\u00f6\n\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r"+
+		"\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\5\r\u00f8\n\r\3\r\3\r\3\r\3\r\3\r"+
 		"\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3"+
-		"\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\7\r\u011b\n\r\f\r\16\r\u011e"+
-		"\13\r\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16"+
-		"\3\16\3\16\3\16\5\16\u0130\n\16\3\17\3\17\3\17\7\17\u0135\n\17\f\17\16"+
-		"\17\u0138\13\17\3\17\3\17\3\17\3\17\7\17\u013e\n\17\f\17\16\17\u0141\13"+
-		"\17\3\20\3\20\3\20\3\20\3\20\3\20\5\20\u0149\n\20\3\20\6\66\u00b1\u00bc"+
-		"\u013f\3\30\21\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36\2\6\3\2\31\33\4"+
-		"\2\27\27\34\34\3\2\35\"\3\2#$\2\u0166\2 \3\2\2\2\4.\3\2\2\2\6\61\3\2\2"+
-		"\2\b=\3\2\2\2\nN\3\2\2\2\f^\3\2\2\2\16p\3\2\2\2\20r\3\2\2\2\22\u0085\3"+
-		"\2\2\2\24\u00cd\3\2\2\2\26\u00da\3\2\2\2\30\u00f5\3\2\2\2\32\u012f\3\2"+
-		"\2\2\34\u013f\3\2\2\2\36\u0148\3\2\2\2 !\5\4\3\2!\"\5\20\t\2\"#\b\2\1"+
-		"\2#$\7\2\2\3$%\b\2\1\2%\3\3\2\2\2&\'\5\6\4\2\'(\b\3\1\2(-\3\2\2\2)*\5"+
-		"\b\5\2*+\b\3\1\2+-\3\2\2\2,&\3\2\2\2,)\3\2\2\2-\60\3\2\2\2.,\3\2\2\2."+
-		"/\3\2\2\2/\5\3\2\2\2\60.\3\2\2\2\61\66\7)\2\2\62\63\7\3\2\2\63\65\7)\2"+
-		"\2\64\62\3\2\2\2\658\3\2\2\2\66\67\3\2\2\2\66\64\3\2\2\2\679\3\2\2\28"+
-		"\66\3\2\2\29:\7\4\2\2:;\5\32\16\2;<\b\4\1\2<\7\3\2\2\2=>\7\5\2\2>?\7)"+
-		"\2\2?@\7\6\2\2@A\5\16\b\2AB\7\7\2\2BC\7\4\2\2CD\5\f\7\2DE\7\b\2\2EF\5"+
-		"\n\6\2FG\7\t\2\2GH\b\5\1\2H\t\3\2\2\2IJ\5\6\4\2JK\b\6\1\2KM\3\2\2\2LI"+
-		"\3\2\2\2MP\3\2\2\2NL\3\2\2\2NO\3\2\2\2OV\3\2\2\2PN\3\2\2\2QR\5\24\13\2"+
-		"RS\b\6\1\2SU\3\2\2\2TQ\3\2\2\2UX\3\2\2\2VT\3\2\2\2VW\3\2\2\2W\13\3\2\2"+
-		"\2XV\3\2\2\2YZ\5\36\20\2Z[\b\7\1\2[_\3\2\2\2\\]\7\n\2\2]_\b\7\1\2^Y\3"+
-		"\2\2\2^\\\3\2\2\2_\r\3\2\2\2`q\b\b\1\2ab\7)\2\2bc\7\4\2\2cd\5\32\16\2"+
-		"dm\b\b\1\2ef\7\3\2\2fg\7)\2\2gh\7\4\2\2hi\5\32\16\2ij\b\b\1\2jl\3\2\2"+
-		"\2ke\3\2\2\2lo\3\2\2\2mk\3\2\2\2mn\3\2\2\2nq\3\2\2\2om\3\2\2\2p`\3\2\2"+
-		"\2pa\3\2\2\2q\17\3\2\2\2rs\7\5\2\2st\7\13\2\2tu\7\6\2\2uv\7\7\2\2v\177"+
-		"\7\b\2\2wx\5\6\4\2xy\b\t\1\2y~\3\2\2\2z{\5\24\13\2{|\b\t\1\2|~\3\2\2\2"+
-		"}w\3\2\2\2}z\3\2\2\2~\u0081\3\2\2\2\177}\3\2\2\2\177\u0080\3\2\2\2\u0080"+
-		"\u0082\3\2\2\2\u0081\177\3\2\2\2\u0082\u0083\7\t\2\2\u0083\u0084\b\t\1"+
-		"\2\u0084\21\3\2\2\2\u0085\u0086\7)\2\2\u0086\u0092\7\6\2\2\u0087\u0088"+
-		"\5\30\r\2\u0088\u008f\b\n\1\2\u0089\u008a\7\3\2\2\u008a\u008b\5\30\r\2"+
-		"\u008b\u008c\b\n\1\2\u008c\u008e\3\2\2\2\u008d\u0089\3\2\2\2\u008e\u0091"+
-		"\3\2\2\2\u008f\u008d\3\2\2\2\u008f\u0090\3\2\2\2\u0090\u0093\3\2\2\2\u0091"+
-		"\u008f\3\2\2\2\u0092\u0087\3\2\2\2\u0092\u0093\3\2\2\2\u0093\u0094\3\2"+
-		"\2\2\u0094\u0095\7\7\2\2\u0095\u0096\b\n\1\2\u0096\23\3\2\2\2\u0097\u0098"+
-		"\7\f\2\2\u0098\u0099\5\30\r\2\u0099\u009a\7\b\2\2\u009a\u009f\5\26\f\2"+
-		"\u009b\u009c\7\r\2\2\u009c\u009d\5\26\f\2\u009d\u009e\b\13\1\2\u009e\u00a0"+
-		"\3\2\2\2\u009f\u009b\3\2\2\2\u009f\u00a0\3\2\2\2\u00a0\u00a1\3\2\2\2\u00a1"+
-		"\u00a2\7\t\2\2\u00a2\u00a3\b\13\1\2\u00a3\u00ce\3\2\2\2\u00a4\u00a5\7"+
-		"\16\2\2\u00a5\u00a6\5\30\r\2\u00a6\u00a7\7\b\2\2\u00a7\u00a8\5\26\f\2"+
-		"\u00a8\u00a9\7\t\2\2\u00a9\u00aa\b\13\1\2\u00aa\u00ce\3\2\2\2\u00ab\u00ac"+
-		"\7\17\2\2\u00ac\u00b1\5\30\r\2\u00ad\u00ae\7\3\2\2\u00ae\u00b0\5\30\r"+
-		"\2\u00af\u00ad\3\2\2\2\u00b0\u00b3\3\2\2\2\u00b1\u00b2\3\2\2\2\u00b1\u00af"+
-		"\3\2\2\2\u00b2\u00b4\3\2\2\2\u00b3\u00b1\3\2\2\2\u00b4\u00b5\b\13\1\2"+
-		"\u00b5\u00ce\3\2\2\2\u00b6\u00b7\7\20\2\2\u00b7\u00bc\5\30\r\2\u00b8\u00b9"+
-		"\7\3\2\2\u00b9\u00bb\5\30\r\2\u00ba\u00b8\3\2\2\2\u00bb\u00be\3\2\2\2"+
-		"\u00bc\u00bd\3\2\2\2\u00bc\u00ba\3\2\2\2\u00bd\u00bf\3\2\2\2\u00be\u00bc"+
-		"\3\2\2\2\u00bf\u00c0\b\13\1\2\u00c0\u00ce\3\2\2\2\u00c1\u00c2\7\21\2\2"+
-		"\u00c2\u00c3\5\30\r\2\u00c3\u00c4\b\13\1\2\u00c4\u00ce\3\2\2\2\u00c5\u00c6"+
-		"\5\30\r\2\u00c6\u00c7\7\22\2\2\u00c7\u00c8\5\30\r\2\u00c8\u00c9\b\13\1"+
-		"\2\u00c9\u00ce\3\2\2\2\u00ca\u00cb\5\22\n\2\u00cb\u00cc\b\13\1\2\u00cc"+
-		"\u00ce\3\2\2\2\u00cd\u0097\3\2\2\2\u00cd\u00a4\3\2\2\2\u00cd\u00ab\3\2"+
-		"\2\2\u00cd\u00b6\3\2\2\2\u00cd\u00c1\3\2\2\2\u00cd\u00c5\3\2\2\2\u00cd"+
-		"\u00ca\3\2\2\2\u00ce\25\3\2\2\2\u00cf\u00d0\5\24\13\2\u00d0\u00d6\b\f"+
-		"\1\2\u00d1\u00d2\5\24\13\2\u00d2\u00d3\b\f\1\2\u00d3\u00d5\3\2\2\2\u00d4"+
-		"\u00d1\3\2\2\2\u00d5\u00d8\3\2\2\2\u00d6\u00d4\3\2\2\2\u00d6\u00d7\3\2"+
-		"\2\2\u00d7\u00db\3\2\2\2\u00d8\u00d6\3\2\2\2\u00d9\u00db\b\f\1\2\u00da"+
-		"\u00cf\3\2\2\2\u00da\u00d9\3\2\2\2\u00db\27\3\2\2\2\u00dc\u00dd\b\r\1"+
-		"\2\u00dd\u00de\7\6\2\2\u00de\u00df\5\30\r\2\u00df\u00e0\7\7\2\2\u00e0"+
-		"\u00e1\b\r\1\2\u00e1\u00f6\3\2\2\2\u00e2\u00e3\7\27\2\2\u00e3\u00e4\5"+
-		"\30\r\r\u00e4\u00e5\b\r\1\2\u00e5\u00f6\3\2\2\2\u00e6\u00e7\7\30\2\2\u00e7"+
-		"\u00e8\5\30\r\f\u00e8\u00e9\b\r\1\2\u00e9\u00f6\3\2\2\2\u00ea\u00eb\5"+
-		"\22\n\2\u00eb\u00ec\b\r\1\2\u00ec\u00f6\3\2\2\2\u00ed\u00ee\7-\2\2\u00ee"+
-		"\u00f6\b\r\1\2\u00ef\u00f0\7,\2\2\u00f0\u00f6\b\r\1\2\u00f1\u00f2\7.\2"+
-		"\2\u00f2\u00f6\b\r\1\2\u00f3\u00f4\7)\2\2\u00f4\u00f6\b\r\1\2\u00f5\u00dc"+
-		"\3\2\2\2\u00f5\u00e2\3\2\2\2\u00f5\u00e6\3\2\2\2\u00f5\u00ea\3\2\2\2\u00f5"+
-		"\u00ed\3\2\2\2\u00f5\u00ef\3\2\2\2\u00f5\u00f1\3\2\2\2\u00f5\u00f3\3\2"+
-		"\2\2\u00f6\u011c\3\2\2\2\u00f7\u00f8\f\13\2\2\u00f8\u00f9\t\2\2\2\u00f9"+
-		"\u00fa\5\30\r\f\u00fa\u00fb\b\r\1\2\u00fb\u011b\3\2\2\2\u00fc\u00fd\f"+
-		"\n\2\2\u00fd\u00fe\t\3\2\2\u00fe\u00ff\5\30\r\13\u00ff\u0100\b\r\1\2\u0100"+
-		"\u011b\3\2\2\2\u0101\u0102\f\t\2\2\u0102\u0103\t\4\2\2\u0103\u0104\5\30"+
-		"\r\n\u0104\u0105\b\r\1\2\u0105\u011b\3\2\2\2\u0106\u0107\f\b\2\2\u0107"+
-		"\u0108\t\5\2\2\u0108\u0109\5\30\r\t\u0109\u010a\b\r\1\2\u010a\u011b\3"+
-		"\2\2\2\u010b\u010c\f\20\2\2\u010c\u010d\7\23\2\2\u010d\u010e\5\30\r\2"+
-		"\u010e\u010f\7\24\2\2\u010f\u0110\b\r\1\2\u0110\u011b\3\2\2\2\u0111\u0112"+
-		"\f\17\2\2\u0112\u0113\7\25\2\2\u0113\u0114\7)\2\2\u0114\u011b\b\r\1\2"+
-		"\u0115\u0116\f\16\2\2\u0116\u0117\7\26\2\2\u0117\u0118\5\36\20\2\u0118"+
-		"\u0119\b\r\1\2\u0119\u011b\3\2\2\2\u011a\u00f7\3\2\2\2\u011a\u00fc\3\2"+
-		"\2\2\u011a\u0101\3\2\2\2\u011a\u0106\3\2\2\2\u011a\u010b\3\2\2\2\u011a"+
-		"\u0111\3\2\2\2\u011a\u0115\3\2\2\2\u011b\u011e\3\2\2\2\u011c\u011a\3\2"+
-		"\2\2\u011c\u011d\3\2\2\2\u011d\31\3\2\2\2\u011e\u011c\3\2\2\2\u011f\u0120"+
-		"\7\23\2\2\u0120\u0121\7-\2\2\u0121\u0122\7\4\2\2\u0122\u0123\5\32\16\2"+
-		"\u0123\u0124\7\24\2\2\u0124\u0125\b\16\1\2\u0125\u0130\3\2\2\2\u0126\u0127"+
-		"\7%\2\2\u0127\u0128\7\b\2\2\u0128\u0129\5\34\17\2\u0129\u012a\7\t\2\2"+
-		"\u012a\u012b\b\16\1\2\u012b\u0130\3\2\2\2\u012c\u012d\5\36\20\2\u012d"+
-		"\u012e\b\16\1\2\u012e\u0130\3\2\2\2\u012f\u011f\3\2\2\2\u012f\u0126\3"+
-		"\2\2\2\u012f\u012c\3\2\2\2\u0130\33\3\2\2\2\u0131\u0136\7)\2\2\u0132\u0133"+
-		"\7\3\2\2\u0133\u0135\7)\2\2\u0134\u0132\3\2\2\2\u0135\u0138\3\2\2\2\u0136"+
-		"\u0134\3\2\2\2\u0136\u0137\3\2\2\2\u0137\u0139\3\2\2\2\u0138\u0136\3\2"+
-		"\2\2\u0139\u013a\7\4\2\2\u013a\u013b\5\32\16\2\u013b\u013c\b\17\1\2\u013c"+
-		"\u013e\3\2\2\2\u013d\u0131\3\2\2\2\u013e\u0141\3\2\2\2\u013f\u0140\3\2"+
-		"\2\2\u013f\u013d\3\2\2\2\u0140\35\3\2\2\2\u0141\u013f\3\2\2\2\u0142\u0143"+
-		"\7&\2\2\u0143\u0149\b\20\1\2\u0144\u0145\7\'\2\2\u0145\u0149\b\20\1\2"+
-		"\u0146\u0147\7(\2\2\u0147\u0149\b\20\1\2\u0148\u0142\3\2\2\2\u0148\u0144"+
-		"\3\2\2\2\u0148\u0146\3\2\2\2\u0149\37\3\2\2\2\33,.\66NV^mp}\177\u008f"+
-		"\u0092\u009f\u00b1\u00bc\u00cd\u00d6\u00da\u00f5\u011a\u011c\u012f\u0136"+
-		"\u013f\u0148";
+		"\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\7\r\u011d\n\r\f\r\16"+
+		"\r\u0120\13\r\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3"+
+		"\16\3\16\3\16\3\16\3\16\5\16\u0132\n\16\3\17\3\17\3\17\7\17\u0137\n\17"+
+		"\f\17\16\17\u013a\13\17\3\17\3\17\3\17\3\17\7\17\u0140\n\17\f\17\16\17"+
+		"\u0143\13\17\3\20\3\20\3\20\3\20\3\20\3\20\3\20\3\20\5\20\u014d\n\20\3"+
+		"\20\6\66\u00b1\u00bc\u0141\3\30\21\2\4\6\b\n\f\16\20\22\24\26\30\32\34"+
+		"\36\2\6\3\2\31\33\4\2\27\27\34\34\3\2\35\"\3\2#$\2\u016c\2 \3\2\2\2\4"+
+		".\3\2\2\2\6\61\3\2\2\2\b=\3\2\2\2\nN\3\2\2\2\f^\3\2\2\2\16p\3\2\2\2\20"+
+		"r\3\2\2\2\22\u0085\3\2\2\2\24\u00cd\3\2\2\2\26\u00da\3\2\2\2\30\u00f7"+
+		"\3\2\2\2\32\u0131\3\2\2\2\34\u0141\3\2\2\2\36\u014c\3\2\2\2 !\5\4\3\2"+
+		"!\"\5\20\t\2\"#\b\2\1\2#$\7\2\2\3$%\b\2\1\2%\3\3\2\2\2&\'\5\6\4\2\'(\b"+
+		"\3\1\2(-\3\2\2\2)*\5\b\5\2*+\b\3\1\2+-\3\2\2\2,&\3\2\2\2,)\3\2\2\2-\60"+
+		"\3\2\2\2.,\3\2\2\2./\3\2\2\2/\5\3\2\2\2\60.\3\2\2\2\61\66\7\61\2\2\62"+
+		"\63\7\3\2\2\63\65\7\61\2\2\64\62\3\2\2\2\658\3\2\2\2\66\67\3\2\2\2\66"+
+		"\64\3\2\2\2\679\3\2\2\28\66\3\2\2\29:\7\4\2\2:;\5\32\16\2;<\b\4\1\2<\7"+
+		"\3\2\2\2=>\7\5\2\2>?\7\61\2\2?@\7\6\2\2@A\5\16\b\2AB\7\7\2\2BC\7\4\2\2"+
+		"CD\5\f\7\2DE\7\b\2\2EF\5\n\6\2FG\7\t\2\2GH\b\5\1\2H\t\3\2\2\2IJ\5\6\4"+
+		"\2JK\b\6\1\2KM\3\2\2\2LI\3\2\2\2MP\3\2\2\2NL\3\2\2\2NO\3\2\2\2OV\3\2\2"+
+		"\2PN\3\2\2\2QR\5\24\13\2RS\b\6\1\2SU\3\2\2\2TQ\3\2\2\2UX\3\2\2\2VT\3\2"+
+		"\2\2VW\3\2\2\2W\13\3\2\2\2XV\3\2\2\2YZ\5\36\20\2Z[\b\7\1\2[_\3\2\2\2\\"+
+		"]\7\n\2\2]_\b\7\1\2^Y\3\2\2\2^\\\3\2\2\2_\r\3\2\2\2`q\b\b\1\2ab\7\61\2"+
+		"\2bc\7\4\2\2cd\5\32\16\2dm\b\b\1\2ef\7\3\2\2fg\7\61\2\2gh\7\4\2\2hi\5"+
+		"\32\16\2ij\b\b\1\2jl\3\2\2\2ke\3\2\2\2lo\3\2\2\2mk\3\2\2\2mn\3\2\2\2n"+
+		"q\3\2\2\2om\3\2\2\2p`\3\2\2\2pa\3\2\2\2q\17\3\2\2\2rs\7\5\2\2st\7\13\2"+
+		"\2tu\7\6\2\2uv\7\7\2\2v\177\7\b\2\2wx\5\6\4\2xy\b\t\1\2y~\3\2\2\2z{\5"+
+		"\24\13\2{|\b\t\1\2|~\3\2\2\2}w\3\2\2\2}z\3\2\2\2~\u0081\3\2\2\2\177}\3"+
+		"\2\2\2\177\u0080\3\2\2\2\u0080\u0082\3\2\2\2\u0081\177\3\2\2\2\u0082\u0083"+
+		"\7\t\2\2\u0083\u0084\b\t\1\2\u0084\21\3\2\2\2\u0085\u0086\7\61\2\2\u0086"+
+		"\u0092\7\6\2\2\u0087\u0088\5\30\r\2\u0088\u008f\b\n\1\2\u0089\u008a\7"+
+		"\3\2\2\u008a\u008b\5\30\r\2\u008b\u008c\b\n\1\2\u008c\u008e\3\2\2\2\u008d"+
+		"\u0089\3\2\2\2\u008e\u0091\3\2\2\2\u008f\u008d\3\2\2\2\u008f\u0090\3\2"+
+		"\2\2\u0090\u0093\3\2\2\2\u0091\u008f\3\2\2\2\u0092\u0087\3\2\2\2\u0092"+
+		"\u0093\3\2\2\2\u0093\u0094\3\2\2\2\u0094\u0095\7\7\2\2\u0095\u0096\b\n"+
+		"\1\2\u0096\23\3\2\2\2\u0097\u0098\7\f\2\2\u0098\u0099\5\30\r\2\u0099\u009a"+
+		"\7\b\2\2\u009a\u009f\5\26\f\2\u009b\u009c\7\r\2\2\u009c\u009d\5\26\f\2"+
+		"\u009d\u009e\b\13\1\2\u009e\u00a0\3\2\2\2\u009f\u009b\3\2\2\2\u009f\u00a0"+
+		"\3\2\2\2\u00a0\u00a1\3\2\2\2\u00a1\u00a2\7\t\2\2\u00a2\u00a3\b\13\1\2"+
+		"\u00a3\u00ce\3\2\2\2\u00a4\u00a5\7\16\2\2\u00a5\u00a6\5\30\r\2\u00a6\u00a7"+
+		"\7\b\2\2\u00a7\u00a8\5\26\f\2\u00a8\u00a9\7\t\2\2\u00a9\u00aa\b\13\1\2"+
+		"\u00aa\u00ce\3\2\2\2\u00ab\u00ac\7\17\2\2\u00ac\u00b1\5\30\r\2\u00ad\u00ae"+
+		"\7\3\2\2\u00ae\u00b0\5\30\r\2\u00af\u00ad\3\2\2\2\u00b0\u00b3\3\2\2\2"+
+		"\u00b1\u00b2\3\2\2\2\u00b1\u00af\3\2\2\2\u00b2\u00b4\3\2\2\2\u00b3\u00b1"+
+		"\3\2\2\2\u00b4\u00b5\b\13\1\2\u00b5\u00ce\3\2\2\2\u00b6\u00b7\7\20\2\2"+
+		"\u00b7\u00bc\5\30\r\2\u00b8\u00b9\7\3\2\2\u00b9\u00bb\5\30\r\2\u00ba\u00b8"+
+		"\3\2\2\2\u00bb\u00be\3\2\2\2\u00bc\u00bd\3\2\2\2\u00bc\u00ba\3\2\2\2\u00bd"+
+		"\u00bf\3\2\2\2\u00be\u00bc\3\2\2\2\u00bf\u00c0\b\13\1\2\u00c0\u00ce\3"+
+		"\2\2\2\u00c1\u00c2\7\21\2\2\u00c2\u00c3\5\30\r\2\u00c3\u00c4\b\13\1\2"+
+		"\u00c4\u00ce\3\2\2\2\u00c5\u00c6\5\30\r\2\u00c6\u00c7\7\22\2\2\u00c7\u00c8"+
+		"\5\30\r\2\u00c8\u00c9\b\13\1\2\u00c9\u00ce\3\2\2\2\u00ca\u00cb\5\22\n"+
+		"\2\u00cb\u00cc\b\13\1\2\u00cc\u00ce\3\2\2\2\u00cd\u0097\3\2\2\2\u00cd"+
+		"\u00a4\3\2\2\2\u00cd\u00ab\3\2\2\2\u00cd\u00b6\3\2\2\2\u00cd\u00c1\3\2"+
+		"\2\2\u00cd\u00c5\3\2\2\2\u00cd\u00ca\3\2\2\2\u00ce\25\3\2\2\2\u00cf\u00d0"+
+		"\5\24\13\2\u00d0\u00d6\b\f\1\2\u00d1\u00d2\5\24\13\2\u00d2\u00d3\b\f\1"+
+		"\2\u00d3\u00d5\3\2\2\2\u00d4\u00d1\3\2\2\2\u00d5\u00d8\3\2\2\2\u00d6\u00d4"+
+		"\3\2\2\2\u00d6\u00d7\3\2\2\2\u00d7\u00db\3\2\2\2\u00d8\u00d6\3\2\2\2\u00d9"+
+		"\u00db\b\f\1\2\u00da\u00cf\3\2\2\2\u00da\u00d9\3\2\2\2\u00db\27\3\2\2"+
+		"\2\u00dc\u00dd\b\r\1\2\u00dd\u00de\7\6\2\2\u00de\u00df\5\30\r\2\u00df"+
+		"\u00e0\7\7\2\2\u00e0\u00e1\b\r\1\2\u00e1\u00f8\3\2\2\2\u00e2\u00e3\7\27"+
+		"\2\2\u00e3\u00e4\5\30\r\16\u00e4\u00e5\b\r\1\2\u00e5\u00f8\3\2\2\2\u00e6"+
+		"\u00e7\7\30\2\2\u00e7\u00e8\5\30\r\r\u00e8\u00e9\b\r\1\2\u00e9\u00f8\3"+
+		"\2\2\2\u00ea\u00eb\5\22\n\2\u00eb\u00ec\b\r\1\2\u00ec\u00f8\3\2\2\2\u00ed"+
+		"\u00ee\7-\2\2\u00ee\u00f8\b\r\1\2\u00ef\u00f0\7,\2\2\u00f0\u00f8\b\r\1"+
+		"\2\u00f1\u00f2\7/\2\2\u00f2\u00f8\b\r\1\2\u00f3\u00f4\7.\2\2\u00f4\u00f8"+
+		"\b\r\1\2\u00f5\u00f6\7\61\2\2\u00f6\u00f8\b\r\1\2\u00f7\u00dc\3\2\2\2"+
+		"\u00f7\u00e2\3\2\2\2\u00f7\u00e6\3\2\2\2\u00f7\u00ea\3\2\2\2\u00f7\u00ed"+
+		"\3\2\2\2\u00f7\u00ef\3\2\2\2\u00f7\u00f1\3\2\2\2\u00f7\u00f3\3\2\2\2\u00f7"+
+		"\u00f5\3\2\2\2\u00f8\u011e\3\2\2\2\u00f9\u00fa\f\f\2\2\u00fa\u00fb\t\2"+
+		"\2\2\u00fb\u00fc\5\30\r\r\u00fc\u00fd\b\r\1\2\u00fd\u011d\3\2\2\2\u00fe"+
+		"\u00ff\f\13\2\2\u00ff\u0100\t\3\2\2\u0100\u0101\5\30\r\f\u0101\u0102\b"+
+		"\r\1\2\u0102\u011d\3\2\2\2\u0103\u0104\f\n\2\2\u0104\u0105\t\4\2\2\u0105"+
+		"\u0106\5\30\r\13\u0106\u0107\b\r\1\2\u0107\u011d\3\2\2\2\u0108\u0109\f"+
+		"\t\2\2\u0109\u010a\t\5\2\2\u010a\u010b\5\30\r\n\u010b\u010c\b\r\1\2\u010c"+
+		"\u011d\3\2\2\2\u010d\u010e\f\21\2\2\u010e\u010f\7\23\2\2\u010f\u0110\5"+
+		"\30\r\2\u0110\u0111\7\24\2\2\u0111\u0112\b\r\1\2\u0112\u011d\3\2\2\2\u0113"+
+		"\u0114\f\20\2\2\u0114\u0115\7\25\2\2\u0115\u0116\7\61\2\2\u0116\u011d"+
+		"\b\r\1\2\u0117\u0118\f\17\2\2\u0118\u0119\7\26\2\2\u0119\u011a\5\36\20"+
+		"\2\u011a\u011b\b\r\1\2\u011b\u011d\3\2\2\2\u011c\u00f9\3\2\2\2\u011c\u00fe"+
+		"\3\2\2\2\u011c\u0103\3\2\2\2\u011c\u0108\3\2\2\2\u011c\u010d\3\2\2\2\u011c"+
+		"\u0113\3\2\2\2\u011c\u0117\3\2\2\2\u011d\u0120\3\2\2\2\u011e\u011c\3\2"+
+		"\2\2\u011e\u011f\3\2\2\2\u011f\31\3\2\2\2\u0120\u011e\3\2\2\2\u0121\u0122"+
+		"\7\23\2\2\u0122\u0123\7-\2\2\u0123\u0124\7\4\2\2\u0124\u0125\5\32\16\2"+
+		"\u0125\u0126\7\24\2\2\u0126\u0127\b\16\1\2\u0127\u0132\3\2\2\2\u0128\u0129"+
+		"\7%\2\2\u0129\u012a\7\b\2\2\u012a\u012b\5\34\17\2\u012b\u012c\7\t\2\2"+
+		"\u012c\u012d\b\16\1\2\u012d\u0132\3\2\2\2\u012e\u012f\5\36\20\2\u012f"+
+		"\u0130\b\16\1\2\u0130\u0132\3\2\2\2\u0131\u0121\3\2\2\2\u0131\u0128\3"+
+		"\2\2\2\u0131\u012e\3\2\2\2\u0132\33\3\2\2\2\u0133\u0138\7\61\2\2\u0134"+
+		"\u0135\7\3\2\2\u0135\u0137\7\61\2\2\u0136\u0134\3\2\2\2\u0137\u013a\3"+
+		"\2\2\2\u0138\u0136\3\2\2\2\u0138\u0139\3\2\2\2\u0139\u013b\3\2\2\2\u013a"+
+		"\u0138\3\2\2\2\u013b\u013c\7\4\2\2\u013c\u013d\5\32\16\2\u013d\u013e\b"+
+		"\17\1\2\u013e\u0140\3\2\2\2\u013f\u0133\3\2\2\2\u0140\u0143\3\2\2\2\u0141"+
+		"\u0142\3\2\2\2\u0141\u013f\3\2\2\2\u0142\35\3\2\2\2\u0143\u0141\3\2\2"+
+		"\2\u0144\u0145\7&\2\2\u0145\u014d\b\20\1\2\u0146\u0147\7\'\2\2\u0147\u014d"+
+		"\b\20\1\2\u0148\u0149\7(\2\2\u0149\u014d\b\20\1\2\u014a\u014b\7)\2\2\u014b"+
+		"\u014d\b\20\1\2\u014c\u0144\3\2\2\2\u014c\u0146\3\2\2\2\u014c\u0148\3"+
+		"\2\2\2\u014c\u014a\3\2\2\2\u014d\37\3\2\2\2\33,.\66NV^mp}\177\u008f\u0092"+
+		"\u009f\u00b1\u00bc\u00cd\u00d6\u00da\u00f7\u011c\u011e\u0131\u0138\u0141"+
+		"\u014c";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

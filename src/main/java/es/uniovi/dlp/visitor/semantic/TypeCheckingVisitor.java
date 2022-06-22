@@ -101,6 +101,14 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
     }
 
     @Override
+    public Type visit(BoolLiteral boolLiteral, Type param) {
+        super.visit(boolLiteral, param);
+        boolLiteral.setLvalue(false);
+        boolLiteral.setType( new BoolType(boolLiteral.getLine(), boolLiteral.getColumn()));
+        return null;
+    }
+
+    @Override
     public Type visit(Logical logical, Type param) {
         super.visit(logical, param);
         logical.setLvalue(false);
@@ -169,6 +177,8 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
             unaryNegative.setType( new ErrorType(unaryNegative.getExpression()) );
             ErrorManager.getInstance().addError(new Error(unaryNegative.getExpression(), ErrorReason.NOT_LOGICAL));
         }
+        else
+            unaryNegative.setType( unaryNegative.getExpression().getType());
         return null;
     }
 
@@ -222,7 +232,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
         Type leftType = assignment.getLeftExpression().getType();
         Type rightType = assignment.getRightExpression().getType();
 
-        if(leftType == null) return null; //TODO: pass from identification -> type checking with errors? (variables)
+        if(leftType == null) return null;
 
         /* If an error is already detected in right or left part, we stop evaluation */
         if(rightType.isError() || leftType.isError())
@@ -286,6 +296,20 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
     /* Types */
 
     @Override
+    public Type visit(FunctionType functionType, Type param) {
+        super.visit(functionType, param);
+        functionType.getParameters().forEach(funcParam -> funcParam.accept(this, param));
+        /* Returned so funcDefinition can access to it */
+        return functionType.getReturnType();
+    }
+
+    @Override
+    public Type visit(IntType intType, Type param) {
+        super.visit(intType, param);
+        return null;
+    }
+
+    @Override
     public Type visit(ArrayType arrayType, Type param) {
         super.visit(arrayType, param);
         return null;
@@ -304,16 +328,8 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
     }
 
     @Override
-    public Type visit(FunctionType functionType, Type param) {
-        super.visit(functionType, param);
-        functionType.getParameters().forEach(funcParam -> funcParam.accept(this, param));
-        /* Returned so funcDefinition can access to it */
-        return functionType.getReturnType();
-    }
-
-    @Override
-    public Type visit(IntType intType, Type param) {
-        super.visit(intType, param);
+    public Type visit(BoolType boolType, Type param) {
+        super.visit(boolType, param);
         return null;
     }
 

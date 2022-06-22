@@ -49,4 +49,21 @@ public class LexerHelper {
         return result;
     }
 
+    public static int lexemeToBool(String lexeme) {
+        int result = -1;
+
+        switch (lexeme) {
+            case "true":
+                result = 1;
+                break;
+            case "false":
+                result = 0;
+                break;
+            default:
+                System.err.println("Invalid Lexecem for boolean");
+        }
+
+        return result;
+    }
+
 }

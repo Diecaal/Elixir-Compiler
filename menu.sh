@@ -26,9 +26,9 @@ elif (( $choice == 5)) ; then
 	bin/xana.bat examples/${filePath} --introspector
 elif (( $choice == 6)) ; then
 	echo "Enter file to perform introspect (examples/codegeneration dir as root)"
-	#read filePath
-	#bin/xana.bat examples/codegeneration/${filePath}
-	bin/xana.bat examples/codegeneration/complete/big_input.xana
+	read filePath
+	bin/xana.bat examples/codegeneration/${filePath}
+	#bin/xana.bat examples/codegeneration/complete/big_input.xana
 	#bin/xana.bat examples/codegeneration/${filePath} -a
 	#for file in "${cg_files[@]}"
 	#do
