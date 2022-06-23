@@ -1,0 +1,14 @@
+def main() do
+    if true == true do
+        puts 'a','l','w','a','y','s', ' ', 't','r','u','e', '\n'
+    end
+    puts '\n'
+
+    value :: bool
+    value = false
+    if value == true do
+        puts 't','r','u','e', '\n'
+    else
+        puts 'f','a','l','s','e', '\n'
+    end
+end

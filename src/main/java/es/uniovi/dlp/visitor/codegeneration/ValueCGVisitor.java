@@ -32,7 +32,7 @@ public class ValueCGVisitor extends AbstractVisitor<Void, Void> {
         logical.getLeftExpression().accept(this, param);
         logical.getRightExpression().accept(this, param);
 
-        cg.logicalOperation(logical.getOperator(), logical.getType());
+        cg.logicalOperation(logical.getOperator());
         return null;
     }
 
@@ -97,7 +97,7 @@ public class ValueCGVisitor extends AbstractVisitor<Void, Void> {
 
     @Override
     public Void visit(CharLiteral charLiteral, Void param) {
-        cg.push(charLiteral.getType(), String.valueOf(charLiteral.getValue()));
+        cg.push(charLiteral.getType(), String.valueOf( ((int) charLiteral.getValue()) ) );
         return null;
     }
 
@@ -112,6 +112,7 @@ public class ValueCGVisitor extends AbstractVisitor<Void, Void> {
         cg.push(doubleLiteral.getType(), String.valueOf(doubleLiteral.getValue()));
         return null;
     }
+
 
     @Override
     public Void visit(BoolLiteral boolLiteral, Void param) {

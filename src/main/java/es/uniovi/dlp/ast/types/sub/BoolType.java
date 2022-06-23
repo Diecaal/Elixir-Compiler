@@ -17,6 +17,16 @@ public class BoolType extends AbstractType {
     }
 
     @Override
+    public int getNumberBytes() {
+        return 2;
+    }
+
+    @Override
+    public String toString() {
+        return "bool";
+    }
+
+    @Override
     public Type logical(Type otherType, ASTNode ast) {
         if(otherType.isLogical())
             return this;
@@ -25,6 +35,13 @@ public class BoolType extends AbstractType {
 
     @Override
     public Type assignment(Type otherType, ASTNode ast) {
+        if(otherType instanceof BoolType)
+            return this;
+        return super.assignment(otherType, ast);
+    }
+
+    @Override
+    public Type comparison(Type otherType, ASTNode ast) {
         if(otherType instanceof BoolType)
             return this;
         return super.assignment(otherType, ast);

@@ -247,7 +247,7 @@ public class CodeGenerator {
         writeInstruction(String.format("%s%s", getRelationalOperand(operator), getSuffix(type)));
     }
 
-    public void logicalOperation(String operator, Type type) {
-        writeInstruction(String.format("%s%s", getLogicalOperand(operator), getSuffix(type)));
+    public void logicalOperation(String operator) {
+        writeInstruction(String.format("%s", getLogicalOperand(operator)));
     }
 }
