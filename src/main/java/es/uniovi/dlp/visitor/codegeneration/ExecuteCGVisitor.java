@@ -4,7 +4,6 @@ import es.uniovi.dlp.ast.Program;
 import es.uniovi.dlp.ast.definitions.Definition;
 import es.uniovi.dlp.ast.definitions.sub.FunctionDefinition;
 import es.uniovi.dlp.ast.definitions.sub.VariableDefinition;
-import es.uniovi.dlp.ast.expressions.sub.Cast;
 import es.uniovi.dlp.ast.statements.Statement;
 import es.uniovi.dlp.ast.statements.sub.*;
 import es.uniovi.dlp.ast.types.sub.FunctionType;
@@ -13,9 +12,7 @@ import es.uniovi.dlp.visitor.AbstractVisitor;
 import es.uniovi.dlp.visitor.codegeneration.util.ReturnStatementDTO;
 
 import java.io.OutputStreamWriter;
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 
 public class ExecuteCGVisitor extends AbstractVisitor<Void, ReturnStatementDTO> {
@@ -113,7 +110,7 @@ public class ExecuteCGVisitor extends AbstractVisitor<Void, ReturnStatementDTO> 
         cg.writeLine(write.getLine());
         cg.writeComment("Write");
         write.getExpression().accept(valueVisitor, null);
-        cg.writeInstruction(String.format("out%s", cg.getSuffix(write.getExpression().getType())));
+        cg.out(write.getExpression().getType());
         return null;
     }
 
@@ -122,8 +119,8 @@ public class ExecuteCGVisitor extends AbstractVisitor<Void, ReturnStatementDTO> 
         cg.writeLine(read.getLine());
         cg.writeComment("Read");
         read.getExpression().accept(addressVisitor, null);
-        cg.writeInstruction(String.format("in%s", cg.getSuffix(read.getExpression().getType())));
-        cg.writeInstruction(String.format("store%s", cg.getSuffix(read.getExpression().getType())));
+        cg.in(read.getExpression().getType());
+        cg.store(read.getExpression().getType());
         return null;
     }
 
@@ -134,7 +131,7 @@ public class ExecuteCGVisitor extends AbstractVisitor<Void, ReturnStatementDTO> 
         assignment.getLeftExpression().accept(addressVisitor, null);
         assignment.getRightExpression().accept(valueVisitor, null);
         cg.promote(assignment.getRightExpression().getType(), assignment.getLeftExpression().getType());
-        cg.writeInstruction(String.format("store%s", cg.getSuffix(assignment.getLeftExpression().getType())));
+        cg.store(assignment.getLeftExpression().getType());
         return null;
     }
 
@@ -206,7 +203,7 @@ public class ExecuteCGVisitor extends AbstractVisitor<Void, ReturnStatementDTO> 
         cg.call(functionInvocation.getVariable().getName());
 
         if ( !( functionInvocation.getType() instanceof VoidType) )
-            cg.writeInstruction(String.format("pop%s", cg.getSuffix(functionInvocation.getType())));
+            cg.pop(functionInvocation.getType());
 
         return null;
     }

@@ -1,8 +1,6 @@
 package es.uniovi.dlp.visitor.codegeneration;
 
 import es.uniovi.dlp.ast.definitions.sub.VariableDefinition;
-import es.uniovi.dlp.ast.expressions.sub.CharLiteral;
-import es.uniovi.dlp.ast.expressions.sub.DoubleLiteral;
 import es.uniovi.dlp.ast.types.Type;
 import es.uniovi.dlp.ast.types.sub.CharType;
 import es.uniovi.dlp.ast.types.sub.DoubleType;
@@ -10,7 +8,6 @@ import es.uniovi.dlp.visitor.codegeneration.util.ReturnStatementDTO;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.util.ArrayList;
 import java.util.Stack;
 
 public class CodeGenerator {
@@ -205,5 +202,49 @@ public class CodeGenerator {
         writeComment(String.format("%s :: %s (offset %s)",
                 variableDefinition.getName(), variableDefinition.getType(), variableDefinition.getOffset())
         );
+    }
+
+    public void out(Type type) {
+        writeInstruction(String.format("out%s", getSuffix(type)));
+    }
+
+    public void store(Type type) {
+        writeInstruction(String.format("store%s", getSuffix(type)));
+    }
+
+    public void in(Type type) {
+        writeInstruction(String.format("in%s", getSuffix(type)));
+    }
+
+    public void pop(Type type) {
+        writeInstruction(String.format("pop%s", getSuffix(type)));
+    }
+
+    public void load(Type type) {
+        writeInstruction( String.format("load%s", getSuffix(type)));
+    }
+
+    public void push(Type type, String value) {
+        writeInstruction( String.format("push%s\t%s", getSuffix(type), value ));
+    }
+
+    public void not() {
+        writeInstruction("not");
+    }
+
+    public void minus() {
+        writeInstruction("-");
+    }
+
+    public void arithmeticOperation(String operator, Type type) {
+        writeInstruction(String.format("%s%s", getArithmeticOperand(operator), getSuffix(type)));
+    }
+
+    public void relationalOperation(String operator, Type type) {
+        writeInstruction(String.format("%s%s", getRelationalOperand(operator), getSuffix(type)));
+    }
+
+    public void logicalOperation(String operator) {
+        writeInstruction(String.format("%s", getLogicalOperand(operator)));
     }
 }
