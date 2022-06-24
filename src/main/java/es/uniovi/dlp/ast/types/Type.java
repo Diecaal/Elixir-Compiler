@@ -17,10 +17,12 @@ public interface Type extends ASTNode {
 
     boolean isLogical();
     boolean isIndexable();
+    boolean isArray();
     boolean isArithmetic();
     boolean allowDot();
     boolean isError();
     boolean isInvocable();
+    boolean isSimple();
 
     int getNumberBytes();
 

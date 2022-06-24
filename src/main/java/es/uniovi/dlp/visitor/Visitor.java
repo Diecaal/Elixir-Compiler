@@ -36,6 +36,7 @@ public interface Visitor<ReturnType, ParamType> {
     ReturnType visit(Return returnStm, ParamType param);
     ReturnType visit(While whileStm, ParamType param);
     ReturnType visit(Write write, ParamType param);
+    ReturnType visit(Destructuring write, ParamType param);
 
     /* Types */
     ReturnType visit(ArrayType arrayType, ParamType param);

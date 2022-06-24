@@ -1,0 +1,17 @@
+v :: [10 :: int]
+a, b, c :: int
+
+pepe :: defstruct do
+        edad :: int
+end
+
+def main() do
+	v[0] = 0
+	v[1] = 100
+	v[2] = 200
+	v[3] = 300
+
+	[a, v[0], pepe.edad] = v
+
+	puts a, '\n', v[0], '\n', pepe.edad, '\n'
+end

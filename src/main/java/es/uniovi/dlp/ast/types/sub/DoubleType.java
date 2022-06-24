@@ -28,6 +28,11 @@ public class DoubleType extends AbstractType {
     }
 
     @Override
+    public boolean isSimple() {
+        return true;
+    }
+
+    @Override
     public Type arithmetic(Type otherType, ASTNode ast) {
         // if(otherType instanceof CharType || otherType instanceof IntType ||otherType instanceof DoubleType)
         // return this;

@@ -32,6 +32,11 @@ public class ArrayType extends AbstractType {
     }
 
     @Override
+    public boolean isArray() {
+        return true;
+    }
+
+    @Override
     public int getNumberBytes() {
         return arrayType.getNumberBytes() * length;
     }

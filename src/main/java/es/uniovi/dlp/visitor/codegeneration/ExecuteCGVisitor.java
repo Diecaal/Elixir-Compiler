@@ -4,9 +4,14 @@ import es.uniovi.dlp.ast.Program;
 import es.uniovi.dlp.ast.definitions.Definition;
 import es.uniovi.dlp.ast.definitions.sub.FunctionDefinition;
 import es.uniovi.dlp.ast.definitions.sub.VariableDefinition;
+import es.uniovi.dlp.ast.expressions.Expression;
+import es.uniovi.dlp.ast.expressions.sub.ArrayAccess;
+import es.uniovi.dlp.ast.expressions.sub.IntLiteral;
 import es.uniovi.dlp.ast.statements.Statement;
 import es.uniovi.dlp.ast.statements.sub.*;
+import es.uniovi.dlp.ast.types.sub.ArrayType;
 import es.uniovi.dlp.ast.types.sub.FunctionType;
+import es.uniovi.dlp.ast.types.sub.IntType;
 import es.uniovi.dlp.ast.types.sub.VoidType;
 import es.uniovi.dlp.visitor.AbstractVisitor;
 import es.uniovi.dlp.visitor.codegeneration.util.ReturnStatementDTO;
@@ -132,6 +137,25 @@ public class ExecuteCGVisitor extends AbstractVisitor<Void, ReturnStatementDTO> 
         assignment.getRightExpression().accept(valueVisitor, null);
         cg.promote(assignment.getRightExpression().getType(), assignment.getLeftExpression().getType());
         cg.store(assignment.getLeftExpression().getType());
+        return null;
+    }
+
+    @Override
+    public Void visit(Destructuring destructuring, ReturnStatementDTO param) {
+        cg.writeLine(destructuring.getLine());
+        cg.writeComment("Destructuring");
+        for(int i = 0; i < destructuring.getVariables().size(); i++) {
+            destructuring.getVariables().get(i).accept(addressVisitor, null);
+
+            destructuring.getArray().accept(addressVisitor, null);
+            cg.writeInstruction(String.format("push %s", i));
+            cg.writeInstruction("pushi\t" + ((ArrayType)destructuring.getArray().getType()).getArrayType().getNumberBytes());
+            cg.writeInstruction("muli");
+            cg.writeInstruction("addi");
+            cg.load(((ArrayType)destructuring.getArray().getType()).getArrayType());
+
+            cg.store(destructuring.getVariables().get(i).getType());
+        }
         return null;
     }
 

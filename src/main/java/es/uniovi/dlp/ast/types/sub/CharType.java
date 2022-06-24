@@ -39,6 +39,11 @@ public class CharType extends AbstractType {
     }
 
     @Override
+    public boolean isSimple() {
+        return true;
+    }
+
+    @Override
     public Type cast(Type toCast, ASTNode ast) {
         if(toCast instanceof CharType || toCast instanceof IntType)
             return toCast;

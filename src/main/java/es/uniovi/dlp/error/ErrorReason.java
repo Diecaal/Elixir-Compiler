@@ -19,7 +19,12 @@ public enum ErrorReason {
     INCOMPATIBLE_TYPES("Types to be assigned are not compatible"),
     INVALID_RETURN_TYPE("Return type does not match function type definition"),
     INVALID_ARGS("Incorrect number of arguments for function"),
-    INVALID_INVOCATION("Trying to invoke not a function");
+    INVALID_INVOCATION("Trying to invoke not a function"),
+    DESTRUCT_ARRAY("Only can perform destructuring from an array"),
+    DESTRUCT_ARRAY_SIMPLE("Array to perform destructuring from must be of simple type"),
+    DESTRUCT_ELEMENTS("Variables to be performed destructuring must be one at least, and less than array length"),
+    DESTRUCT_ELEMENTS_TYPE("Variables types must match array type"),
+    DESTRUCT_ELEMENTS_LVALUE("Variables must have lvalue present (be modifiable)");
 
     private final String message;
 

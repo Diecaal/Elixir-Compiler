@@ -58,6 +58,12 @@ public class IntType extends AbstractType {
     }
 
     @Override
+    public boolean isSimple() {
+        return true;
+    }
+
+
+    @Override
     public Type cast(Type toCast, ASTNode ast) {
         if(toCast instanceof CharType)
             return new CharType(toCast.getLine(), toCast.getColumn());

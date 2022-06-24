@@ -1,6 +1,7 @@
 package es.uniovi.dlp.visitor.semantic;
 
 import es.uniovi.dlp.ast.definitions.sub.FunctionDefinition;
+import es.uniovi.dlp.ast.expressions.Expression;
 import es.uniovi.dlp.ast.expressions.sub.*;
 import es.uniovi.dlp.ast.statements.sub.*;
 import es.uniovi.dlp.ast.types.Type;
@@ -176,7 +177,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
     public Type visit(Variable variable, Type param) {
         super.visit(variable, param);
         variable.setLvalue(true);
-        if(variable.getDefinition() != null) //TODO: pass from identification -> type checking with errors? (variables)
+        if(variable.getDefinition() != null)
             variable.setType(variable.getDefinition().getType());
         return null;
     }
@@ -188,7 +189,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
 
         Type invocationType = functionInvocation.getVariable().getType();
 
-        if(invocationType == null) return null; //TODO: pass from identification -> type checking with errors? (variables)
+        if(invocationType == null) return null;
 
         functionInvocation.setType(invocationType.invocation(functionInvocation.getParameters(), functionInvocation));
 
@@ -222,7 +223,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
         Type leftType = assignment.getLeftExpression().getType();
         Type rightType = assignment.getRightExpression().getType();
 
-        if(leftType == null) return null; //TODO: pass from identification -> type checking with errors? (variables)
+        if(leftType == null) return null;
 
         /* If an error is already detected in right or left part, we stop evaluation */
         if(rightType.isError() || leftType.isError())
@@ -234,6 +235,42 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
         //System.out.println(String.format("[%s] %s + %s -> %s", assignment.getLine(), leftType,rightType, assignmentType));
         if(leftType.assignment(rightType, assignment).isError())
             ErrorManager.getInstance().addError(new Error(assignment, ErrorReason.INCOMPATIBLE_TYPES));
+
+        return null;
+    }
+
+    /* DESTRUCTURING */
+
+    @Override
+    public Type visit(Destructuring destructuring, Type param) {
+        super.visit(destructuring, param);
+
+        if(!destructuring.getArray().getType().isArray()) {
+            destructuring.getArray().setType(new ErrorType(destructuring.getLine(), destructuring.getColumn()));
+            ErrorManager.getInstance().addError( new Error(destructuring.getArray(), ErrorReason.DESTRUCT_ARRAY) );
+            return null;
+        }
+
+        ArrayType arrayType = ((ArrayType) destructuring.getArray().getType());
+
+        if(!arrayType.getArrayType().isSimple()) {
+            ErrorManager.getInstance().addError( new Error(destructuring.getArray(), ErrorReason.DESTRUCT_ARRAY_SIMPLE) );
+            return null;
+        }
+
+        if(destructuring.getVariables().size() < 1 ||
+                destructuring.getVariables().size() > arrayType.getLength()) {
+            ErrorManager.getInstance().addError( new Error(destructuring, ErrorReason.DESTRUCT_ELEMENTS) );
+        }
+
+        for(int i = 0; i < destructuring.getVariables().size(); i++) {
+            if(!arrayType.getArrayType().isPromotableTo(destructuring.getVariables().get(i).getType())) {
+                ErrorManager.getInstance().addError( new Error(destructuring.getVariables().get(i), ErrorReason.DESTRUCT_ELEMENTS_TYPE) );
+            }
+            if(!destructuring.getVariables().get(i).getLvalue()) {
+                ErrorManager.getInstance().addError( new Error(destructuring.getVariables().get(i), ErrorReason.DESTRUCT_ELEMENTS_LVALUE) );
+            }
+        }
 
         return null;
     }
@@ -334,4 +371,6 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
         super.visit(voidType, param);
         return null;
     }
+
+
 }

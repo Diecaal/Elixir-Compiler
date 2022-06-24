@@ -119,6 +119,13 @@ public abstract class AbstractVisitor<ReturnType, ParamType> implements Visitor<
     }
 
     @Override
+    public ReturnType visit(Destructuring destructuring, ParamType param) {
+        destructuring.getVariables().forEach(var -> var.accept(this, param));
+        destructuring.getArray().accept(this, param);
+        return null;
+    }
+
+    @Override
     public ReturnType visit(FunctionInvocation functionInvocation, ParamType param) {
         functionInvocation.getParameters().forEach(funcParam -> funcParam.accept(this, param));
         functionInvocation.getVariable().accept(this, param);
@@ -213,4 +220,5 @@ public abstract class AbstractVisitor<ReturnType, ParamType> implements Visitor<
     public ReturnType visit(ErrorType errorType, ParamType param) {
         return null;
     }
+
 }

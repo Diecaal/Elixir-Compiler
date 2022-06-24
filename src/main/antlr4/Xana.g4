@@ -77,7 +77,8 @@ functionInvocation returns[FunctionInvocation ast]
 
 // STATEMENTS
 statement returns [List<Statement> ast = new ArrayList<Statement>()]
-          locals[List<Statement> elseBody = new ArrayList<Statement>()]:
+          locals[List<Statement> elseBody = new ArrayList<Statement>(),
+                 List<Expression> expressions = new ArrayList<Expression>()]:
            'if' condition=expression 'do' ifStm=conditionalBody ('else' elseStm=conditionalBody { $elseBody = $elseStm.ast; })? 'end'
           { $ast.add(new If($start.getLine(), $start.getCharPositionInLine() + 1, $condition.ast, $ifStm.ast, $elseBody)); }
          | 'while' condition=expression 'do' whileStm=conditionalBody 'end'
@@ -90,6 +91,8 @@ statement returns [List<Statement> ast = new ArrayList<Statement>()]
           { $ast.add(new Return($start.getLine(), $start.getCharPositionInLine() + 1, $expression.ast)); }
          | <asocc=right> left=expression '=' right=expression
           { $ast.add(new Assignment($start.getLine(), $start.getCharPositionInLine() + 1, $left.ast, $right.ast)); }
+         | <asocc=right> '[' left=expression {$expressions.add($left.ast);} (',' left2=expression {$expressions.add($left2.ast);})* ']' '=' right=expression
+           { $ast.add(new Destructuring($start.getLine(), $start.getCharPositionInLine() + 1, $expressions, $right.ast)); }
          | functionInvocation
           { $ast.add($functionInvocation.ast); }
          ;

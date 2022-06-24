@@ -26,6 +26,8 @@ public class AddressCGVisitor extends AbstractVisitor<Void, Void> {
         return null;
     }
 
+
+
     @Override
     public Void visit(StructAccess structAccess, Void param) {
         structAccess.getStruct().accept(this, param);
